@@ -1,0 +1,36 @@
+{
+  "_comment": "Draft taxonomy. Confirm before M1 (PLAN.md decision D4). Scoring is exact match on these slugs.",
+  "pain_points": [
+    "forecast_accuracy",
+    "pipeline_visibility",
+    "deal_slippage",
+    "rep_ramp_time",
+    "coaching_at_scale",
+    "manual_data_entry",
+    "data_quality",
+    "tool_sprawl"
+  ],
+  "use_case": [
+    "call_recording",
+    "call_coaching",
+    "forecasting",
+    "deal_inspection",
+    "crm_hygiene",
+    "pipeline_reporting",
+    "onboarding",
+    "competitive_intel"
+  ],
+  "next_step_action": [
+    "send_security_docs",
+    "send_proposal",
+    "send_contract",
+    "schedule_demo",
+    "schedule_followup",
+    "technical_review",
+    "pilot_kickoff",
+    "intro_to_buyer"
+  ],
+  "competitor_stance": ["evaluating", "ruled_out", "incumbent"],
+  "stage_signal": ["advance", "hold", "regress"],
+  "proposal_action": ["set", "append", "clear", "note"]
+}

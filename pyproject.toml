@@ -1,0 +1,23 @@
+[project]
+name = "interaction-to-crm"
+version = "0.1.0"
+description = "Call transcripts in, reviewed HubSpot deal updates out, with a measured learning loop."
+requires-python = ">=3.11"
+dependencies = [
+  "slack-bolt>=1.18",
+  "requests>=2.31",
+  "python-dotenv>=1.0",
+  "openai>=1.40",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=8"]
+# Added per milestone, not up front:
+# M2:    pydantic
+# M6:    matplotlib
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+
+[tool.setuptools]
+packages = ["crm"]

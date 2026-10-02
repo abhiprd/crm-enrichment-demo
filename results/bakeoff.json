@@ -1,0 +1,238 @@
+{
+  "prompt_version": "v0-71968bd8",
+  "deals": [
+    "d004",
+    "d005",
+    "d039",
+    "d046",
+    "d048",
+    "d052",
+    "d067",
+    "d070",
+    "d074",
+    "d077",
+    "d078",
+    "d081",
+    "d086",
+    "d089",
+    "d100"
+  ],
+  "n_deals": 15,
+  "repeats": 3,
+  "models": {
+    "luna": "gpt-6-luna",
+    "sol": "gpt-6.1-sol"
+  },
+  "settings": [
+    {
+      "setting": "luna-none",
+      "repeats": 3,
+      "transcripts_per_run": 15,
+      "calls": 45,
+      "call_errors": 0,
+      "run_scores": [
+        0.7506172839506173,
+        0.7728395061728395,
+        0.7679012345679013
+      ],
+      "mean_score": 0.7637860082304527,
+      "score_range": 0.022222222222222143,
+      "score_std": 0.009527437780074234,
+      "per_field_mean": {
+        "budget": 1.0,
+        "decision_timeline": 0.9777777777777777,
+        "competitors": 0.8740740740740741,
+        "economic_buyer": 0.9111111111111111,
+        "champion": 0.5555555555555556,
+        "pain_points": 0.26666666666666666,
+        "use_case": 0.37777777777777777,
+        "next_step": 1.0,
+        "stage_signal": 0.9111111111111111
+      },
+      "flip_rate_by_field": {
+        "budget": 0.0,
+        "decision_timeline": 0.06666666666666667,
+        "competitors": 0.26666666666666666,
+        "economic_buyer": 0.06666666666666667,
+        "champion": 0.06666666666666667,
+        "pain_points": 0.13333333333333333,
+        "use_case": 0.13333333333333333,
+        "next_step": 0.0,
+        "stage_signal": 0.06666666666666667
+      },
+      "max_flip_rate": 0.26666666666666666,
+      "unsupported": 2,
+      "extracted_fields": 355,
+      "parse_errors": 0,
+      "mean_in_tokens": 1686.5333333333333,
+      "mean_out_tokens": 668.2444444444444,
+      "mean_reasoning_tokens": 0.0,
+      "cost_per_call": 0.0005027755555555556,
+      "total_cost": 0.0226249,
+      "mean_latency_ms": 5016.6
+    },
+    {
+      "setting": "luna-low",
+      "repeats": 3,
+      "transcripts_per_run": 15,
+      "calls": 45,
+      "call_errors": 0,
+      "run_scores": [
+        0.7234567901234568,
+        0.7012345679012346,
+        0.7308641975308642
+      ],
+      "mean_score": 0.7185185185185184,
+      "score_range": 0.02962962962962956,
+      "score_std": 0.012590171638500671,
+      "per_field_mean": {
+        "budget": 0.9555555555555556,
+        "decision_timeline": 0.9333333333333333,
+        "competitors": 0.8,
+        "economic_buyer": 0.7777777777777778,
+        "champion": 0.6222222222222222,
+        "pain_points": 0.24444444444444444,
+        "use_case": 0.2222222222222222,
+        "next_step": 0.9555555555555556,
+        "stage_signal": 0.9555555555555556
+      },
+      "flip_rate_by_field": {
+        "budget": 0.06666666666666667,
+        "decision_timeline": 0.0,
+        "competitors": 0.2,
+        "economic_buyer": 0.06666666666666667,
+        "champion": 0.06666666666666667,
+        "pain_points": 0.13333333333333333,
+        "use_case": 0.26666666666666666,
+        "next_step": 0.13333333333333333,
+        "stage_signal": 0.13333333333333333
+      },
+      "max_flip_rate": 0.26666666666666666,
+      "unsupported": 0,
+      "extracted_fields": 350,
+      "parse_errors": 10,
+      "mean_in_tokens": 1686.5333333333333,
+      "mean_out_tokens": 964.6888888888889,
+      "mean_reasoning_tokens": 315.9111111111111,
+      "cost_per_call": 0.0006509977777777778,
+      "total_cost": 0.029294900000000006,
+      "mean_latency_ms": 8080.888888888889
+    },
+    {
+      "setting": "luna-medium",
+      "repeats": 3,
+      "transcripts_per_run": 15,
+      "calls": 45,
+      "call_errors": 0,
+      "run_scores": [
+        0.7308641975308642,
+        0.7382716049382716,
+        0.7382716049382716
+      ],
+      "mean_score": 0.7358024691358024,
+      "score_range": 0.007407407407407418,
+      "score_std": 0.0034918853391928324,
+      "per_field_mean": {
+        "budget": 0.9333333333333333,
+        "decision_timeline": 0.9111111111111111,
+        "competitors": 0.8222222222222222,
+        "economic_buyer": 0.9333333333333333,
+        "champion": 0.6,
+        "pain_points": 0.3333333333333333,
+        "use_case": 0.2,
+        "next_step": 0.9555555555555556,
+        "stage_signal": 0.9333333333333333
+      },
+      "flip_rate_by_field": {
+        "budget": 0.2,
+        "decision_timeline": 0.06666666666666667,
+        "competitors": 0.26666666666666666,
+        "economic_buyer": 0.0,
+        "champion": 0.0,
+        "pain_points": 0.2,
+        "use_case": 0.2,
+        "next_step": 0.13333333333333333,
+        "stage_signal": 0.0
+      },
+      "max_flip_rate": 0.26666666666666666,
+      "unsupported": 3,
+      "extracted_fields": 351,
+      "parse_errors": 0,
+      "mean_in_tokens": 1686.5333333333333,
+      "mean_out_tokens": 1866.5333333333333,
+      "mean_reasoning_tokens": 1198.9555555555555,
+      "cost_per_call": 0.0011019200000000002,
+      "total_cost": 0.049586399999999996,
+      "mean_latency_ms": 16104.755555555555
+    },
+    {
+      "setting": "sol",
+      "repeats": 1,
+      "transcripts_per_run": 15,
+      "calls": 15,
+      "call_errors": 0,
+      "run_scores": [
+        0.8444444444444444
+      ],
+      "mean_score": 0.8444444444444444,
+      "score_range": null,
+      "score_std": null,
+      "per_field_mean": {
+        "budget": 1.0,
+        "decision_timeline": 0.9333333333333333,
+        "competitors": 1.0,
+        "economic_buyer": 1.0,
+        "champion": 0.8666666666666667,
+        "pain_points": 0.4,
+        "use_case": 0.4666666666666667,
+        "next_step": 1.0,
+        "stage_signal": 0.9333333333333333
+      },
+      "flip_rate_by_field": {},
+      "max_flip_rate": null,
+      "unsupported": 0,
+      "extracted_fields": 111,
+      "parse_errors": 0,
+      "mean_in_tokens": 1686.5333333333333,
+      "mean_out_tokens": 1336.9333333333334,
+      "mean_reasoning_tokens": 193.93333333333334,
+      "cost_per_call": 0.0167424,
+      "total_cost": 0.25113599999999997,
+      "mean_latency_ms": 21505.066666666666
+    }
+  ],
+  "selection": {
+    "pick": null,
+    "best_luna": "luna-none",
+    "flip_limit": 0.1,
+    "ceiling": 0.95,
+    "candidates": [
+      {
+        "setting": "luna-none",
+        "stable": false,
+        "headroom": true,
+        "within_noise_of_best": true,
+        "cost_per_call": 0.0005027755555555556,
+        "noise_used": 0.022222222222222143
+      },
+      {
+        "setting": "luna-low",
+        "stable": false,
+        "headroom": true,
+        "within_noise_of_best": false,
+        "cost_per_call": 0.0006509977777777778,
+        "noise_used": 0.02962962962962956
+      },
+      {
+        "setting": "luna-medium",
+        "stable": false,
+        "headroom": true,
+        "within_noise_of_best": false,
+        "cost_per_call": 0.0011019200000000002,
+        "noise_used": 0.022222222222222143
+      }
+    ],
+    "reason": "no setting met all three conditions; decide manually"
+  },
+  "caveat": "15 transcripts x 3 repeats is small; chosen on the validation set (selection, not teaching)."
+}

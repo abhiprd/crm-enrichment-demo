@@ -1,0 +1,530 @@
+{
+  "_comment": "Frozen three-deal fixture for the ingest tests. Not the eval set (that is data/deals.json).",
+  "vendor": {
+    "name": "Northbeam",
+    "domain": "northbeam.example",
+    "sells": "conversation intelligence and forecasting software for mid-market sales teams"
+  },
+  "deals": [
+    {
+      "deal_id": "d001",
+      "split": "learn",
+      "company": {
+        "name": "Kestrel Foods",
+        "domain": "kestrelfoods.example",
+        "industry": "food distribution",
+        "employees": 420
+      },
+      "call": {
+        "type": "discovery",
+        "date": "2026-09-14",
+        "target_turns": 40
+      },
+      "participants": [
+        {
+          "name": "Dana Reyes",
+          "role": "Account Executive",
+          "org": "Northbeam",
+          "internal": true
+        },
+        {
+          "name": "Priya Shah",
+          "role": "VP Revenue Operations",
+          "org": "Kestrel Foods",
+          "internal": false
+        },
+        {
+          "name": "Tom Alvarez",
+          "role": "CFO",
+          "org": "Kestrel Foods",
+          "internal": false
+        }
+      ],
+      "cases": [
+        {
+          "id": "hedged_timeline",
+          "field": "decision_timeline",
+          "note": "Priya says they'd probably decide by end of year if the pilot goes well. Nobody commits to a date."
+        },
+        {
+          "id": "competitor_threshold",
+          "field": "competitors",
+          "note": "Tom mentions in passing that a friend's company uses Clari. Nobody suggests evaluating Clari. Gong is under active evaluation."
+        }
+      ],
+      "fields": {
+        "budget": {
+          "truth": {
+            "value": 60000,
+            "status": "stated"
+          },
+          "expected_proposal": {
+            "action": "set",
+            "value": 60000
+          },
+          "crm_relation": "empty",
+          "crm_before": null
+        },
+        "decision_timeline": {
+          "truth": {
+            "value": "2026-Q4",
+            "status": "hedged"
+          },
+          "expected_proposal": {
+            "action": "set",
+            "value": "2026-Q4",
+            "tentative": true
+          },
+          "crm_relation": "stale",
+          "crm_before": "2026-10-15"
+        },
+        "competitors": {
+          "truth": {
+            "value": [
+              {
+                "name": "Gong",
+                "stance": "evaluating"
+              }
+            ],
+            "status": "stated"
+          },
+          "expected_proposal": {
+            "action": "append",
+            "value": [
+              {
+                "name": "Gong",
+                "stance": "evaluating"
+              }
+            ]
+          },
+          "crm_relation": "empty",
+          "crm_before": []
+        },
+        "economic_buyer": {
+          "truth": {
+            "value": "Tom Alvarez",
+            "status": "stated"
+          },
+          "expected_proposal": {
+            "action": "set",
+            "value": "Tom Alvarez"
+          },
+          "crm_relation": "empty",
+          "crm_before": null
+        },
+        "champion": {
+          "truth": {
+            "value": "Priya Shah",
+            "status": "stated"
+          },
+          "expected_proposal": null,
+          "crm_relation": "matches",
+          "crm_before": "Priya Shah"
+        },
+        "pain_points": {
+          "truth": {
+            "value": [
+              "forecast_accuracy"
+            ],
+            "status": "stated"
+          },
+          "expected_proposal": {
+            "action": "append",
+            "value": [
+              "forecast_accuracy"
+            ]
+          },
+          "crm_relation": "empty",
+          "crm_before": []
+        },
+        "use_case": {
+          "truth": {
+            "value": null,
+            "status": "not_mentioned"
+          },
+          "expected_proposal": null,
+          "crm_relation": "empty",
+          "crm_before": null
+        },
+        "next_step": {
+          "truth": {
+            "value": {
+              "action": "send_security_docs",
+              "owner": "Dana Reyes",
+              "date": "2026-09-25"
+            },
+            "status": "stated"
+          },
+          "expected_proposal": {
+            "action": "set",
+            "value": {
+              "action": "send_security_docs",
+              "owner": "Dana Reyes",
+              "date": "2026-09-25"
+            }
+          },
+          "crm_relation": "empty",
+          "crm_before": null
+        },
+        "stage_signal": {
+          "truth": {
+            "value": "advance",
+            "status": "stated"
+          },
+          "expected_proposal": {
+            "action": "note",
+            "value": "advance"
+          },
+          "crm_relation": "empty",
+          "crm_before": null
+        }
+      },
+      "hubspot": {
+        "seeded": false,
+        "company_id": null,
+        "deal_id": null
+      }
+    },
+    {
+      "deal_id": "d002",
+      "split": "validation",
+      "company": {
+        "name": "Harborvine Logistics",
+        "domain": "harborvine.example",
+        "industry": "freight brokerage",
+        "employees": 180
+      },
+      "call": {
+        "type": "demo",
+        "date": "2026-09-18",
+        "target_turns": 35
+      },
+      "participants": [
+        {
+          "name": "Marcus Lee",
+          "role": "Solutions Engineer",
+          "org": "Northbeam",
+          "internal": true
+        },
+        {
+          "name": "Elena Brooks",
+          "role": "Director of Sales",
+          "org": "Harborvine Logistics",
+          "internal": false
+        }
+      ],
+      "cases": [],
+      "fields": {
+        "budget": {
+          "truth": {
+            "value": null,
+            "status": "not_mentioned"
+          },
+          "expected_proposal": null,
+          "crm_relation": "empty",
+          "crm_before": null
+        },
+        "decision_timeline": {
+          "truth": {
+            "value": "2027-Q1",
+            "status": "stated"
+          },
+          "expected_proposal": {
+            "action": "set",
+            "value": "2027-Q1"
+          },
+          "crm_relation": "empty",
+          "crm_before": null
+        },
+        "competitors": {
+          "truth": {
+            "value": null,
+            "status": "not_mentioned"
+          },
+          "expected_proposal": null,
+          "crm_relation": "empty",
+          "crm_before": []
+        },
+        "economic_buyer": {
+          "truth": {
+            "value": null,
+            "status": "not_mentioned"
+          },
+          "expected_proposal": null,
+          "crm_relation": "empty",
+          "crm_before": null
+        },
+        "champion": {
+          "truth": {
+            "value": "Elena Brooks",
+            "status": "stated"
+          },
+          "expected_proposal": {
+            "action": "set",
+            "value": "Elena Brooks"
+          },
+          "crm_relation": "empty",
+          "crm_before": null
+        },
+        "pain_points": {
+          "truth": {
+            "value": [
+              "rep_ramp_time"
+            ],
+            "status": "stated"
+          },
+          "expected_proposal": {
+            "action": "append",
+            "value": [
+              "rep_ramp_time"
+            ]
+          },
+          "crm_relation": "empty",
+          "crm_before": []
+        },
+        "use_case": {
+          "truth": {
+            "value": [
+              "call_coaching"
+            ],
+            "status": "stated"
+          },
+          "expected_proposal": {
+            "action": "append",
+            "value": [
+              "call_coaching"
+            ]
+          },
+          "crm_relation": "empty",
+          "crm_before": []
+        },
+        "next_step": {
+          "truth": {
+            "value": {
+              "action": "schedule_followup",
+              "owner": "Marcus Lee",
+              "date": "2026-09-30"
+            },
+            "status": "stated"
+          },
+          "expected_proposal": {
+            "action": "set",
+            "value": {
+              "action": "schedule_followup",
+              "owner": "Marcus Lee",
+              "date": "2026-09-30"
+            }
+          },
+          "crm_relation": "stale",
+          "crm_before": {
+            "action": "schedule_demo",
+            "owner": "Marcus Lee",
+            "date": "2026-09-18"
+          }
+        },
+        "stage_signal": {
+          "truth": {
+            "value": "hold",
+            "status": "stated"
+          },
+          "expected_proposal": {
+            "action": "note",
+            "value": "hold"
+          },
+          "crm_relation": "empty",
+          "crm_before": null
+        }
+      },
+      "hubspot": {
+        "seeded": false,
+        "company_id": null,
+        "deal_id": null
+      }
+    },
+    {
+      "deal_id": "d003",
+      "split": "test",
+      "company": {
+        "name": "Copperline Dental Group",
+        "domain": "copperline.example",
+        "industry": "dental practice management",
+        "employees": 650
+      },
+      "call": {
+        "type": "negotiation",
+        "date": "2026-09-22",
+        "target_turns": 45
+      },
+      "participants": [
+        {
+          "name": "Dana Reyes",
+          "role": "Account Executive",
+          "org": "Northbeam",
+          "internal": true
+        },
+        {
+          "name": "Sam Okafor",
+          "role": "COO",
+          "org": "Copperline Dental Group",
+          "internal": false
+        },
+        {
+          "name": "Lina Park",
+          "role": "Sales Systems Manager",
+          "org": "Copperline Dental Group",
+          "internal": false
+        }
+      ],
+      "cases": [
+        {
+          "id": "ballpark_budget",
+          "field": "budget",
+          "note": "Sam gives a rough ballpark of 80 to 100 thousand and says the real number depends on the board. He calls it a ballpark in his own words."
+        },
+        {
+          "id": "superseded_value",
+          "field": "next_step",
+          "note": "Dana first offers to send the contract by October 3. Near the end Sam asks for it by the 29th and Dana agrees. The 29th is final."
+        }
+      ],
+      "fields": {
+        "budget": {
+          "truth": {
+            "value": {
+              "min": 80000,
+              "max": 100000
+            },
+            "status": "hedged"
+          },
+          "expected_proposal": null,
+          "crm_relation": "empty",
+          "crm_before": null
+        },
+        "decision_timeline": {
+          "truth": {
+            "value": "2026-11-30",
+            "status": "stated"
+          },
+          "expected_proposal": {
+            "action": "set",
+            "value": "2026-Q4"
+          },
+          "crm_relation": "empty",
+          "crm_before": null
+        },
+        "competitors": {
+          "truth": {
+            "value": [
+              {
+                "name": "Gong",
+                "stance": "incumbent"
+              }
+            ],
+            "status": "stated"
+          },
+          "expected_proposal": {
+            "action": "append",
+            "value": [
+              {
+                "name": "Gong",
+                "stance": "incumbent"
+              }
+            ]
+          },
+          "crm_relation": "empty",
+          "crm_before": []
+        },
+        "economic_buyer": {
+          "truth": {
+            "value": "Sam Okafor",
+            "status": "stated"
+          },
+          "expected_proposal": {
+            "action": "set",
+            "value": "Sam Okafor"
+          },
+          "crm_relation": "stale",
+          "crm_before": "Lina Park"
+        },
+        "champion": {
+          "truth": {
+            "value": null,
+            "status": "not_mentioned"
+          },
+          "expected_proposal": null,
+          "crm_relation": "empty",
+          "crm_before": null
+        },
+        "pain_points": {
+          "truth": {
+            "value": [
+              "manual_data_entry"
+            ],
+            "status": "stated"
+          },
+          "expected_proposal": {
+            "action": "append",
+            "value": [
+              "manual_data_entry"
+            ]
+          },
+          "crm_relation": "empty",
+          "crm_before": []
+        },
+        "use_case": {
+          "truth": {
+            "value": [
+              "crm_hygiene"
+            ],
+            "status": "stated"
+          },
+          "expected_proposal": {
+            "action": "append",
+            "value": [
+              "crm_hygiene"
+            ]
+          },
+          "crm_relation": "empty",
+          "crm_before": []
+        },
+        "next_step": {
+          "truth": {
+            "value": {
+              "action": "send_contract",
+              "owner": "Dana Reyes",
+              "date": "2026-09-29"
+            },
+            "status": "superseded"
+          },
+          "expected_proposal": {
+            "action": "set",
+            "value": {
+              "action": "send_contract",
+              "owner": "Dana Reyes",
+              "date": "2026-09-29"
+            }
+          },
+          "crm_relation": "empty",
+          "crm_before": null
+        },
+        "stage_signal": {
+          "truth": {
+            "value": "advance",
+            "status": "stated"
+          },
+          "expected_proposal": {
+            "action": "note",
+            "value": "advance"
+          },
+          "crm_relation": "empty",
+          "crm_before": null
+        }
+      },
+      "hubspot": {
+        "seeded": false,
+        "company_id": null,
+        "deal_id": null
+      }
+    }
+  ]
+}
