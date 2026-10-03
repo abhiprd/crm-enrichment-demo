@@ -17,3 +17,11 @@ inbox/processed/*
 inbox/rejected/*
 !inbox/processed/.gitkeep
 !inbox/rejected/.gitkeep
+
+# Eval truth and anything derived from it stays private (regenerate with scripts/make_deals.py)
+data/keys/
+data/audit/
+data/deals.json
+results/handcheck/
+results/*_runs.json
+results/archive/**/*_runs.json

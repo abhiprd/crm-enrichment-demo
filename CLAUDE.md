@@ -4,7 +4,7 @@ Call transcript in, proposed HubSpot deal updates out, reviewed in Slack, with a
 
 ## Stack
 
-Python 3.11+, SQLite, Pydantic, slack-bolt (Socket Mode), HubSpot REST (service key), OpenAI for the extractor and rule learner. Transcripts are written by Claude through the subscription (Claude Code agent or claude.ai chat), never the Anthropic API.
+Python 3.9+, SQLite, Pydantic, slack-bolt (Socket Mode), HubSpot REST (service key), OpenAI for the extractor and rule learner. Transcripts are written by Claude through the subscription (Claude Code agent or claude.ai chat), never the Anthropic API.
 
 ## Layout
 

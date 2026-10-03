@@ -6,7 +6,7 @@ build-backend = "setuptools.build_meta"
 name = "interaction-to-crm"
 version = "0.1.0"
 description = "Call transcripts in, reviewed HubSpot deal updates out, with a measured learning loop."
-requires-python = ">=3.11"
+requires-python = ">=3.9"
 dependencies = [
   "slack-bolt>=1.18",
   "requests>=2.31",

@@ -22,11 +22,11 @@ Everything runs in dry-run by default. Posting to Slack or writing to HubSpot ne
 - **Measure extraction quality**: 100 synthetic transcripts with answer keys, split 40 learn / 40 validation / 20 test. A run-to-run noise floor, a manual prompt baseline, and paired statistics tell real improvements apart from noise.
 - **Log everything** to SQLite (interactions, extractions, proposals, review decisions) and track model spend per run.
 
-All companies and people are fictional (`.example` domains). Competitor names are real vendors, as reps actually say them.
+The answer keys and eval truth are not published in this repository (`data/keys/`, `data/audit/`, `data/deals.json`, and per-instance run files are git-ignored); `scripts/make_deals.py` regenerates a deal set. All companies and people are fictional (`.example` domains). Competitor names are real vendors, as reps actually say them.
 
 ## Quick start
 
-Python 3.11+ recommended.
+Python 3.9+.
 
 ```bash
 python3 -m venv .venv && source .venv/bin/activate

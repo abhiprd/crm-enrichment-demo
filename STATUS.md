@@ -59,7 +59,6 @@ Spend counts completed responses only (rate-limited calls produced no usage reco
 
 - Decide whether to add a labelled post-hoc matched noise criterion for paired comparisons (see Manual baseline). The pre-set criterion stands until then.
 - Rendering audit: the first 15 had 4 failures (a not-mentioned field hinted at); the generator prompt gained rule 7, the 4 were regenerated, and all 15 now pass verification. Hand-check about 15 transcripts for the real rendering error rate.
-- Install Python 3.11 (only 3.9 here; `pyproject.toml` requires 3.11+). Code runs on 3.9.
 - Bot token lacks `channels:read`, so channel membership can't be verified; posting works.
 - D1 to D5 were built to the PLAN.md recommendations but not explicitly confirmed.
 - 2026-10-02 (M0 closed): added `crm preflight` (HubSpot read/write scope probes that create nothing, Slack scopes and Socket Mode token, OpenAI models); the live seed and live slice refuse to run unless it passes. Review card now shows Account Name (id), Deal Name (id) linked to the HubSpot record, and the quote with its speaker. Seeded 15 fictional deals into HubSpot.
