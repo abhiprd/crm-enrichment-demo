@@ -6,6 +6,7 @@ Endpoints and property names follow HubSpot's CRM v3 docs and are unverified unt
 
 from __future__ import annotations
 
+from datetime import datetime, timezone
 from typing import Any, Optional
 
 import requests
@@ -13,6 +14,7 @@ import requests
 BASE = "https://api.hubapi.com"
 GROUP = {"name": "ai_extracted", "label": "AI-extracted"}
 DEAL_TO_COMPANY = 5  # HUBSPOT_DEFINED association type id, deal -> company
+NOTE_TO_DEAL = 214  # HUBSPOT_DEFINED association type id, note -> deal
 
 # deal field -> HubSpot deal property. amount and hs_next_step are native; the rest are custom text.
 PROPERTY = {
@@ -103,6 +105,23 @@ class HubSpot:
             return self.call("GET", "/account-info/v3/details")
         except HubSpotError:
             return {}
+
+    def owner_email(self, owner_id: str) -> str:
+        """Email of a HubSpot owner, used to find the record owner's Slack user. '' if unknown."""
+        if not owner_id:
+            return ""
+        try:
+            return self.call("GET", f"/crm/v3/owners/{owner_id}").get("email", "") or ""
+        except HubSpotError:
+            return ""
+
+    def create_note(self, deal_id: str, body: str) -> dict:
+        """Attach a note to a deal (association type 214 is HubSpot's note-to-deal)."""
+        return self.call("POST", "/crm/v3/objects/notes", {
+            "properties": {"hs_timestamp": datetime.now(timezone.utc).strftime("%Y-%m-%dT%H:%M:%S.000Z"),
+                           "hs_note_body": body},
+            "associations": [{"to": {"id": deal_id},
+                              "types": [{"associationCategory": "HUBSPOT_DEFINED", "associationTypeId": NOTE_TO_DEAL}]}]})
 
     def default_owner_id(self) -> str:
         owners = self.call("GET", "/crm/v3/owners").get("results", [])

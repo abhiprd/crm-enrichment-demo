@@ -374,18 +374,21 @@ def pending_files(paths: Paths, settle_seconds: float = 1.0) -> list[Path]:
     )
 
 
-def run_pipeline(deal_id: str, paths: Paths) -> str:
-    """Hand an ingested transcript to the live pipeline (built in M3)."""
-    try:
-        from . import pipeline  # type: ignore[attr-defined]
-        pipeline.process_interaction(deal_id, paths)
-        return "sent to pipeline"
-    except (ImportError, AttributeError):
-        return "live pipeline not built yet (M3): ingested only"
+def run_pipeline(deal_id: str, paths: Paths, live: bool = False) -> str:
+    """Hand an ingested demo transcript to the live pipeline. Eval transcripts are never sent."""
+    if not deal_id.startswith(DEMO_PREFIX):
+        return "not a demo call: ingested only (eval transcripts never go to the live pipeline)"
+    from . import pipeline
+    out = pipeline.process_interaction(deal_id, paths, live=live)
+    if not out.get("matched"):
+        return out["message"]
+    return (f"{'posted card' if live else 'dry-run'}: {out['proposals']} proposal(s) for {out['deal']}"
+            + (f", unsupported {out['unsupported_fields']}" if out["unsupported_fields"] else ""))
 
 
 def ingest_inbox(paths: Paths, force: bool = False, run: bool = False,
-                 files: list[Path] | None = None, settle_seconds: float = 1.0) -> list[FileResult]:
+                 files: list[Path] | None = None, settle_seconds: float = 1.0,
+                 live: bool = False) -> list[FileResult]:
     paths.ensure()
     dealset = load_deals(paths)
     results = []
@@ -398,7 +401,7 @@ def ingest_inbox(paths: Paths, force: bool = False, run: bool = False,
         if run:
             for b in r.blocks:
                 if b.ok:
-                    b.warnings.append(run_pipeline(b.deal_id, paths))
+                    b.warnings.append(run_pipeline(b.deal_id, paths, live))
         results.append(r)
     return results
 
@@ -417,11 +420,11 @@ def format_result(r: FileResult) -> str:
     return "\n".join(out)
 
 
-def watch(paths: Paths, interval: float, force: bool, run: bool) -> None:
+def watch(paths: Paths, interval: float, force: bool, run: bool, live: bool = False) -> None:
     print(f"watching {paths.inbox} every {interval}s (Ctrl+C to stop)", flush=True)
     try:
         while True:
-            for r in ingest_inbox(paths, force=force, run=run):
+            for r in ingest_inbox(paths, force=force, run=run, live=live):
                 print(format_result(r), flush=True)
             time.sleep(interval)
     except KeyboardInterrupt:

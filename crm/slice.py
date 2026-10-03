@@ -100,9 +100,11 @@ def run(paths: Paths, deal_id: str = "", live: bool = False, settings: Settings 
     pid = create_proposal(conn, deal_id=deal["deal_id"], hubspot_id=deal["hubspot"]["deal_id"], prop=PROPERTY,
                           current=current, proposed=PROPOSED, evidence=evidence_for(deal), channel=settings.slack_channel,
                           context=context_for(deal, hs))
-    post_card(settings, conn, pid)
+    conn.execute("UPDATE proposals SET interaction_id = ? WHERE id = ?", (f"slice-{pid}", pid))
+    conn.commit()
+    post_card(settings, conn, f"slice-{pid}")
     print(f"card posted for {deal['deal_id']} ({deal['company']['name']}); waiting for a click. Ctrl-C to stop.")
-    serve(settings, conn, hs)
+    serve(settings, paths.root / "results" / "crm.sqlite", hs)
     return 0
 
 

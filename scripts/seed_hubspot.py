@@ -3,6 +3,7 @@
     python3 scripts/seed_hubspot.py            # print what would happen
     python3 scripts/seed_hubspot.py --live     # create the property group, properties, companies, deals
     python3 scripts/seed_hubspot.py --live --reset   # PATCH every seeded deal back to its crm_before values
+    python3 scripts/seed_hubspot.py --demo --live    # the demo deal(s) in data/demo_deals.json (add --reset to restore)
 
 HubSpot ids are written back to deals.json (hubspot.company_id / deal_id / seeded) so reruns update
 instead of duplicating. Truth fields are never touched.
@@ -56,7 +57,10 @@ def main() -> int:
     ap.add_argument("--live", action="store_true", help="actually call HubSpot (default: dry-run)")
     ap.add_argument("--reset", action="store_true", help="restore every seeded deal to its crm_before values")
     ap.add_argument("--deals", default=str(ROOT / "data" / "deals.json"))
+    ap.add_argument("--demo", action="store_true", help="seed data/demo_deals.json instead of the eval deals")
     args = ap.parse_args()
+    if args.demo:
+        args.deals = str(ROOT / "data" / "demo_deals.json")
 
     load_env(ROOT)
     s = Settings.load()

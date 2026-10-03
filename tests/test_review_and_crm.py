@@ -162,7 +162,8 @@ def test_card_shows_account_deal_link_and_quote_speaker(tmp_path):
     conn = db.connect(tmp_path / "t.sqlite")
     pid = create_proposal(conn, deal_id="d1", hubspot_id="222", prop="amount", current="1", proposed="2",
                           evidence=evidence_for(DEAL), context=context_for(DEAL, HS()))
-    text = card_blocks(get_proposal(conn, pid))[0]["text"]["text"]
+    blocks = card_blocks(get_proposal(conn, pid))
+    text = "\n".join(b["text"]["text"] for b in blocks if b["type"] == "section")
     assert "*Acme Foods* (111)" in text and "/record/0-3/222|" in text
     assert "Priya Shah" in text and "Dana Reyes" not in text  # speaker is the external participant
 

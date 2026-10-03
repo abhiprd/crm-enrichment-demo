@@ -16,11 +16,27 @@ from .schema import SPLITS
 
 
 def cmd_ingest(args, paths: Paths) -> int:
+    if args.live and not args.run:
+        print("--live only applies with --run")
+        return 1
     if args.watch:
-        watch(paths, args.interval, args.force, args.run)
+        if args.live:
+            from .config import Settings
+            from .hubspot import HubSpot
+            from . import preflight, slack_app
+            settings = Settings.load()
+            results = preflight.run(settings, ["hubspot", "slack", "openai"])
+            if not preflight.passed(results):
+                print(preflight.render(results))
+                print("\npreflight FAILED: nothing was started")
+                return 1
+            slack_app.start_background(settings, paths.root / "results" / "crm.sqlite",
+                                       HubSpot(settings.hubspot_key, live=True))
+            print("Slack handler connected: card buttons are live", flush=True)
+        watch(paths, args.interval, args.force, args.run, args.live)
         return 0
     files = [Path(f).resolve() for f in args.file] if args.file else None
-    results = ingest_inbox(paths, force=args.force, run=args.run, files=files, settle_seconds=0)
+    results = ingest_inbox(paths, force=args.force, run=args.run, files=files, settle_seconds=0, live=args.live)
     if not results:
         print("inbox is empty")
         return 0
@@ -153,7 +169,8 @@ def main(argv: list[str] | None = None) -> int:
     pi = sub.add_parser("ingest", help="ingest transcript files from inbox/")
     pi.add_argument("--watch", action="store_true", help="keep polling inbox/")
     pi.add_argument("--interval", type=float, default=2.0)
-    pi.add_argument("--run", action="store_true", help="send each ingested call to the live pipeline")
+    pi.add_argument("--run", action="store_true", help="send each ingested demo call to the pipeline (dry-run unless --live)")
+    pi.add_argument("--live", action="store_true", help="with --run: post cards to Slack and write to HubSpot")
     pi.add_argument("--force", action="store_true", help="replace an existing transcript")
     pi.add_argument("--file", action="append", help="ingest this file instead of inbox/ (not moved)")
 

@@ -35,7 +35,7 @@ CREATE TABLE IF NOT EXISTS proposals (
   id INTEGER PRIMARY KEY AUTOINCREMENT, extraction_id INTEGER, deal_id TEXT, hubspot_object TEXT NOT NULL,
   hubspot_id TEXT, property TEXT NOT NULL, current_value TEXT, proposed_value TEXT,
   action TEXT NOT NULL CHECK (action IN ('set','append','clear','note')), tentative INTEGER NOT NULL DEFAULT 0,
-  evidence TEXT, context TEXT,
+  evidence TEXT, context TEXT, interaction_id TEXT, field TEXT, note TEXT,
   review_status TEXT NOT NULL DEFAULT 'pending'
     CHECK (review_status IN ('pending','approved','edited','rejected','no_response','bulk_approved')),
   final_value TEXT, reject_reason TEXT, reviewed_by TEXT, reviewed_at TEXT, slack_ts TEXT, slack_channel TEXT,
@@ -64,6 +64,7 @@ def connect(path: Path) -> sqlite3.Connection:
         if col not in cols:
             conn.execute(f"ALTER TABLE llm_calls ADD COLUMN {col} {typ}")
     pcols = {r["name"] for r in conn.execute("PRAGMA table_info(proposals)")}
-    if "context" not in pcols:
-        conn.execute("ALTER TABLE proposals ADD COLUMN context TEXT")
+    for col in ("context", "interaction_id", "field", "note"):  # older logs predate these columns
+        if col not in pcols:
+            conn.execute(f"ALTER TABLE proposals ADD COLUMN {col} TEXT")
     return conn

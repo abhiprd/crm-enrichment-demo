@@ -64,6 +64,12 @@ def hubspot_checks(s: Settings) -> list:
                                                   {"inputs": []}), (200, 201, 400), "crm.objects.companies.write"))
         out.append(_probe("write deals", _hs(s, "POST", "/crm/v3/objects/deals/batch/create", {"inputs": []}),
                           (200, 201, 400), "crm.objects.deals.write"))
+        out.append(_probe("create notes", _hs(s, "POST", "/crm/v3/objects/notes", {}), (400, 422),
+                          "a notes or deals write scope (needed for the stage-signal note)"))
+        if r.status_code == 200 and r.json().get("results"):
+            oid = r.json()["results"][0]["id"]
+            out.append(_probe("read owner by id", _hs(s, "GET", f"/crm/v3/owners/{oid}"), (200,),
+                              "crm.objects.owners.read"))
     except requests.RequestException as e:
         out.append(Check("HubSpot reachable", FAIL, type(e).__name__))
     return out

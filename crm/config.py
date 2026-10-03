@@ -34,10 +34,12 @@ class Settings:
     slack_app_token: str = ""
     slack_channel: str = ""
     slack_reviewer_ids: tuple = ()
+    slack_manager_ids: tuple = ()
 
     @classmethod
     def load(cls) -> "Settings":
         ids = tuple(x.strip() for x in _get("SLACK_REVIEWER_IDS").split(",") if x.strip())
+        managers = tuple(x.strip() for x in _get("SLACK_MANAGER_IDS").split(",") if x.strip())
         ext, lrn = _get("OPENAI_EXTRACTOR_MODEL"), _get("OPENAI_LEARNER_MODEL")
         prices = tuple(
             (m, float(_get(f"{role}_PRICE_IN_PER_MTOK", "0") or 0), float(_get(f"{role}_PRICE_OUT_PER_MTOK", "0") or 0))
@@ -51,7 +53,7 @@ class Settings:
             slack_bot_token=_get("SLACK_BOT_TOKEN"),
             slack_app_token=_get("SLACK_APP_TOKEN"),
             slack_channel=_get("SLACK_REVIEW_CHANNEL"),
-            slack_reviewer_ids=ids,
+            slack_reviewer_ids=ids, slack_manager_ids=managers,
         )
 
     def price(self, model: str) -> tuple:
