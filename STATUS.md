@@ -5,7 +5,7 @@ Update at the end of every session: what changed, what's next, and any number wi
 | # | Milestone | State | Evidence |
 | --- | --- | --- | --- |
 | M0 | Setup and vertical slice | done | Live run 2026-10-02: Approve in Slack changed HubSpot `amount` on d007 from 130000 to 60000; `seed_hubspot.py --live --reset` restored 130000. Reject path also exercised (HubSpot unchanged). Log: `results/crm.sqlite` (git-ignored) |
-| M1 | Deals, 100 transcripts, rendering audit | code complete; hand-check pending | `python3 -m crm status`: all 100 ingested and verified (learn 40, validation 40, test 20). Hand-check of 15 sheets in `results/handcheck/` (human only) is the remaining exit item |
+| M1 | Deals, 100 transcripts, rendering audit | done | `python3 -m crm status`: all 100 ingested and verified (learn 40, validation 40, test 20). Hand-check: 0 of 15 sheets had errors, per `results/handcheck/result.json` (reviewer-reported; 95% upper bound on the error rate about 0.20 at n=15, so the verifier pass on all 100 is the stronger evidence) |
 | M2 | Extractor, validator, dry-run eval, noise floor, manual baseline | started: V0 extractor, validator, scorer, bake-off | `results/bakeoff.json`; `results/v0_noise.json` and `results/manual_baseline.json` do not exist yet |
 | M3 | Slack review loop and HubSpot writeback | not started | |
 | M4 | Learning loop | not started | |
@@ -16,6 +16,8 @@ Update at the end of every session: what changed, what's next, and any number wi
 ## Decisions pending
 
 D1 to D5 in `PLAN.md`.
+
+D6: capturing stakeholders who need convincing (skeptics, blockers) is out of scope for v1. Decided 2026-10-02: ignore; no schema change. Mention as a limitation in the write-up.
 
 ## Log
 
@@ -56,3 +58,4 @@ Cost per call is at the configured prices ($0.10/$0.50 per 1M tokens for Luna, $
 - 2026-10-02 (M0 closed): added `crm preflight` (HubSpot read/write scope probes that create nothing, Slack scopes and Socket Mode token, OpenAI models); the live seed and live slice refuse to run unless it passes. Review card now shows Account Name (id), Deal Name (id) linked to the HubSpot record, and the quote with its speaker. Seeded 15 fictional deals into HubSpot.
 - 2026-10-02 (M1): generated and verified all 100 transcripts. Verifier first pass failed some calls (a not-mentioned field hinted in the dialogue was the common cause; d084 took three attempts, d044 three), and ingest rejected two files for missing evidence; all were regenerated and now pass. These first-pass counts are not yet computed from a results file, so no rendering error rate is claimed. Added generator rule 7 and a house-rule clarification to the verifier. `scripts/handcheck_sheet.py` builds 15 stratified sheets in `results/handcheck/`; they contain answer keys, so the main Claude session does not open them.
 - Known data issue: d036 combines a `committed_champion` case with a champion-owned next step (intro to buyer); the transcript satisfies both only by having the rep assign the step. Left as is (truth is fixed); list it as ambiguous in the write-up.
+- 2026-10-02 (M1 closed): hand-check of 15 sheets found no rendering issues (`results/handcheck/result.json`). Schema gap noted by the reviewer: a stakeholder who needs convincing is not captured by the nine fields. See Decisions pending.
