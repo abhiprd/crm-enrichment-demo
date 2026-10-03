@@ -63,3 +63,35 @@ def test_not_mentioned_never_proposed_and_cases_target_distinct_fields():
                 assert spec["expected_proposal"] is None
         fields = [c["field"] for c in d["cases"]]
         assert len(fields) == len(set(fields))
+
+
+# ---- hand-check sampler --------------------------------------------------------------------
+spec_hc = importlib.util.spec_from_file_location("handcheck_sheet", ROOT / "scripts" / "handcheck_sheet.py")
+handcheck = importlib.util.module_from_spec(spec_hc)
+sys.modules["handcheck_sheet"] = handcheck
+spec_hc.loader.exec_module(handcheck)
+
+
+def fake_keys():
+    cases = sorted(handcheck.CASE_IDS)
+    keys, n = {}, 0
+    for i in range(100):
+        split = ["learn", "learn", "validation", "validation", "test"][i % 5]
+        cs = [] if i % 5 == 4 and i % 10 == 4 else [{"id": cases[n % len(cases)]}]
+        n += bool(cs)
+        keys[f"d{i:03d}"] = {"split": split, "cases": cs}
+    return keys
+
+
+def test_handcheck_sample_is_seeded_covers_cases_and_splits():
+    keys = fake_keys()
+    a = handcheck.sample(keys, 15, 7)
+    assert a == handcheck.sample(keys, 15, 7) and len(a) == 15
+    assert {c["id"] for d in a for c in keys[d]["cases"]} == set(handcheck.CASE_IDS)
+    from collections import Counter
+    assert Counter(keys[d]["split"] for d in a) == {"learn": 6, "validation": 6, "test": 3}
+
+
+def test_handcheck_utterance_parser():
+    assert handcheck.utterances("hdr\n[0] [00:00] A (R): hi\n[12] [01:00] B (R): yo\n") == {
+        0: "[0] [00:00] A (R): hi", 12: "[12] [01:00] B (R): yo"}
