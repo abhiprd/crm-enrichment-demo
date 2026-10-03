@@ -12,10 +12,10 @@ For every field return `value`, `status`, and `evidence`.
 - `decision_timeline`: when the buyer will decide. An exact day as "YYYY-MM-DD", or a quarter as "YYYY-Qn", at the precision the speaker used.
 - `competitors`: list of {"name": <vendor>, "stance": "evaluating" | "ruled_out" | "incumbent"}.
 - `economic_buyer`: the full name of the person who controls the budget.
-- `champion`: the full name of the buyer-side person who clearly pushes for the purchase internally. A friendly contact who only asks questions is not a champion, and neither is a skeptic.
-- `pain_points`: a list using only these labels (pick the label that fits best; add a second only if the buyer states a second distinct problem):{{PAIN_POINTS}}
-- `use_case`: a list using only these labels (pick the label that fits best; add a second only if the buyer states a second distinct need):{{USE_CASES}}
-- `next_step`: a list with one entry per follow-up commitment made in the call, the most important or final one first (usually just one): [{"action": one of {{NEXT_STEP_ACTIONS}}, "owner": <full name>, "date": "YYYY-MM-DD" or null}]. If none, `not_mentioned` with `null`.
+- `champion`: the full name of the person advocating for the purchase internally.
+- `pain_points`: list from: {{PAIN_POINTS}}.
+- `use_case`: list from: {{USE_CASES}}.
+- `next_step`: {"action": one of {{NEXT_STEP_ACTIONS}}, "owner": <full name>, "date": "YYYY-MM-DD" or null}.
 - `stage_signal`: one of advance, hold, regress, judged from the call as a whole.
 
 `status` is one of:
@@ -41,7 +41,7 @@ Be conservative. Report only what a speaker actually said in this call. Never in
 - `champion`: someone who clearly advocates for buying this internally (pushes for it, says they want it, will sell it to colleagues). Do not name a champion just because someone attends, asks questions, or is friendly, and a skeptic is never a champion. If nobody clearly pushes for the purchase, the champion is `not_mentioned`.
 - `pain_points`: only problems the buyer states as their own, in their words. List one value per distinct problem, usually one or two. Do not add a value because it is plausible, because the rep raised it, or because it is a consequence of a problem already listed. If you are unsure whether to include a value, leave it out.
 - `use_case`: only what the buyer says they want to use the product for. Features the rep shows do not count. If the buyer never says what they would use it for, it is `not_mentioned`. If you are unsure whether to include a value, leave it out.
-- `next_step`: each agreed follow-up commitment, with the person who committed to do it and its date (null if no date was given). If a step was changed later in the call, list only its final version. Put the most important step first. Pick the action that best matches: `send_security_docs` (security or compliance material), `send_proposal`, `send_contract`, `schedule_demo` (a demo of the product), `schedule_followup` (another call or meeting), `technical_review` (technical or integration review), `pilot_kickoff` (start of a pilot), `intro_to_buyer` (introduce the rep to the person who signs or to more stakeholders).
+- `next_step`: the final agreed next step, the person who committed to do it, and its date (null if no date was given). Pick the action that best matches: `send_security_docs` (security or compliance material), `send_proposal`, `send_contract`, `schedule_demo` (a demo of the product), `schedule_followup` (another call or meeting), `technical_review` (technical or integration review), `pilot_kickoff` (start of a pilot), `intro_to_buyer` (introduce the rep to the person who signs or to more stakeholders).
 
 Calls take place on {{DATE}}. Resolve relative dates ("next Friday") to calendar dates.
 

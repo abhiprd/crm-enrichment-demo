@@ -6,7 +6,7 @@ Update at the end of every session: what changed, what's next, and any number wi
 | --- | --- | --- | --- |
 | M0 | Setup and vertical slice | done | Live run 2026-10-02: Approve in Slack changed HubSpot `amount` on d007 from 130000 to 60000; `seed_hubspot.py --live --reset` restored 130000. Reject path also exercised (HubSpot unchanged). Log: `results/crm.sqlite` (git-ignored) |
 | M1 | Deals, 100 transcripts, rendering audit | done | `python3 -m crm status`: all 100 ingested and verified (learn 40, validation 40, test 20). Hand-check: 0 of 15 sheets had errors, per `results/handcheck/result.json` (reviewer-reported; 95% upper bound on the error rate about 0.20 at n=15, so the verifier pass on all 100 is the stronger evidence) |
-| M2 | Extractor, validator, dry-run eval, noise floor, manual baseline | done | `results/v0_noise.json`, `results/manual_baseline.json`, `results/baseline_iterations.json`, `results/bakeoff.json`; auditor-checked wording below |
+| M2 | Extractor, validator, dry-run eval, noise floor, manual baseline | done (second pass) | `results/v0_noise.json`, `results/manual_baseline.json`, `results/baseline_iterations.json`, `results/bakeoff.json`; auditor-checked wording below; first pass archived |
 | M3 | Slack review loop and HubSpot writeback | not started | |
 | M4 | Learning loop | not started | |
 | M5 | Batch experiment and test run | not started | |
@@ -24,35 +24,36 @@ D6: capturing stakeholders who need convincing (skeptics, blockers) is out of sc
 - 2026-10-01: Scaffold created. `crm ingest`, `crm request`, `crm status` with 20 passing tests. Three example deals in `data/deals.json`.
 - 2026-10-01 (M0): pulled `scripts/make_deals.py` into M0 and generated the 100-deal set (seed 1337, 40/40/20, 20 clean, 15 marked for HubSpot seeding). Replaced the three example deals; they live on as `tests/fixtures/deals.json` for the ingest tests. Added `crm/config.py`, `db.py` (SQLite schema), `llm.py` (pinned model, spend logged), `hubspot.py`, `review.py`, `slack_app.py`, `slice.py`, `scripts/seed_hubspot.py`. Dry-run slice passes: approve writes once, a second click is a no-op.
 
-## Extractor bake-off (rerun 2026-10-03 under the final timeline metric, audited by `eval-auditor`)
+## Extractor bake-off (`results/bakeoff.json`, audited; run with the first-pass prompt pv-71968bd8)
 
-Source: `results/bakeoff.json`. On 15 validation transcripts x 3 repeats, mean scores were luna-none 0.775, luna-low 0.751, luna-medium 0.728 (run ranges 0.000, 0.030, 0.059). Sol, 1 run (15 calls), scored 0.793. Higher effort did not improve Luna here, and none was cheapest at $0.000485 per call. The automatic selector chose no setting (pick null) and `none` was selected manually (`OPENAI_EXTRACTOR_EFFORT=none`). Small sample; chosen on validation (selection, not teaching).
+On 15 validation transcripts x 3 repeats under the final timeline metric, mean scores were luna-none 0.775, luna-low 0.751, luna-medium 0.728 (run ranges 0.000, 0.030, 0.059). Sol, 1 run (15 calls), scored 0.793. Higher effort did not improve Luna here, and none was cheapest at $0.000485 per call. The automatic selector chose no setting (pick null) and `none` was selected manually (`OPENAI_EXTRACTOR_EFFORT=none`). Small sample; chosen on validation.
 
-Metric: mean per-field credit over transcripts x 9 fields; not F1 or accuracy. Timeline scoring follows SPEC section 6: a predicted date inside a quarter truth counts; a date truth needs that exact day.
+Metric (all sections): mean per-field credit over transcripts x 9 fields; not F1 or accuracy. Timeline follows SPEC section 6 (a predicted date inside a quarter truth counts; a date truth needs that exact day). Pain points and use cases are scored by exact set match. next_step is a list scored as best match against the single keyed step; extra steps are ignored.
 
-## V0 noise floor (`results/v0_noise.json`, audited)
+## M2 results (second pass, `results/v0_noise.json` and `results/manual_baseline.json`, audited)
 
-V0 (pv-71968bd8, gpt-6-luna, effort none), 5 runs x 40 validation transcripts (200 calls, 0 API errors): run scores 0.8296/0.8194/0.8407/0.8370/0.8296, mean 0.8313, range 0.0213, population std 0.0073. 41 of 360 (transcript, field) instances flipped correct/incorrect between runs (0.114). 5 of 1565 extracted fields failed the quote check. 10 parse/field-validity errors and 3 retries (one retry is made when a reply is unparseable).
+"V0" here is the updated starting prompt (pv-ca8faa57): V0 plus per-label definitions for pain points and use cases (`data/taxonomy_definitions.json`), a champion definition, a best-fit-label instruction, and next_step as a list. It is not the first-pass V0 (pv-71968bd8). The first pass is archived in `results/archive/m2_first_pass/` and superseded.
 
-## Manual baseline (`results/manual_baseline.json`, audited)
+**V0 noise floor.** 5 runs x 40 validation transcripts = 200 calls, 0 API errors: run scores 0.8648/0.8583/0.8741/0.8704/0.8611, mean 0.8657, range 0.0157, population std 0.0058. 37 of 360 (transcript, field) instances flipped correct/incorrect between runs (0.103). 4 of 1532 extracted fields failed the quote check. 5 unparseable-reply retries. Per-field means: budget 0.965, timeline 0.990, competitors 0.878, economic_buyer 0.850, champion 0.870, pain_points 0.760, use_case 0.600, next_step 0.928, stage_signal 0.950.
 
-Prompt `prompts/extractor_baseline.md`, tuned on the learn split only, frozen after round 2, 5 runs x 40 validation transcripts (200 calls): run scores 0.9028/0.9250/0.9167/0.9222/0.9139, mean 0.9161, range 0.0222; 29 of 360 instances flip. Per-field means: budget 0.975, timeline 0.990, competitors 1.000, economic_buyer 0.980, champion 0.875, pain_points 0.780, use_case 0.760, next_step 0.945, stage_signal 0.940 (V0: pain_points and use_case 0.520 each).
+**Manual baseline** (the frozen baseline prompt, pv-6bc5055e, tuned on the learn split over two rounds in the first pass and re-run under the new schema). 5 runs x 40 validation = 200 calls, 0 recorded API errors (an earlier attempt hit rate limits and those calls were re-run; this is not recorded in `results/`): run scores 0.9056/0.9111/0.9111/0.9194/0.9083, mean 0.9111, range 0.0139. 25 of 360 instances flip. 5 of 1478 extracted fields failed the quote check. 6 unparseable-reply retries. Per-field means: budget 0.965, timeline 1.000, competitors 1.000, economic_buyer 0.975, champion 0.825, pain_points 0.830, use_case 0.720, next_step 0.910, stage_signal 0.975.
 
-**Verdict under the pre-set criterion (McNemar p < 0.05 AND changed instances > V0's flipped instances): the baseline's gain over V0 is within noise.** 35 changed instances (32 improved, 3 worsened) against a bar of 41 flipped; the criterion was not met. Exact McNemar p = 4.2e-7 (32 vs 3 discordant).
+**Verdict under the pre-set criterion (McNemar p < 0.05 AND changed instances > V0's flipped instances): within noise.** Baseline beat V0 on 20 of 360 validation instances and lost on 6 (26 changed; exact McNemar p = 0.0094; mean difference +0.0454, bootstrap 95% CI [0.0252, 0.0674]). It does not clear the rule because 26 < 37, the number that flipped between V0's own runs. This is not called significant. Changed-instance and flipped-instance counts are not like for like, and instances are clustered by transcript (40), so the p-value is optimistic.
 
-Post hoc, not the pre-set rule: the mean score difference is 0.0848 (0.9161 vs 0.8313), bootstrap 95% CI [0.0563, 0.1143]. V0's run-to-run range is 0.0213 and the baseline's 0.0222; the two sets of run scores do not overlap (V0 max 0.8407, baseline min 0.9028). This is descriptive, not a claim of clearing the floor.
+The baseline is worse than V0 on champion (0.825 vs 0.870) and on next_step (0.910 vs 0.928).
 
-Limits of the criterion (disclosed, rule not changed): "changed" counts instances whose 5-run mean crosses 0.5 while "flipped" counts instances that differ in any of 5 runs, so the two are not like for like and the bar is biased against passing. McNemar and the bootstrap treat 360 instances as independent although they cluster by 40 transcripts, so p and the CI are optimistic. A matched noise bar (majority-outcome changes between splits of V0's own runs) would be a post-hoc amendment and is not applied.
+**Why the gap narrowed.** The gap fell from 0.0848 (first pass: 0.9161 vs 0.8313) to 0.0454. V0 rose by 0.0344, mostly in pain_points (0.520 to 0.760) and use_case (0.520 to 0.600), alongside the added label definitions; the baseline moved by -0.0050. This is consistent with the definitions giving V0 part of what the baseline's guidance supplied. It was not isolated by an ablation, and V0 also changed in champion, next_step and output format.
 
-Disclosure for the write-up: the manual baseline prompt includes generic competitor-stance guidance that partially overlaps the `competitor_threshold` house rule, so the loop's headroom on that rule is reduced (competitors: V0 0.917 to baseline 1.000, `results/` files above).
+Learn-split tuning scores (`results/baseline_iterations.json`, single runs, 40 learn transcripts): updated V0 0.879, frozen baseline 0.937. These are tuning scores, not generalisation evidence. No tuning rounds were run in the second pass; the baseline guidance is unchanged from the first pass except the next_step wording. Validation was not used for tuning.
 
-Learn-split single-run scores while tuning (`results/baseline_iterations.json`; 40 transcripts, 1 run each): round 0 (V0) 0.837, round 1 0.907, round 2 0.938. Round 0 ran before the unparseable-reply retry was added. These are tuning scores on the data the prompt was tuned against, not generalisation evidence.
+Spend counts completed responses only (rate-limited calls produced no usage record). Second-pass cycle: noise $0.101, baseline $0.111, learn rounds $0.041; 492 calls, $0.253 in `llm_calls` since the archive step. The first-pass cycle is in the archive.
 
-Process note: the project owner approved the frozen baseline prompt in chat on 2026-10-03 before it was scored (the `--approved` flag gates the run); no results file records this.
-
-Spend logged in `llm_calls` for these experiments: $1.07 (1027 calls), of which about $0.45 was discarded reruns (an earlier noise batch without retry, and the bake-off before the timeline-metric change). The reported results account for $0.62: noise $0.097, baseline $0.104, learn rounds $0.059, bake-off $0.358.
-
-Validation was used for the effort choice and for the baseline-vs-V0 comparison, so any later learning-loop claim must be confirmed on the single test run. Prompt tuning used the learn split only.
+**Process and leakage disclosures.**
+- The decisions to add label definitions and make next_step a list were made after seeing first-pass validation results (V0 pain_points and use_case 0.520), so validation informed the redesign. Validation is no longer a clean held-out set: it was used for the effort choice, the first-pass comparison and this comparison. The test split stays the single confirmation.
+- The next_step scoring rule (best match over a list, extras ignored) was changed after those results. It is lenient toward list-producing prompts and is applied to both arms.
+- The label definitions were drafted from the label names and the learn-split error analysis; no validation or test transcript was read. The project owner approved the definitions, the champion definition and the baseline prompt in chat.
+- The baseline prompt includes generic competitor-stance guidance that partially overlaps the `competitor_threshold` house rule, so the loop's headroom on that rule is reduced.
+- Exact set match for pain points and use cases was kept by the project owner's choice; per-label partial credit is not applied. It can be added later from the saved raw extractions.
 
 ## Open items
 
@@ -66,3 +67,4 @@ Validation was used for the effort choice and for the baseline-vs-V0 comparison,
 - Known data issue: d036 combines a `committed_champion` case with a champion-owned next step (intro to buyer); the transcript satisfies both only by having the rep assign the step. Left as is (truth is fixed); list it as ambiguous in the write-up.
 - 2026-10-02 (M1 closed): hand-check of 15 sheets found no rendering issues (`results/handcheck/result.json`). Schema gap noted by the reviewer: a stakeholder who needs convincing is not captured by the nine fields. See Decisions pending.
 - 2026-10-03 (M2 closed): timeline scoring now follows SPEC; added `crm/stats.py` (flip rate, exact McNemar, paired bootstrap), `crm/evalrun.py`, `crm/evalcmds.py` (`eval noise|learn|learn-errors|baseline`), cache keyed by prompt version with raw extractions, one retry on unparseable replies, and routed the preflight model check through `crm/llm.py` (rule 7). Ran the 5-run noise floor and the manual baseline; auditor-checked wording above. Open: 59 tests pass; test split untouched.
+- 2026-10-03 (M2 second pass): added label definitions and a champion definition (`data/taxonomy_definitions.json`, prompts), next_step as a scored list, and rate-limit/transient-error backoff in `crm/llm.py`. Re-ran the noise floor and manual baseline; auditor-checked wording above. 61 tests pass; test split untouched.

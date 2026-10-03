@@ -34,6 +34,20 @@ def cost_usd(settings: Settings, model: str, in_tokens: int, out_tokens: int) ->
     return (in_tokens * p_in + out_tokens * p_out) / 1_000_000
 
 
+TRANSIENT = ("RateLimitError", "APIConnectionError", "APITimeoutError", "InternalServerError")
+
+
+def _create_with_backoff(client, kwargs: dict, attempts: int = 6, base_delay: float = 2.0, sleep=time.sleep):
+    """Retry transient API errors (rate limit, timeout, 5xx) with exponential backoff; raise anything else."""
+    for attempt in range(attempts):
+        try:
+            return client.chat.completions.create(**kwargs)
+        except Exception as e:  # noqa: BLE001
+            if type(e).__name__ not in TRANSIENT or attempt == attempts - 1:
+                raise
+            sleep(min(60.0, base_delay * 2 ** attempt))
+
+
 def complete(settings: Settings, conn: sqlite3.Connection, prompt: str, *, model: str, run_id: str, purpose: str,
              effort: Optional[str] = None, system: str = "", client=None) -> LLMResult:
     """One chat completion with a pinned model. `client` is injectable for tests; the real one is lazy."""
@@ -47,7 +61,7 @@ def complete(settings: Settings, conn: sqlite3.Connection, prompt: str, *, model
     if effort:
         kwargs["reasoning_effort"] = effort
     t0 = time.monotonic()
-    resp = client.chat.completions.create(**kwargs)
+    resp = _create_with_backoff(client, kwargs)
     ms = int((time.monotonic() - t0) * 1000)
     usage = resp.usage
     details = getattr(usage, "completion_tokens_details", None)

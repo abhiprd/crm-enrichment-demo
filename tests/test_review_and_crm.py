@@ -1,5 +1,7 @@
 import json
 
+import pytest
+
 from crm import db
 from crm.config import Settings
 from crm.hubspot import HubSpot, fmt_value, props_from_fields
@@ -191,3 +193,38 @@ def test_preflight_flags_missing_scope_and_gates(monkeypatch):
     assert by["read owners"].status == "ok"
     assert not preflight.passed(res)
     assert not preflight.passed(preflight.run(Settings(), ["hubspot"]))  # no key at all
+
+
+def test_transient_api_errors_are_retried_with_backoff():
+    from crm.llm import _create_with_backoff
+
+    class RateLimitError(Exception):
+        pass
+
+    class Flaky:
+        def __init__(self, fails):
+            self.fails, self.calls = fails, 0
+            self.chat = self
+            self.completions = self
+
+        def create(self, **kw):
+            self.calls += 1
+            if self.calls <= self.fails:
+                raise RateLimitError("429")
+            return "ok"
+
+    waits = []
+    c = Flaky(2)
+    assert _create_with_backoff(c, {}, sleep=waits.append) == "ok" and c.calls == 3 and waits == [2.0, 4.0]
+    with pytest.raises(RateLimitError):
+        _create_with_backoff(Flaky(99), {}, attempts=3, sleep=lambda s: None)
+
+    class Bad(Exception):
+        pass
+
+    class Broken(Flaky):
+        def create(self, **kw):
+            raise Bad("not transient")
+
+    with pytest.raises(Bad):
+        _create_with_backoff(Broken(0), {}, sleep=lambda s: None)

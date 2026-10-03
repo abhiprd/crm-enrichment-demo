@@ -17,6 +17,7 @@ from .schema import FIELDS, STATUSES
 
 PROMPT_PATH = Path(__file__).resolve().parent.parent / "prompts" / "extractor_v0.md"
 TAXONOMY_PATH = Path(__file__).resolve().parent.parent / "data" / "taxonomy.json"
+DEFINITIONS_PATH = Path(__file__).resolve().parent.parent / "data" / "taxonomy_definitions.json"
 
 
 @dataclass
@@ -46,9 +47,13 @@ def render_transcript(block: Block) -> str:
 def build_prompt(block: Block, template: Optional[str] = None) -> str:
     tpl = template if template is not None else PROMPT_PATH.read_text(encoding="utf-8")
     tax = json.loads(TAXONOMY_PATH.read_text(encoding="utf-8"))
+    defs = json.loads(DEFINITIONS_PATH.read_text(encoding="utf-8"))
+
+    def described(kind: str) -> str:
+        return "\n" + "\n".join(f"  - `{slug}`: {defs[kind][slug]}" for slug in tax[kind])
     people = "\n".join(f"- {p.name}, {p.role}, {p.org}" for p in block.participants)
     subs = {"{{PARTICIPANTS}}": people, "{{DATE}}": block.date, "{{TRANSCRIPT}}": render_transcript(block),
-            "{{PAIN_POINTS}}": ", ".join(tax["pain_points"]), "{{USE_CASES}}": ", ".join(tax["use_case"]),
+            "{{PAIN_POINTS}}": described("pain_points"), "{{USE_CASES}}": described("use_case"),
             "{{NEXT_STEP_ACTIONS}}": ", ".join(tax["next_step_action"])}
     for k, v in subs.items():
         tpl = tpl.replace(k, v)

@@ -89,6 +89,13 @@ def competitor_f1(truth: Any, pred: Any) -> float:
 
 
 def next_step_parts(truth: Any, pred: Any) -> dict:
+    """Which of action, owner, date match. `pred` may be one step or a list of steps: the best-matching
+    step is scored, so extra steps are never penalised (the keys list only one)."""
+    if isinstance(pred, list):
+        steps = [p for p in pred if isinstance(p, dict)]
+        if not steps:
+            return {"action": False, "owner": False, "date": False}
+        return max((next_step_parts(truth, p) for p in steps), key=lambda parts: sum(parts.values()))
     pred = pred if isinstance(pred, dict) else {}
     return {"action": str(pred.get("action", "")).lower() == str(truth["action"]).lower(),
             "owner": norm_name(pred.get("owner")) == norm_name(truth["owner"]),

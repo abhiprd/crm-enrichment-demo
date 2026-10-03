@@ -1,0 +1,23 @@
+{
+  "_comment": "One-line definitions shown to the extractor. Slugs must match data/taxonomy.json exactly; definitions never change the truth labels.",
+  "pain_points": {
+    "forecast_accuracy": "forecasts and commit numbers are unreliable or often miss",
+    "pipeline_visibility": "leaders cannot see what is in the pipeline, or its stage and health",
+    "deal_slippage": "deals stall or close later than expected",
+    "rep_ramp_time": "new reps take too long to become productive",
+    "coaching_at_scale": "managers cannot coach every rep or call consistently as the team grows",
+    "manual_data_entry": "reps spend time typing notes or updating the CRM by hand (the effort)",
+    "data_quality": "CRM data is missing, stale, inconsistent or untrusted (the result)",
+    "tool_sprawl": "too many separate tools, logins or renewals to manage"
+  },
+  "use_case": {
+    "call_recording": "record, store or transcribe calls",
+    "call_coaching": "use calls to coach reps (scorecards, feedback, call libraries)",
+    "forecasting": "roll-up, commit and forecast views",
+    "deal_inspection": "review the status and risks of individual deals",
+    "crm_hygiene": "keep CRM fields and notes updated automatically from calls",
+    "pipeline_reporting": "dashboards and reports on the pipeline for leadership",
+    "onboarding": "use calls to ramp new hires",
+    "competitive_intel": "track competitor and market mentions in calls"
+  }
+}

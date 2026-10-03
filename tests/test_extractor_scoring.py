@@ -179,3 +179,13 @@ def test_bootstrap_and_compare_require_floor_and_significance():
     assert not stats.compare(base, better, noise_flips=20)["clears_noise_floor"]  # not above the flip count
     same = stats.compare(base, base, noise_flips=0)
     assert same["changed"] == 0 and not same["clears_noise_floor"]
+
+
+def test_next_step_list_scores_best_match_and_ignores_extras():
+    ns = {"action": "send_contract", "owner": "Dana Reyes", "date": "2026-09-29"}
+    extra = {"action": "schedule_followup", "owner": "Priya Shah", "date": None}
+    assert score_field("next_step", T(ns), T([extra, ns]))["score"] == 1.0  # keyed step found, extra ignored
+    r = score_field("next_step", T(ns), T([extra, {**ns, "date": "2026-10-03"}]))
+    assert abs(r["score"] - 2 / 3) < 1e-9 and r["parts"]["date"] is False
+    assert score_field("next_step", T(ns), T([]))["score"] == 0.0
+    assert score_field("next_step", T(ns), T(ns))["score"] == 1.0  # a single step still works
