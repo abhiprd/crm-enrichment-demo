@@ -95,6 +95,18 @@ def cmd_eval(args, paths: Paths) -> int:
         ids = bakeoff.select_deals(dealset)
         deal_path.parent.mkdir(exist_ok=True)
         deal_path.write_text(json.dumps({"seed": bakeoff.SEED, "split": "validation", "deals": ids}, indent=2))
+    if args.what in ("noise", "learn", "learn-errors", "baseline"):
+        from . import evalcmds
+        if args.what == "noise":
+            out = evalcmds.noise(settings, paths, args.run)
+        elif args.what == "learn":
+            out = evalcmds.learn_round(settings, paths, Path(args.prompt), args.round, args.run)
+        elif args.what == "learn-errors":
+            out = evalcmds.learn_errors(paths, Path(args.prompt), args.limit)
+        else:
+            out = evalcmds.baseline(settings, paths, args.run, args.approved)
+        print(json.dumps(out, indent=2))
+        return 0
     if args.what == "bakeoff-deals":
         print(json.dumps(ids))
         return 0
@@ -154,7 +166,11 @@ def main(argv: list[str] | None = None) -> int:
     sub.add_parser("status", help="dataset progress by split")
 
     pe = sub.add_parser("eval", help="eval experiments (dry-run plan by default)")
-    pe.add_argument("what", choices=["bakeoff", "bakeoff-deals"])
+    pe.add_argument("what", choices=["bakeoff", "bakeoff-deals", "noise", "learn", "learn-errors", "baseline"])
+    pe.add_argument("--prompt", default="prompts/extractor_v0.md", help="prompt for learn / learn-errors")
+    pe.add_argument("--round", type=int, default=0, help="iteration number for `learn`")
+    pe.add_argument("--limit", type=int, default=40, help="max rows for learn-errors")
+    pe.add_argument("--approved", action="store_true", help="baseline prompt approved by the project owner")
     pe.add_argument("--run", action="store_true", help="call OpenAI for real (default prints the plan and estimate)")
     pe.add_argument("--smoke", action="store_true", help="one call per setting on a fixture transcript")
     pe.add_argument("--repeats", type=int, default=3)

@@ -44,9 +44,29 @@ def budget_equal(truth: Any, pred: Any) -> bool:
     return not isinstance(pred, dict) and to_amount(pred) == to_amount(truth)
 
 
+_QUARTER = re.compile(r"^(\d{4})-Q([1-4])$")
+_DATE = re.compile(r"^(\d{4})-(\d{2})-(\d{2})$")
+
+
+def quarter_of(value: str) -> Optional[str]:
+    """'2026-11-30' -> '2026-Q4'; a quarter string maps to itself; anything else is None."""
+    v = str(value or "").strip().upper()
+    if _QUARTER.match(v):
+        return v
+    m = _DATE.match(v)
+    return f"{m.group(1)}-Q{(int(m.group(2)) - 1) // 3 + 1}" if m else None
+
+
 def timeline_equal(truth: Any, pred: Any) -> bool:
-    """Same granularity: a quarter truth needs that quarter, a date truth needs that exact day."""
-    return str(pred or "").strip().upper() == str(truth).strip().upper()
+    """SPEC section 6: the prediction must fall inside the truth period at the stated granularity.
+
+    A quarter truth accepts that quarter or any date inside it. A date truth needs that exact day: a
+    predicted quarter is coarser than the truth, so it never matches ("end of Q4" is not "Dec 31").
+    """
+    t, p = str(truth).strip().upper(), str(pred or "").strip().upper()
+    if _QUARTER.match(t):
+        return quarter_of(p) == t
+    return p == t
 
 
 def pairs(v: Any) -> set:

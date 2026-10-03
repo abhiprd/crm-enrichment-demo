@@ -114,14 +114,13 @@ def openai_checks(s: Settings) -> list:
         out.append(Check("ANTHROPIC_API_KEY", OK, "unset"))
     if not s.openai_api_key:
         return out + [Check("OPENAI_API_KEY", FAIL, "not set in .env")]
-    from openai import OpenAI
-    client = OpenAI(api_key=s.openai_api_key)
+    from .llm import model_available
     for label, model in (("extractor model", s.extractor_model), ("learner model", s.learner_model)):
         if not model:
             out.append(Check(label, FAIL, "not set in .env"))
             continue
         try:
-            client.models.retrieve(model)
+            model_available(s, model)
             out.append(Check(label, OK, model))
         except Exception as e:
             out.append(Check(label, FAIL, f"{model}: {type(e).__name__}"))

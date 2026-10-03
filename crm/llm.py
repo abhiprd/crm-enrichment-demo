@@ -67,6 +67,14 @@ def complete(settings: Settings, conn: sqlite3.Connection, prompt: str, *, model
     return res
 
 
+def model_available(settings: Settings, model: str, client=None) -> None:
+    """Raise if the pinned model id cannot be retrieved (used by preflight; no tokens are billed)."""
+    if client is None:
+        from openai import OpenAI
+        client = OpenAI(api_key=settings.openai_api_key)
+    client.models.retrieve(model)
+
+
 def run_spend(conn: sqlite3.Connection, run_id: str) -> float:
     row = conn.execute("SELECT COALESCE(SUM(cost_usd), 0) FROM llm_calls WHERE run_id = ?", (run_id,)).fetchone()
     return float(row[0])

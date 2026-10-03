@@ -25,11 +25,18 @@ class Extraction:
     errors: list = field(default_factory=list)
     prompt_version: str = ""
     llm: Optional[LLMResult] = None
+    retries: int = 0
+    extra_cost: float = 0.0  # cost of a discarded first attempt
+
+
+def load_template(path: Optional[Path] = None) -> str:
+    return (Path(path) if path else PROMPT_PATH).read_text(encoding="utf-8")
 
 
 def prompt_version(template: Optional[str] = None) -> str:
-    text = template if template is not None else PROMPT_PATH.read_text(encoding="utf-8")
-    return "v0-" + hashlib.sha256(text.encode("utf-8")).hexdigest()[:8]
+    """Short content hash of the prompt template, so a cached result is never reused after a prompt edit."""
+    text = template if template is not None else load_template()
+    return "pv-" + hashlib.sha256(text.encode("utf-8")).hexdigest()[:8]
 
 
 def render_transcript(block: Block) -> str:
@@ -83,10 +90,16 @@ def parse_response(text: str) -> Extraction:
 
 
 def extract(settings: Settings, conn: sqlite3.Connection, block: Block, *, model: str, effort: Optional[str],
-            run_id: str, client=None) -> Extraction:
-    prompt = build_prompt(block)
+            run_id: str, client=None, template: Optional[str] = None) -> Extraction:
+    prompt = build_prompt(block, template)
     res = complete(settings, conn, prompt, model=model, effort=effort, run_id=run_id, purpose="extract",
                    client=client)
     ex = parse_response(res.text)
-    ex.prompt_version, ex.llm = prompt_version(), res
+    retried, extra = 0, 0.0
+    if any(e.startswith("unparseable") for e in ex.errors):  # sporadic non-JSON reply: ask once more
+        extra = res.cost_usd
+        res = complete(settings, conn, prompt, model=model, effort=effort, run_id=run_id, purpose="extract-retry",
+                       client=client)
+        ex, retried = parse_response(res.text), 1
+    ex.prompt_version, ex.llm, ex.retries, ex.extra_cost = prompt_version(template), res, retried, extra
     return ex

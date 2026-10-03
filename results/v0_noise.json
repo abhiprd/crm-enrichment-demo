@@ -1,0 +1,61 @@
+{
+  "report": {
+    "setting": "v0-noise",
+    "repeats": 5,
+    "transcripts_per_run": 40,
+    "calls": 200,
+    "call_errors": 0,
+    "run_scores": [
+      0.8296296296296296,
+      0.8194444444444444,
+      0.8407407407407407,
+      0.837037037037037,
+      0.8296296296296296
+    ],
+    "mean_score": 0.8312962962962963,
+    "score_range": 0.021296296296296258,
+    "score_std": 0.007323599975290802,
+    "per_field_mean": {
+      "budget": 0.965,
+      "decision_timeline": 0.995,
+      "competitors": 0.9166666666666667,
+      "economic_buyer": 0.865,
+      "champion": 0.77,
+      "pain_points": 0.52,
+      "use_case": 0.52,
+      "next_step": 0.985,
+      "stage_signal": 0.945
+    },
+    "flip_rate_by_field": {
+      "budget": 0.05,
+      "decision_timeline": 0.025,
+      "competitors": 0.15,
+      "economic_buyer": 0.075,
+      "champion": 0.075,
+      "pain_points": 0.3,
+      "use_case": 0.3,
+      "next_step": 0.025,
+      "stage_signal": 0.025
+    },
+    "max_flip_rate": 0.3,
+    "unsupported": 5,
+    "extracted_fields": 1565,
+    "parse_errors": 10,
+    "retries": 3,
+    "mean_in_tokens": 1738.975,
+    "mean_out_tokens": 612.7,
+    "mean_reasoning_tokens": 0.0,
+    "cost_per_call": 0.000486459,
+    "total_cost": 0.09729179999999997,
+    "mean_latency_ms": 5097.27,
+    "split": "validation",
+    "model": "gpt-6-luna",
+    "effort": "none",
+    "prompt_version": "pv-71968bd8",
+    "instances_per_run": 360,
+    "flipped_instances": 41,
+    "flipped_instance_rate": 0.11388888888888889
+  },
+  "bar_for_paired_tests": 41,
+  "note": "A change clears the noise floor only if its paired-test p < 0.05 and it changes more instances than flipped between V0's own runs (SPEC section 6)."
+}

@@ -56,7 +56,6 @@ def test_budget_and_timeline_granularity():
     assert score_field("budget", T(60000), T("60k"))["correct"]
     assert not score_field("budget", T({"min": 80000, "max": 100000}, "hedged"), T(100000, "hedged"))["correct"]
     assert score_field("decision_timeline", T("2026-Q4"), T("2026-Q4"))["correct"]
-    assert not score_field("decision_timeline", T("2026-Q4"), T("2026-12-31"))["correct"]
 
 
 def test_status_must_match():
@@ -142,3 +141,41 @@ def test_plan_is_9_luna_runs_plus_one_sol():
     p = bakeoff.plan(s, 3)
     assert len(p) == 10 and p[-1][:3] == ("sol", "sol", None)
     assert [x[2] for x in p[:3]] == ["none"] * 3
+
+
+# ---- timeline per SPEC and stats -------------------------------------------------------------
+from crm import stats  # noqa: E402
+from crm.scoring import quarter_of  # noqa: E402
+
+
+def test_timeline_follows_spec_period_rule():
+    assert quarter_of("2026-11-30") == "2026-Q4" and quarter_of("2026-q4") == "2026-Q4" and quarter_of("soon") is None
+    # quarter truth accepts that quarter or a date inside it
+    assert score_field("decision_timeline", T("2026-Q4"), T("2026-12-31"))["correct"]
+    assert score_field("decision_timeline", T("2026-Q4"), T("2026-Q4"))["correct"]
+    assert not score_field("decision_timeline", T("2026-Q4"), T("2027-01-02"))["correct"]
+    # date truth needs the exact day; a quarter is too coarse
+    assert score_field("decision_timeline", T("2026-11-30"), T("2026-11-30"))["correct"]
+    assert not score_field("decision_timeline", T("2026-11-30"), T("2026-Q4"))["correct"]
+    assert not score_field("decision_timeline", T("2026-11-30"), T("2026-11-29"))["correct"]
+
+
+def test_flip_instances_and_mcnemar():
+    runs = [{"a": True, "b": True, "c": False}, {"a": True, "b": False, "c": False}, {"a": True, "b": True, "c": True}]
+    assert stats.flip_instances(runs) == 2 and stats.flip_instances([]) == 0
+    assert stats.mcnemar_exact(0, 0) == 1.0
+    assert abs(stats.mcnemar_exact(10, 0) - 2 / 1024) < 1e-12
+    assert stats.mcnemar_exact(5, 5) == 1.0
+
+
+def test_bootstrap_and_compare_require_floor_and_significance():
+    mean, lo, hi = stats.paired_bootstrap([1.0] * 20)
+    assert mean == 1.0 and lo == 1.0 and hi == 1.0
+    base = {i: [0.0, 0.0, 0.0] for i in range(30)}
+    better = {i: ([1.0] * 3 if i < 15 else [0.0] * 3) for i in range(30)}
+    r = stats.compare(base, better, noise_flips=5)
+    assert (r["improved"], r["worsened"], r["changed"]) == (15, 0, 15)
+    assert r["mcnemar_p"] < 0.001 and r["clears_noise_floor"] and r["diff_ci95"][0] > 0
+    assert not stats.compare(base, better, noise_flips=20)["clears_noise_floor"]  # not above the flip count
+    same = stats.compare(base, base, noise_flips=0)
+    assert same["changed"] == 0 and not same["clears_noise_floor"]
