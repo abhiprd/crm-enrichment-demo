@@ -25,3 +25,6 @@ data/deals.json
 results/handcheck/
 results/*_runs.json
 results/archive/**/*_runs.json
+
+# local Claude Code settings
+.claude/settings.local.json

@@ -40,5 +40,6 @@ Python 3.9+, SQLite, Pydantic, slack-bolt (Socket Mode), HubSpot REST (service k
 - One milestone at a time with `/milestone Mx`. Plan before code on M2 to M4. Finish by meeting the exit criterion, updating `STATUS.md`, and committing.
 - New transcripts: `/transcripts`. Ingest and verify: `/ingest`. Experiments: `/eval-run`.
 - Before any result reaches README or STATUS.md, have the `eval-auditor` agent check it.
+- Before every commit, run the `infosec-reviewer` agent (`.claude/agents/infosec-reviewer.md`) on the staged diff and fix or report its findings before committing. If that file is missing, stop and ask. The git hook `.githooks/pre-commit` (`scripts/precommit_scan.py`, enabled with `git config core.hooksPath .githooks`) also blocks secrets, personal data, and private eval files; never bypass it with `--no-verify`.
 - Keep functions small and typed. Add a test with every behavior change. Prefer the standard library until a milestone needs a dependency, then add it to `pyproject.toml`.
 - Ask before: adding a dependency, changing the data contract in `crm/schema.py`, or anything in Hard rules.
