@@ -27,6 +27,8 @@ class Settings:
     extractor_model: str = ""
     extractor_effort: str = ""  # none | low | medium; empty means the provider default
     learner_model: str = ""
+    learner_effort: str = ""  # reasoning effort for the rule learner (Sol)
+    rules_mode: str = "demo"  # demo: rules activate at once, validated in the background; gated: after the gate
     prices: tuple = ()  # ((model, usd_per_mtok_in, usd_per_mtok_out), ...) from the provider's price page
     hubspot_key: str = ""
     hubspot_owner_id: str = ""
@@ -47,6 +49,7 @@ class Settings:
         return cls(
             openai_api_key=_get("OPENAI_API_KEY"),
             extractor_model=ext, extractor_effort=_get("OPENAI_EXTRACTOR_EFFORT"), learner_model=lrn,
+            learner_effort=_get("OPENAI_LEARNER_EFFORT"), rules_mode=_get("RULES_MODE", "demo") or "demo",
             prices=prices,
             hubspot_key=_get("HUBSPOT_SERVICE_KEY"),
             hubspot_owner_id=_get("HUBSPOT_OWNER_ID"),

@@ -1,0 +1,116 @@
+{
+  "description": "Paired live demo on two fictional calls with the same trap (a vendor mentioned only as another company's tool). Demo data only: no eval truth is involved.",
+  "rule": {
+    "rule_id": 1,
+    "field": "competitors",
+    "text": "For competitors, record only products the prospect's company uses or is considering; do not treat another company's use or endorsement as evidence of the prospect's evaluation.",
+    "written_by": "gpt-6.1-sol from a reviewer reject (not_crm_worthy)"
+  },
+  "rule_status_note": "The validation gate retired this rule automatically (results/gate_1.json). It was reinstated by `crm rules revert 2` (ruleset v6) for this paired replay, so it is NOT validated.",
+  "replay_runs_per_call": 3,
+  "before": {
+    "ruleset_version": 5,
+    "active_rules": [],
+    "calls": {
+      "demo-pair-a": {
+        "vendor": "salesloft",
+        "passing_vendor_proposed_in_runs": 3,
+        "competitors_proposals": [
+          "Clari (incumbent); Salesloft (evaluating)",
+          "Clari (incumbent); Salesloft (evaluating)",
+          "Clari (incumbent); Salesloft (evaluating)"
+        ]
+      },
+      "demo-pair-b": {
+        "vendor": "outreach",
+        "passing_vendor_proposed_in_runs": 3,
+        "competitors_proposals": [
+          "Gong (evaluating); Outreach (evaluating)",
+          "Gong (evaluating); Outreach (evaluating)",
+          "Gong (evaluating); Outreach (evaluating)"
+        ]
+      }
+    }
+  },
+  "after": {
+    "ruleset_version": 6,
+    "active_rules": [
+      1
+    ],
+    "calls": {
+      "demo-pair-a": {
+        "vendor": "salesloft",
+        "passing_vendor_proposed_in_runs": 0,
+        "competitors_proposals": [
+          "",
+          "",
+          ""
+        ]
+      },
+      "demo-pair-b": {
+        "vendor": "outreach",
+        "passing_vendor_proposed_in_runs": 0,
+        "competitors_proposals": [
+          "Gong (evaluating)",
+          "Gong (evaluating)",
+          "Gong (evaluating)"
+        ]
+      }
+    }
+  },
+  "gate_results": [
+    {
+      "rule_id": 1,
+      "field": "competitors",
+      "passed": false,
+      "net_on_target": 1,
+      "net_by_field": {
+        "budget": 1,
+        "decision_timeline": 0,
+        "competitors": 1,
+        "economic_buyer": -1,
+        "champion": -2,
+        "pain_points": 2,
+        "use_case": -6,
+        "next_step": 0,
+        "stage_signal": 0
+      },
+      "reasons": [
+        "competitors net gain 1 is below the minimum 3",
+        "competitors net gain 1 does not exceed its noise allowance 9.0",
+        "use_case lost 6 net instances (limit 2)"
+      ],
+      "transcripts": 40,
+      "repeats": 3,
+      "cost_usd": 0.12091220000000003,
+      "call_errors": 0
+    },
+    {
+      "rule_id": 2,
+      "field": "decision_timeline",
+      "passed": false,
+      "net_on_target": -1,
+      "net_by_field": {
+        "budget": 2,
+        "decision_timeline": -1,
+        "competitors": -4,
+        "economic_buyer": 0,
+        "champion": -1,
+        "pain_points": 1,
+        "use_case": -3,
+        "next_step": -1,
+        "stage_signal": 0
+      },
+      "reasons": [
+        "decision_timeline net gain -1 is below the minimum 3",
+        "decision_timeline net gain -1 does not exceed its noise allowance 1.0",
+        "competitors lost 4 net instances (limit 2)",
+        "use_case lost 3 net instances (limit 2)"
+      ],
+      "transcripts": 40,
+      "repeats": 3,
+      "cost_usd": 0.12172450000000003,
+      "call_errors": 0
+    }
+  ]
+}

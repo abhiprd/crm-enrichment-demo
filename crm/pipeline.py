@@ -12,7 +12,9 @@ from typing import Optional
 
 from . import db
 from .config import Settings
-from .extractor import extract
+from . import rules as rulestore
+from .extractor import compose_template, extract, load_template
+from .schema import FIELDS
 from .hubspot import PROPERTY, HubSpot, deal_url, props_from_fields
 from .ingest import Block, parse_transcript
 from .paths import Paths
@@ -107,8 +109,11 @@ def process_interaction(deal_id: str, paths: Paths, live: bool = False, settings
         hs = HubSpot(settings.hubspot_key, live=True)
 
     current, owner_id = current_values(deal, hs, live)
+    version = rulestore.current_version(conn)
+    template = compose_template(load_template(), rulestore.active_rules(conn),
+                                {f: rulestore.examples_for(conn, f) for f in FIELDS})
     ex = extract(settings, conn, block, model=settings.extractor_model, effort=settings.extractor_effort or None,
-                 run_id=interaction_id, client=llm_client)
+                 run_id=interaction_id, client=llm_client, template=template)
     bad = validate_fields(ex.fields, {u.idx: u.text for u in block.utterances})
     validated = apply_validation(ex.fields, bad)
     ext_ids = {}
@@ -116,9 +121,9 @@ def process_interaction(deal_id: str, paths: Paths, live: bool = False, settings
         ev = {"evidence": spec["evidence"], **({"unsupported": bad[field]} if field in bad else {})}
         cur = conn.execute(
             "INSERT INTO extractions (interaction_id, field, value, status, evidence, prompt_version, model, "
-            "ruleset_version_id) VALUES (?,?,?,?,?,?,?,NULL)",
+            "ruleset_version_id) VALUES (?,?,?,?,?,?,?,?)",
             (interaction_id, field, json.dumps(spec["value"]), spec["status"], json.dumps(ev),
-             ex.prompt_version, settings.extractor_model))
+             ex.prompt_version, settings.extractor_model, version["version_id"]))
         ext_ids[field] = cur.lastrowid
     conn.commit()
 
@@ -141,8 +146,10 @@ def process_interaction(deal_id: str, paths: Paths, live: bool = False, settings
         create_proposal(conn, deal_id=deal["deal_id"], hubspot_id=deal["hubspot"]["deal_id"], prop=p.prop,
                         current=p.current, proposed=p.proposed, action=p.action, tentative=p.tentative,
                         evidence=_evidence(block, validated[p.field]), channel=settings.slack_channel if live else "",
-                        context=ctx, interaction_id=interaction_id, extraction_id=ext_ids[p.field], field=p.field)
+                        context=ctx, interaction_id=interaction_id, extraction_id=ext_ids[p.field], field=p.field,
+                        ruleset_version_id=version["version_id"])
     summary = {"interaction_id": interaction_id, "matched": True, "deal": deal["deal_id"], "proposals": len(proposals),
+               "ruleset_version": version["version_id"],
                "unsupported_fields": sorted(bad), "retries": ex.retries,
                "fields": [{"field": p.field, "action": p.action, "current": p.current, "proposed": p.proposed,
                            "tentative": p.tentative} for p in proposals]}

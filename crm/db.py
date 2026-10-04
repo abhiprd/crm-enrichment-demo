@@ -23,7 +23,8 @@ CREATE TABLE IF NOT EXISTS ruleset_versions (
 CREATE TABLE IF NOT EXISTS rules (
   rule_id INTEGER PRIMARY KEY AUTOINCREMENT, field TEXT NOT NULL, rule_text TEXT NOT NULL, rationale TEXT,
   source_proposal_ids TEXT NOT NULL DEFAULT '[]', created_by TEXT, created_at TEXT DEFAULT CURRENT_TIMESTAMP,
-  status TEXT NOT NULL CHECK (status IN ('candidate','active','retired','reverted'))
+  status TEXT NOT NULL CHECK (status IN ('candidate','active','retired','reverted')),
+  validated INTEGER, gate_result TEXT
 );
 CREATE TABLE IF NOT EXISTS extractions (
   id INTEGER PRIMARY KEY AUTOINCREMENT, interaction_id TEXT NOT NULL REFERENCES interactions(id),
@@ -63,6 +64,10 @@ def connect(path: Path) -> sqlite3.Connection:
     for col, typ in (("reasoning_tokens", "INTEGER"), ("effort", "TEXT")):  # older logs predate these
         if col not in cols:
             conn.execute(f"ALTER TABLE llm_calls ADD COLUMN {col} {typ}")
+    rcols = {r["name"] for r in conn.execute("PRAGMA table_info(rules)")}
+    for col, typ in (("validated", "INTEGER"), ("gate_result", "TEXT")):
+        if col not in rcols:
+            conn.execute(f"ALTER TABLE rules ADD COLUMN {col} {typ}")
     pcols = {r["name"] for r in conn.execute("PRAGMA table_info(proposals)")}
     for col in ("context", "interaction_id", "field", "note"):  # older logs predate these columns
         if col not in pcols:

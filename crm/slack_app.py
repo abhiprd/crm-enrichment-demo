@@ -6,13 +6,16 @@ from __future__ import annotations
 
 import json
 from pathlib import Path
-from typing import Callable
+from typing import Callable, Optional
 
 from slack_bolt import App
 from slack_bolt.adapter.socket_mode import SocketModeHandler
 
-from . import db
+import threading
+
+from . import db, learning
 from .config import Settings
+from .paths import Paths
 from .review import (card_blocks, edit_modal, get_proposal, handle_decision, modal_values, proposals_for,
                      reject_modal, reviewers_for)
 
@@ -22,7 +25,7 @@ def refresh_card(client, conn, channel: str, ts: str, interaction_id: str) -> No
                        text="Proposed CRM updates")
 
 
-def build_app(settings: Settings, db_path: Path, hs) -> App:
+def build_app(settings: Settings, db_path: Path, hs, paths: Optional[Paths] = None) -> App:
     app = App(token=settings.slack_bot_token)
 
     def connect():
@@ -81,6 +84,11 @@ def build_app(settings: Settings, db_path: Path, hs) -> App:
                 tell(client, v["channel"], user, out.message)
             if out.status not in ("unauthorized", "error"):
                 refresh_card(client, conn, v["channel"], v["ts"], row["interaction_id"])
+            if decision == "reject" and out.status == "rejected" and paths is not None:
+                def say(text: str) -> None:
+                    client.chat_postMessage(channel=v["channel"], thread_ts=v["ts"], text=text)
+                threading.Thread(target=learning.learn_and_apply, args=(settings, paths, int(v["pid"]), say),
+                                 daemon=True).start()
         return _handler
 
     app.action("approve")(on_button("approve"))
@@ -104,13 +112,13 @@ def post_card(settings: Settings, conn, interaction_id: str, client=None) -> str
     return res["ts"]
 
 
-def serve(settings: Settings, db_path: Path, hs) -> None:
+def serve(settings: Settings, db_path: Path, hs, paths: Optional[Paths] = None) -> None:
     """Block and handle clicks (used by `crm slice --live`)."""
-    SocketModeHandler(build_app(settings, db_path, hs), settings.slack_app_token).start()
+    SocketModeHandler(build_app(settings, db_path, hs, paths), settings.slack_app_token).start()
 
 
-def start_background(settings: Settings, db_path: Path, hs) -> SocketModeHandler:
+def start_background(settings: Settings, db_path: Path, hs, paths: Optional[Paths] = None) -> SocketModeHandler:
     """Connect Socket Mode in a background thread so the inbox watcher can run in the same process."""
-    handler = SocketModeHandler(build_app(settings, db_path, hs), settings.slack_app_token)
+    handler = SocketModeHandler(build_app(settings, db_path, hs, paths), settings.slack_app_token)
     handler.connect()
     return handler

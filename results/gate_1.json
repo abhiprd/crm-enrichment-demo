@@ -1,0 +1,81 @@
+{
+  "rule_id": 1,
+  "field": "competitors",
+  "rule_text": "For competitors, record only products the prospect's company uses or is considering; do not treat another company's use or endorsement as evidence of the prospect's evaluation.",
+  "transcripts": 40,
+  "repeats": 3,
+  "thresholds": {
+    "min_net_gain": 3,
+    "max_other_loss": 2
+  },
+  "allowance": {
+    "budget": 1.0,
+    "decision_timeline": 1.0,
+    "competitors": 9.0,
+    "economic_buyer": 3.0,
+    "champion": 3.0,
+    "pain_points": 6.0,
+    "use_case": 8.0,
+    "next_step": 4.0,
+    "stage_signal": 2.0
+  },
+  "changes": {
+    "budget": {
+      "improved": 1,
+      "worsened": 0
+    },
+    "decision_timeline": {
+      "improved": 0,
+      "worsened": 0
+    },
+    "competitors": {
+      "improved": 3,
+      "worsened": 2
+    },
+    "economic_buyer": {
+      "improved": 0,
+      "worsened": 1
+    },
+    "champion": {
+      "improved": 2,
+      "worsened": 4
+    },
+    "pain_points": {
+      "improved": 2,
+      "worsened": 0
+    },
+    "use_case": {
+      "improved": 0,
+      "worsened": 6
+    },
+    "next_step": {
+      "improved": 2,
+      "worsened": 2
+    },
+    "stage_signal": {
+      "improved": 0,
+      "worsened": 0
+    }
+  },
+  "validation_score_before": 0.8768518518518519,
+  "validation_score_after": 0.8700617283950617,
+  "cost_usd": 0.12091220000000003,
+  "call_errors": 0,
+  "passed": false,
+  "net_by_field": {
+    "budget": 1,
+    "decision_timeline": 0,
+    "competitors": 1,
+    "economic_buyer": -1,
+    "champion": -2,
+    "pain_points": 2,
+    "use_case": -6,
+    "next_step": 0,
+    "stage_signal": 0
+  },
+  "reasons": [
+    "competitors net gain 1 is below the minimum 3",
+    "competitors net gain 1 does not exceed its noise allowance 9.0",
+    "use_case lost 6 net instances (limit 2)"
+  ]
+}

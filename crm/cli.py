@@ -31,7 +31,7 @@ def cmd_ingest(args, paths: Paths) -> int:
                 print("\npreflight FAILED: nothing was started")
                 return 1
             slack_app.start_background(settings, paths.root / "results" / "crm.sqlite",
-                                       HubSpot(settings.hubspot_key, live=True))
+                                       HubSpot(settings.hubspot_key, live=True), paths)
             print("Slack handler connected: card buttons are live", flush=True)
         watch(paths, args.interval, args.force, args.run, args.live)
         return 0
@@ -161,6 +161,42 @@ def cmd_preflight(args, paths: Paths) -> int:
     return 0 if ok else 1
 
 
+def cmd_rules(args, paths: Paths) -> int:
+    from . import db, gate, rules
+    from .config import Settings
+    conn = db.connect(paths.root / "results" / "crm.sqlite")
+    cur = rules.current_version(conn)
+    if args.action == "list":
+        print(f"current ruleset: v{cur['version_id']} ({cur['change_type']}): {cur['reason']}")
+        for r in conn.execute("SELECT * FROM rules ORDER BY rule_id"):
+            flag = {None: "unvalidated", 0: "failed validation", 1: "validated"}[r["validated"]]
+            print(f"  #{r['rule_id']} [{r['status']}, {flag}] {r['field']}: {r['rule_text']}")
+        for v in conn.execute("SELECT * FROM ruleset_versions ORDER BY version_id"):
+            print(f"  v{v['version_id']} {v['change_type']} rules={v['active_rule_ids']} {v['reason']}")
+        return 0
+    if args.action == "show":
+        r = rules.get_rule(conn, args.id)
+        if r is None:
+            print(f"no rule {args.id}")
+            return 1
+        print(json.dumps({k: r[k] for k in r.keys()}, indent=2))
+        return 0
+    if args.action == "revert":
+        v = rules.revert(conn, args.id, "cli", "reverted from the command line")
+        print(f"reverted to the rules of v{args.id} as new version v{v}" if v else f"no version {args.id}")
+        return 0 if v else 1
+    settings = Settings.load()
+    if rules.get_rule(conn, args.id) is None:
+        print(f"no rule {args.id}")
+        return 1
+    if not args.run:
+        print(json.dumps({"dry_run": True, **gate.plan(settings, conn, paths, args.id)}, indent=2))
+        return 0
+    result = gate.validate_rule(settings, conn, paths, args.id)
+    print(gate.apply_verdict(conn, args.id, result))
+    return 0
+
+
 def main(argv: list[str] | None = None) -> int:
     p = argparse.ArgumentParser(prog="python -m crm")
     p.add_argument("--root", help="repo root (default: CRM_ROOT or current directory)")
@@ -195,6 +231,11 @@ def main(argv: list[str] | None = None) -> int:
     pp = sub.add_parser("preflight", help="verify keys, scopes, models and channels before any live step")
     pp.add_argument("--only", action="append", choices=["hubspot", "slack", "openai"])
 
+    pr2 = sub.add_parser("rules", help="learned rules: list, show, revert, validate")
+    pr2.add_argument("action", choices=["list", "show", "revert", "validate"])
+    pr2.add_argument("id", nargs="?", type=int, help="rule id (show, validate) or version id (revert)")
+    pr2.add_argument("--run", action="store_true", help="validate: call the model (default prints the plan)")
+
     ps = sub.add_parser("slice", help="M0 vertical slice: one hardcoded proposal through review (dry-run by default)")
     ps.add_argument("--deal", help="deal id (default: first seeded deal)")
     ps.add_argument("--live", action="store_true", help="post to Slack and write to HubSpot")
@@ -202,7 +243,7 @@ def main(argv: list[str] | None = None) -> int:
     args = p.parse_args(argv)
     paths = Paths.from_env(args.root)
     load_env(paths.root)
-    handlers = {"ingest": cmd_ingest, "request": cmd_request, "status": cmd_status, "slice": cmd_slice, "eval": cmd_eval, "preflight": cmd_preflight}
+    handlers = {"ingest": cmd_ingest, "request": cmd_request, "status": cmd_status, "slice": cmd_slice, "eval": cmd_eval, "preflight": cmd_preflight, "rules": cmd_rules}
     return handlers[args.cmd](args, paths)
 
 

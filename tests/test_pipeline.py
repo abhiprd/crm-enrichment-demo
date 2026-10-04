@@ -24,6 +24,8 @@ class FakeLLM:
         self.completions = self
 
     def create(self, **kw):
+        self.prompts = getattr(self, "prompts", []) + [kw["messages"][-1]["content"]]
+
         class U:
             prompt_tokens, completion_tokens, completion_tokens_details = 100, 50, None
 
@@ -119,3 +121,20 @@ def test_unchanged_crm_values_produce_no_proposals(paths):
 def test_only_demo_calls_reach_the_pipeline(paths):
     from crm.ingest import run_pipeline
     assert "not a demo call" in run_pipeline("d002", paths)
+
+
+def test_active_rule_reaches_the_prompt_and_versions_are_recorded(paths):
+    from crm import rules
+    conn = db.connect(paths.root / "results" / "crm.sqlite")
+    r = rules.add_candidate(conn, "competitors", "Record a competitor only if the buyer is evaluating it.", "why", [1], "U1")
+    v, _ = rules.activate(conn, r, "U1", "demo", validated=False)
+    payload = blank()
+    payload["pain_points"] = spec(["rep_ramp_time"], "stated", [(3, "it's taking them five, six months")])
+    llm = FakeLLM(payload)
+    out = pipeline.process_interaction("demo-d02", paths, live=False, settings=SETTINGS, llm_client=llm)
+    assert "## Company conventions" in llm.prompts[0] and "only if the buyer is evaluating it" in llm.prompts[0]
+    assert out["ruleset_version"] == v
+    rows = proposals_for(conn, out["interaction_id"])
+    assert rows and {r["ruleset_version_id"] for r in rows} == {v}
+    assert {x[0] for x in conn.execute("SELECT ruleset_version_id FROM extractions WHERE interaction_id=?",
+                                         (out["interaction_id"],))} == {v}

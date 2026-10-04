@@ -50,6 +50,47 @@
         "company_id": "350272810732",
         "deal_id": "352371271401"
       }
+    },
+    {
+      "deal_id": "demo-d02",
+      "company": {
+        "name": "Larkspur Wholesale",
+        "domain": "larkspurwholesale.example",
+        "industry": "food wholesale",
+        "employees": 210
+      },
+      "fields": {
+        "budget": {
+          "crm_before": null
+        },
+        "decision_timeline": {
+          "crm_before": null
+        },
+        "competitors": {
+          "crm_before": []
+        },
+        "economic_buyer": {
+          "crm_before": null
+        },
+        "champion": {
+          "crm_before": null
+        },
+        "pain_points": {
+          "crm_before": []
+        },
+        "use_case": {
+          "crm_before": []
+        },
+        "next_step": {
+          "crm_before": null
+        }
+      },
+      "hubspot": {
+        "seed": true,
+        "seeded": true,
+        "company_id": "350342089439",
+        "deal_id": "352464819949"
+      }
     }
   ]
 }

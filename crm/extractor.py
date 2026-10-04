@@ -34,6 +34,38 @@ def load_template(path: Optional[Path] = None) -> str:
     return (Path(path) if path else PROMPT_PATH).read_text(encoding="utf-8")
 
 
+def _plain(text: str) -> str:
+    """Rule and example text is inserted into a template, so it must not look like a {{placeholder}}."""
+    return text.replace("{{", "{ {").replace("}}", "} }")
+
+
+def compose_template(template: str, rules: list, examples: Optional[dict] = None) -> str:
+    """Insert 'Company conventions' (learned rules) and 'Reviewer corrections' (worked examples) before the
+    transcript. With neither, the template is returned unchanged so its version hash does not move."""
+    examples = {f: e for f, e in (examples or {}).items() if e}
+    if not rules and not examples:
+        return template
+    parts = []
+    if rules:
+        lines = [f"- {r['field']}: {_plain(r['rule_text'])}" for r in rules]
+        parts.append("## Company conventions\n\nThese rules come from reviewers of earlier calls. Follow them.\n\n"
+                     + "\n".join(lines))
+    if examples:
+        lines = []
+        for field, items in examples.items():
+            for ex in items:
+                quote = f' evidence "{_plain(ex["quote"])}":' if ex.get("quote") else ":"
+                lines.append(f"- {field},{quote} a reviewer changed the proposed value `{_plain(ex['proposed'])}` "
+                             f"to `{_plain(ex['final'])}`")
+        parts.append("## Reviewer corrections\n\nEarlier proposals that a reviewer edited:\n\n" + "\n".join(lines))
+    block = "\n\n".join(parts) + "\n\n"
+    for marker in ("## Transcript", "{{TRANSCRIPT}}"):
+        if marker in template:
+            i = template.index(marker)
+            return template[:i] + block + template[i:]
+    return template.rstrip() + "\n\n" + block
+
+
 def prompt_version(template: Optional[str] = None) -> str:
     """Short content hash of the prompt template, so a cached result is never reused after a prompt edit."""
     text = template if template is not None else load_template()

@@ -32,13 +32,14 @@ def _now() -> str:
 def create_proposal(conn: sqlite3.Connection, *, deal_id: str, hubspot_id: str, prop: str, current: str,
                     proposed: str, action: str = "set", tentative: bool = False, evidence: Optional[dict] = None,
                     channel: str = "", context: Optional[dict] = None, interaction_id: str = "",
-                    extraction_id: Optional[int] = None, field: str = "") -> int:
+                    extraction_id: Optional[int] = None, field: str = "",
+                    ruleset_version_id: Optional[int] = None) -> int:
     cur = conn.execute(
         "INSERT INTO proposals (extraction_id, deal_id, hubspot_object, hubspot_id, property, current_value, "
-        "proposed_value, action, tentative, evidence, slack_channel, context, interaction_id, field) "
-        "VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
+        "proposed_value, action, tentative, evidence, slack_channel, context, interaction_id, field, "
+        "ruleset_version_id) VALUES (?,?,?,?,?,?,?,?,?,?,?,?,?,?,?)",
         (extraction_id, deal_id, "deal", hubspot_id, prop, current, proposed, action, int(tentative),
-         json.dumps(evidence or {}), channel, json.dumps(context or {}), interaction_id, field or FIELD_OF.get(prop, "")))
+         json.dumps(evidence or {}), channel, json.dumps(context or {}), interaction_id, field or FIELD_OF.get(prop, ""), ruleset_version_id))
     conn.commit()
     return int(cur.lastrowid)
 

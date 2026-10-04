@@ -20,6 +20,7 @@ Everything runs in dry-run by default. Posting to Slack or writing to HubSpot ne
 - **Watch a folder**: drop a demo transcript in `inbox/` and `ingest --watch --run --live` posts the card.
 - **Seed a sandbox**: an idempotent script creates fictional companies and deals in HubSpot (with a reset), and `crm preflight` checks keys, scopes, models, and Slack tokens before any live step.
 - **Measure extraction quality**: 100 synthetic transcripts with answer keys, split 40 learn / 40 validation / 20 test. A run-to-run noise floor, a manual prompt baseline, and paired statistics tell real improvements apart from noise.
+- **Learn from reviewers**: rejects become rules and edits become worked examples for the extractor; each rule is gated on the validation split and versioned, with revert.
 - **Log everything** to SQLite (interactions, extractions, proposals, review decisions) and track model spend per run.
 
 The answer keys and eval truth are not published in this repository (`data/keys/`, `data/audit/`, `data/deals.json`, and per-instance run files are git-ignored); `scripts/make_deals.py` regenerates a deal set. All companies and people are fictional (`.example` domains). Competitor names are real vendors, as reps actually say them.
@@ -78,11 +79,11 @@ Python, SQLite, Slack Bolt (Socket Mode), the HubSpot REST API (service key), an
 - **M1, Dataset**: 100 fictional deals with traps and house rules, transcripts generated and independently verified, hand-checked sample.
 - **M2, Extraction and measurement**: extractor, quote validator, scorer, noise floor, manual baseline, paired statistics, model and effort bake-off.
 - **M3, Slack review loop and writeback**: batched review cards with edit and reject modals, authorization, stale-value handling, deal notes, folder watcher, live demo.
+- **M4, Learning loop**: a reject becomes a plain-English rule written by a second model, put in force immediately (demo mode) or after validation, replayed on the validation split by a gate, stored in append-only versions that can be reverted. Demonstrated live on a paired call.
 
 **To do**
 
-- **M4, Learning loop**: turn rejects into candidate rules and edits into examples, gate each rule on the validation set, versioned and revertible rulesets.
-- **M5, Experiments**: learning curve, ablations, the single test-set run, and a human-versus-oracle reviewer comparison.
+- **M5, Experiments**: oracle reviewer, learning curve, ablations, the single test-set run, and a human-versus-oracle reviewer comparison.
 - **M6, Charts and unit economics**: static charts and a cost and latency table.
 - **M7, Write-up and demo**: final write-up, a short demo recording, and a limitations section.
 
