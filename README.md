@@ -10,17 +10,27 @@ call transcript  ->  extractor (LLM)  ->  quote check  ->  proposals  ->  Slack 
 
 Everything runs in dry-run by default. Posting to Slack or writing to HubSpot needs an explicit `--live` flag.
 
+## Findings in brief
+
+- **The mechanism works end to end.** Calls become Slack cards, reviewer decisions are logged, and a reject can become a versioned, gated, revertible rule that changes the next extraction (live demo and paired replay on two fictional calls, no statistics, `results/m4_demo.json`). The rules from that demo did not clear the validation gate.
+- **Run-to-run noise is large enough to matter.** Identical V0 runs flip 37 of 360 (transcript, field) outcomes at truth level (`results/v0_noise.json`) and 25 of 360 at proposal level (`results/ablation.json`, `noise_flipped_instances`). A change counts only if it also changes more instances than that and passes the paired test.
+- **A scored gain exists only on one metric.** With an oracle reviewer, the proposal-level score rises on validation (tuned-on) and on the single test run, but the truth-level score on the test run is lower than the hand-tuned baseline (0.850 vs 0.926, `results/test_run.json`). The largest single contribution is reviewer-edit examples fixing the decision-timeline quarter format (about 13 of the roughly 27 net instance gain in the final state; `results/ablation.json`, `results/proposal_scores.json`); the rest is spread over economic buyer, champion and competitors, where the three gated rules act. That is a per-field decomposition on tuned-on validation, not an isolated ablation. Rules alone changed 21 of 360 instances (19 improved, 2 worsened) against a bar of 25: within noise.
+- **Some conventions were not learned.** The learner declined to write a rule for all 6 budget and 2 next-step rejects it examined (all reason `not_crm_worthy`), so the ballpark-budget convention was never picked up (0 of 7 instances at every point, `results/curve.json`).
+- **The oracle is not a human.** One reviewer matched the oracle's decision kind on 45 of 58 proposals on 10 validation calls (not held out; `results/handreview.json`).
+
+The details, denominators and caveats are under Results and in [STATUS.md](STATUS.md).
+
 ## What it can do
 
 - **Extract nine CRM fields from a call**: budget, decision timeline, competitors (with stance), economic buyer, champion, pain points, use case, next steps, and a stage signal. Each value carries a status (stated, hedged, negated, superseded, or not mentioned) and the quote it came from.
-- **Reject hallucinations deterministically**: a value is only proposed if its quote appears in the cited utterance.
+- **Drop values whose quote is not in the call**: a value is only proposed if its quote appears in the cited utterance (4 of 1,532 extracted fields failed in the V0 noise runs, `results/v0_noise.json`). This checks the quote, not whether the value is right.
 - **Propose, never overwrite**: extractions are diffed against the deal's current HubSpot values. Hedged values are marked tentative, negated competitors become `ruled_out`, lists are merged without duplicates, and the stage signal becomes a deal note, never a stage change.
 - **Review in Slack**: one card per call with every proposal, the quotes behind it (speaker and timestamp), a link to the deal, and Approve / Edit / Reject on each field. Only the record owner or a manager can act. There is no approve-all button.
 - **Write back safely**: the CRM value is re-read before each write; if it changed since the proposal, the card refreshes instead of writing. Double clicks are ignored.
 - **Watch a folder**: drop a demo transcript in `inbox/` and `ingest --watch --run --live` posts the card.
 - **Seed a sandbox**: an idempotent script creates fictional companies and deals in HubSpot (with a reset), and `crm preflight` checks keys, scopes, models, and Slack tokens before any live step.
-- **Measure extraction quality**: 100 synthetic transcripts with answer keys, split 40 learn / 40 validation / 20 test. A run-to-run noise floor, a manual prompt baseline, and paired statistics tell real improvements apart from noise.
-- **Learn from reviewers**: rejects become rules and edits become worked examples for the extractor; each rule is gated on the validation split and versioned, with revert.
+- **Measure extraction quality**: 100 synthetic transcripts with answer keys, split 40 learn / 40 validation / 20 test. A run-to-run noise floor, a manual prompt baseline and paired statistics label each change as clearing or within noise on validation (which is tuned-on); the 20-transcript test split was run once.
+- **Learn from reviewers**: rejects become rules and edits become worked examples for the extractor; each rule is replayed on the validation split by a gate (in demo mode a rule acts immediately, flagged unvalidated) and versioned, with revert.
 - **Log everything** to SQLite (interactions, extractions, proposals, review decisions) and track model spend per run.
 
 The answer keys and eval truth are not published in this repository (`data/keys/`, `data/audit/`, `data/deals.json`, and per-instance run files are git-ignored); `scripts/make_deals.py` regenerates a deal set. All companies and people are fictional (`.example` domains). Competitor names are real vendors, as reps actually say them.
@@ -89,7 +99,7 @@ From `results/unit_economics.json`, built from local spend logs (git-ignored, so
 
 | Item | Value |
 | --- | --- |
-| Extractor requests at the selected setting (`gpt-6-luna`, effort `none`) | 5,691 logged, pooled across every validation, test, noise-floor, baseline, gate, ablation and demo run at that setting; excludes retries and the effort-low and effort-medium bake-off calls |
+| Extractor requests at the selected setting (`gpt-6-luna`, effort `none`) | 5,691 logged, pooled across every validation, test, noise-floor, baseline, gate, ablation and demo run at that setting, including archived first-pass runs; excludes retries and the effort-low and effort-medium bake-off calls |
 | Mean cost per extractor request | $0.000525 |
 | Latency per extractor request | 4.8 s mean, 4.3 s median, 8.0 s at the 95th percentile |
 | Tokens per extractor request (means; prompts vary by run) | about 2,484 in, 553 out |
@@ -100,6 +110,25 @@ From `results/unit_economics.json`, built from local spend logs (git-ignored, so
 | CRM field slots held a value, hand-reviewed calls | 36 of 80 before the call; 62 of 80 after the reviewer's approved or edited proposals |
 
 The curve, ablation and test costs are subsets of the logged requests, not additions to them, and none of this is the project's total spend. The fill-rate row counts filled slots (10 validation calls x 8 fields), not correct values; it comes from one reviewer's decisions, whose clicks went to a stub and wrote nothing to HubSpot, so it is a demonstration, not a rate to expect elsewhere.
+
+## Limitations
+
+- **Synthetic data.** 100 fictional calls written by one model family, with traps and house rules placed by a generator. A hand-check of 15 stratified calls (reviewer-reported) found 0 of 15 with rendering errors (Wilson 95% upper bound about 0.20, assuming the sample is representative). All 100 passed the Claude verifier after regeneration; first-pass failures were not counted, so no verifier error rate is claimed. Real calls are messier, and the house rules here are far denser than in a real CRM.
+- **One extractor model, pinned.** Results are for one small model at one effort setting, on 40 validation and 20 test transcripts. No claim is made that they generalise.
+- **Validation is tuned-on.** It informed the prompt redesign, the effort choice, rule gating, the curve and the ablation. The test split is the only held-out check, and it has been used once.
+- **The headline metric was chosen after seeing earlier results.** Proposal-level scoring is in the plan (D1), but the baseline-versus-V0 comparison was pre-set at truth level, where it was within noise; re-scored at proposal level it clears the bar by one instance. Treat that as borderline.
+- **The oracle is idealised.** It never errs and, when it edits, supplies the answer key's convention, so the curve is an upper bound on what a perfect reviewer's feedback yields. The hand review is one reviewer and 58 proposals, with no per-field significance.
+- **Rules are global and few.** v1 has one reviewer, so a rule applies to everyone; in a real organisation one rep's rejection may be personal preference and rules should be per-rep until validated. Per-reviewer weighting is a design note in the spec, not built.
+- **The gate is strict and was left unchanged.** Its "other fields may lose at most 2" limit is smaller than the measured run-to-run flip allowance on those fields, so it may retire rules that are harmless. Its outcome metric changed to proposal level in M5; its thresholds did not.
+- **Scoring choices.** Pain points and use cases are scored by exact set match; next steps by the best match among the extracted steps, while the proposal builder uses only the first. Competitor names use an alias map. These were fixed after some results were seen and apply to every arm.
+- **Not captured.** Stakeholders who need convincing (skeptics, blockers) are outside the nine fields (decision D6). One deal (d036) combines a committed champion with a champion-owned next step and is ambiguous.
+- **Pipeline gaps.** The pipeline can let a junk stance value through when the extractor lists a vendor without a valid stance. A rule's text is generated from the reviewer's note and the call; a name typed in a note is not checked against the rule. Timers, escalation and the weekly digest were cut. `--reset` restores deal properties but does not delete the stage-signal notes created during review.
+- **Ops.** Socket Mode needs the laptop running, so the demo has a recorded fallback. The Slack bot token lacks `channels:read`, so channel membership is not verified. Spend numbers cover completed requests only, and the unit-economics figures pool every run at the selected setting.
+- **Nothing here writes without a human click.** Auto-write to the CRM is a path-to-production note, not a feature; the dry-run error rates are the case for the human gate.
+
+## Demo
+
+A step-by-step 2-minute runbook is in [docs/DEMO.md](docs/DEMO.md).
 
 ## Repository layout
 
@@ -126,13 +155,13 @@ Python, SQLite, Slack Bolt (Socket Mode), the HubSpot REST API (service key), an
 - **M1, Dataset**: 100 fictional deals with traps and house rules, transcripts generated and independently verified, hand-checked sample.
 - **M2, Extraction and measurement**: extractor, quote validator, scorer, noise floor, manual baseline, paired statistics, model and effort bake-off.
 - **M3, Slack review loop and writeback**: batched review cards with edit and reject modals, authorization, stale-value handling, deal notes, folder watcher, live demo.
-- **M4, Learning loop**: a reject becomes a plain-English rule written by a second model, put in force immediately (demo mode) or after validation, replayed on the validation split by a gate, stored in append-only versions that can be reverted. Demonstrated live on a paired call.
+- **M4, Learning loop**: a reject becomes a plain-English rule written by a second model, put in force immediately (demo mode) or after validation, replayed on the validation split by a gate, stored in append-only versions that can be reverted. Demonstrated live on a paired call (no validated gain).
 
 - **M5, Experiments**: oracle reviewer, learning curve, ablation, the single test-set run, and a human-versus-oracle reviewer comparison.
 - **M6, Charts and unit economics**: static charts (below) and a cost and latency table, generated from `results/` by `python3 -m crm charts`.
 
 **To do**
 
-- **M7, Write-up and demo**: final write-up, a short demo recording, and a limitations section.
+- **M7, Write-up and demo**: the write-up and limitations are above; the recording is still to be made from the runbook.
 
 Measured results and per-milestone evidence are tracked in [STATUS.md](STATUS.md).

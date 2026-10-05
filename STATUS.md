@@ -11,7 +11,7 @@ Update at the end of every session: what changed, what's next, and any number wi
 | M4 | Learning loop | done (mechanism; no validated gain) | Live reject -> rule -> gate -> versions -> revert, and a paired replay: `results/m4_demo.json`, `results/gate_1.json`, `results/gate_2.json`. The learned rules did not clear the validation gate |
 | M5 | Batch experiment and test run | done (measured; gain is at proposal level only, see caveats) | `results/curve.json`, `results/ablation.json`, `results/proposal_scores.json`, `results/curve_gates/`, `results/test_run.json`, `results/handreview.json` |
 | M6 | Charts and unit economics | done | `docs/charts/*.svg` (from `results/curve.json`, `ablation.json`, `test_run.json`, `proposal_scores.json`), `results/unit_economics.json`; README Results section; auditor-checked wording below |
-| M7 | Write-up and demo | not started | |
+| M7 | Write-up and demo | in progress: README write-up, limitations and demo runbook (`docs/DEMO.md`) done and auditor-checked; the demo recording is not made | README.md, docs/DEMO.md |
 
 ## Decisions pending
 
@@ -118,3 +118,4 @@ Other: the pipeline lets a junk stance value through (for example "not_applicabl
 - 2026-10-04 (M4): learning loop built and demonstrated live (see M4 section). Added `infosec-reviewer` agent and a pre-commit guard (`scripts/precommit_scan.py`). 110 tests pass; test split untouched.
 - 2026-10-05 (M5): added `crm/propscore.py` (proposal-level scoring), `crm/oracle.py`, `crm/curve.py` (`eval curve | ablate | test`), `crm/handreview.py` (`handreview build | post | serve | report`), `eval rescore`; gate now uses the proposal-level outcome (thresholds unchanged). 125 tests pass. Test split run once.
 - 2026-10-05 (M6): added `crm/charts.py` and `crm charts`, `stats.wilson`, six SVG charts, `results/unit_economics.json`, and the README Results section. 133 tests pass.
+- 2026-10-05 (M7): README findings summary, limitations and demo section; `docs/DEMO.md` runbook; auditor-checked wording. Open: the 2-minute recording (project owner).
