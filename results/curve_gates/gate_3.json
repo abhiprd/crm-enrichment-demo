@@ -1,0 +1,119 @@
+{
+  "rule_id": 3,
+  "field": "pain_points",
+  "rule_text": "For pain_points, record data_quality only when the transcript identifies a problem with data accuracy, completeness, or consistency; do not infer it solely from a request for correctly populated fields.",
+  "metric": "pfields",
+  "transcripts": 40,
+  "repeats": 3,
+  "thresholds": {
+    "min_net_gain": 3,
+    "max_other_loss": 2
+  },
+  "allowance": {
+    "budget": 0.0,
+    "decision_timeline": 1.0,
+    "competitors": 3.0,
+    "economic_buyer": 3.0,
+    "champion": 2.0,
+    "pain_points": 5.0,
+    "use_case": 7.0,
+    "next_step": 2.0,
+    "stage_signal": 2.0
+  },
+  "changes": {
+    "budget": {
+      "improved": 0,
+      "worsened": 0
+    },
+    "decision_timeline": {
+      "improved": 0,
+      "worsened": 1
+    },
+    "competitors": {
+      "improved": 0,
+      "worsened": 0
+    },
+    "economic_buyer": {
+      "improved": 0,
+      "worsened": 1
+    },
+    "champion": {
+      "improved": 0,
+      "worsened": 0
+    },
+    "pain_points": {
+      "improved": 0,
+      "worsened": 1
+    },
+    "use_case": {
+      "improved": 1,
+      "worsened": 2
+    },
+    "next_step": {
+      "improved": 1,
+      "worsened": 1
+    },
+    "stage_signal": {
+      "improved": 0,
+      "worsened": 2
+    }
+  },
+  "truth_changes": {
+    "budget": {
+      "improved": 1,
+      "worsened": 0
+    },
+    "decision_timeline": {
+      "improved": 1,
+      "worsened": 0
+    },
+    "competitors": {
+      "improved": 0,
+      "worsened": 0
+    },
+    "economic_buyer": {
+      "improved": 0,
+      "worsened": 1
+    },
+    "champion": {
+      "improved": 0,
+      "worsened": 0
+    },
+    "pain_points": {
+      "improved": 0,
+      "worsened": 1
+    },
+    "use_case": {
+      "improved": 1,
+      "worsened": 2
+    },
+    "next_step": {
+      "improved": 0,
+      "worsened": 1
+    },
+    "stage_signal": {
+      "improved": 0,
+      "worsened": 2
+    }
+  },
+  "validation_score_before": 0.8814814814814814,
+  "validation_score_after": 0.8694444444444444,
+  "cost_usd": 0.12637199999999998,
+  "call_errors": 0,
+  "passed": false,
+  "net_by_field": {
+    "budget": 0,
+    "decision_timeline": -1,
+    "competitors": 0,
+    "economic_buyer": -1,
+    "champion": 0,
+    "pain_points": -1,
+    "use_case": -1,
+    "next_step": 0,
+    "stage_signal": -2
+  },
+  "reasons": [
+    "pain_points net gain -1 is below the minimum 3",
+    "pain_points net gain -1 does not exceed its noise allowance 5.0"
+  ]
+}

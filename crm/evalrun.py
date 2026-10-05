@@ -16,6 +16,7 @@ from .extractor import extract, load_template, prompt_version
 from .ingest import parse_transcript
 from .paths import Paths
 from .schema import FIELDS
+from .propscore import score_proposals
 from .scoring import field_score, score_extraction
 from .validator import apply_validation, validate_fields
 
@@ -34,12 +35,35 @@ def run_instance(settings: Settings, conn, paths: Paths, deal_id: str, model: st
     utts = {u.idx: u.text for u in block.utterances}
     bad = validate_fields(ex.fields, utts)
     n_extracted = sum(f["status"] != "not_mentioned" for f in ex.fields.values())
-    scores = score_extraction(key["fields"], apply_validation(ex.fields, bad))
+    validated = apply_validation(ex.fields, bad)
+    scores = score_extraction(key["fields"], validated)
     return {"deal_id": deal_id, "field_score": field_score(scores),
             "fields": {f: {"score": s["score"], "correct": s["correct"]} for f, s in scores.items()},
+            "pfields": score_proposals(key["fields"], validated),
             "unsupported": len(bad), "extracted": n_extracted, "parse_errors": len(ex.errors), "retries": ex.retries,
             "in": ex.llm.input_tokens, "out": ex.llm.output_tokens, "reasoning": ex.llm.reasoning_tokens,
             "cost": ex.llm.cost_usd + ex.extra_cost, "ms": ex.llm.latency_ms, "raw": ex.fields, "prompt_version": ex.prompt_version}
+
+
+def rescore_proposals(paths: Paths, rec: dict) -> dict:
+    """Add proposal-level outcomes (`pfields`) to a record that predates them, from its saved raw extraction.
+    No API call: quote validation and the key are applied again in code."""
+    if "error" in rec or "pfields" in rec:
+        return rec
+    block = parse_transcript((paths.transcripts / f"{rec['deal_id']}.md").read_text(encoding="utf-8"))
+    key = json.loads((paths.keys / f"{rec['deal_id']}.json").read_text(encoding="utf-8"))
+    bad = validate_fields(rec["raw"], {u.idx: u.text for u in block.utterances})
+    return {**rec, "pfields": score_proposals(key["fields"], apply_validation(rec["raw"], bad))}
+
+
+def as_metric(runs: list, metric: str) -> list:
+    """View runs through one metric. metric "fields" (truth scoring) returns them unchanged; "pfields"
+    (proposal scoring) swaps in the proposal outcomes so aggregate, flips and paired tests work as before."""
+    if metric == "fields":
+        return runs
+    return [[r if "error" in r else {**r, "fields": r["pfields"],
+                                     "field_score": _mean([r["pfields"][f]["score"] for f in FIELDS])}
+             for r in run] for run in runs]
 
 
 def _mean(xs: list) -> float:
@@ -98,7 +122,7 @@ def run_spec(settings: Settings, paths: Paths, deal_ids: list, *, model: str, ef
         rep, d = job
         key = cache_key(version, model, effort, rep, d)
         if key in cache and "error" not in cache[key]:
-            return key, cache[key]
+            return key, rescore_proposals(paths, cache[key])
         return key, run_instance(settings, conn, paths, d, model, effort, f"{tag}-{rep}", template, client)
 
     with ThreadPoolExecutor(max_workers=workers) as pool:

@@ -1,0 +1,1753 @@
+{
+  "metric": "proposal-level (PLAN D1); truth_* fields are the truth-level scores of the same runs",
+  "config": {
+    "batch_size": 5,
+    "max_candidates_per_batch": 3,
+    "snapshot_repeats": 3,
+    "order_seed": 1337,
+    "rules_mode": "gated",
+    "gate": {
+      "repeats": 3,
+      "min_net_gain": 3,
+      "max_other_loss": 2
+    },
+    "start_prompt": "prompts/extractor_v0.md"
+  },
+  "points": [
+    {
+      "batch": 0,
+      "ruleset_version": 1,
+      "active_rule_ids": [],
+      "examples": 0,
+      "prompt_version": "pv-ca8faa57",
+      "repeats": 3,
+      "calls": 120,
+      "call_errors": 0,
+      "run_scores": [
+        0.8166666666666667,
+        0.8055555555555556,
+        0.8222222222222222
+      ],
+      "mean_score": 0.8148148148148149,
+      "per_field_mean": {
+        "budget": 0.8,
+        "decision_timeline": 0.6416666666666667,
+        "competitors": 0.925,
+        "economic_buyer": 0.85,
+        "champion": 0.85,
+        "pain_points": 0.7833333333333333,
+        "use_case": 0.65,
+        "next_step": 0.8833333333333333,
+        "stage_signal": 0.95
+      },
+      "truth_mean_score": 0.8651234567901235,
+      "truth_per_field_mean": {
+        "budget": 0.9666666666666667,
+        "decision_timeline": 0.9916666666666667,
+        "competitors": 0.9,
+        "economic_buyer": 0.85,
+        "champion": 0.85,
+        "pain_points": 0.7583333333333333,
+        "use_case": 0.6166666666666667,
+        "next_step": 0.9027777777777778,
+        "stage_signal": 0.95
+      },
+      "unsupported": 4,
+      "extracted_fields": 913,
+      "cost_usd": 0.05872970000000002,
+      "by_group": {
+        "house_rule": {
+          "instances": 33,
+          "mean": 0.31313131313131315
+        },
+        "other": {
+          "instances": 287,
+          "mean": 0.8490127758420442
+        },
+        "trap": {
+          "instances": 40,
+          "mean": 0.9833333333333333
+        }
+      },
+      "by_case": {
+        "ballpark_budget": {
+          "instances": 7,
+          "mean": 0.0
+        },
+        "buried_next_step": {
+          "instances": 6,
+          "mean": 0.9444444444444444
+        },
+        "committed_champion": {
+          "instances": 7,
+          "mean": 0.5714285714285714
+        },
+        "competitor_threshold": {
+          "instances": 8,
+          "mean": 0.625
+        },
+        "dated_next_step": {
+          "instances": 5,
+          "mean": 0.26666666666666666
+        },
+        "hedged_timeline": {
+          "instances": 8,
+          "mean": 1.0
+        },
+        "negation": {
+          "instances": 7,
+          "mean": 1.0
+        },
+        "quarter_timeline": {
+          "instances": 6,
+          "mean": 0.0
+        },
+        "speaker_attribution": {
+          "instances": 8,
+          "mean": 0.9583333333333334
+        },
+        "superseded_value": {
+          "instances": 11,
+          "mean": 1.0
+        }
+      }
+    },
+    {
+      "batch": 1,
+      "ruleset_version": 3,
+      "active_rule_ids": [
+        2,
+        1
+      ],
+      "examples": 5,
+      "prompt_version": "pv-6ac6567c",
+      "repeats": 3,
+      "calls": 120,
+      "call_errors": 0,
+      "run_scores": [
+        0.861111111111111,
+        0.8722222222222221,
+        0.8583333333333334
+      ],
+      "mean_score": 0.8638888888888889,
+      "per_field_mean": {
+        "budget": 0.8083333333333333,
+        "decision_timeline": 0.9916666666666667,
+        "competitors": 1.0,
+        "economic_buyer": 0.825,
+        "champion": 0.9083333333333333,
+        "pain_points": 0.7916666666666666,
+        "use_case": 0.625,
+        "next_step": 0.875,
+        "stage_signal": 0.95
+      },
+      "truth_mean_score": 0.8157407407407407,
+      "truth_per_field_mean": {
+        "budget": 0.9583333333333334,
+        "decision_timeline": 0.65,
+        "competitors": 0.9416666666666667,
+        "economic_buyer": 0.825,
+        "champion": 0.75,
+        "pain_points": 0.7916666666666666,
+        "use_case": 0.575,
+        "next_step": 0.9,
+        "stage_signal": 0.95
+      },
+      "unsupported": 0,
+      "extracted_fields": 902,
+      "cost_usd": 0.0614412,
+      "by_group": {
+        "house_rule": {
+          "instances": 33,
+          "mean": 0.6262626262626263
+        },
+        "other": {
+          "instances": 287,
+          "mean": 0.8722415795586528
+        },
+        "trap": {
+          "instances": 40,
+          "mean": 1.0
+        }
+      },
+      "by_case": {
+        "ballpark_budget": {
+          "instances": 7,
+          "mean": 0.0
+        },
+        "buried_next_step": {
+          "instances": 6,
+          "mean": 1.0
+        },
+        "committed_champion": {
+          "instances": 7,
+          "mean": 0.8571428571428571
+        },
+        "competitor_threshold": {
+          "instances": 8,
+          "mean": 1.0
+        },
+        "dated_next_step": {
+          "instances": 5,
+          "mean": 0.2
+        },
+        "hedged_timeline": {
+          "instances": 8,
+          "mean": 1.0
+        },
+        "negation": {
+          "instances": 7,
+          "mean": 1.0
+        },
+        "quarter_timeline": {
+          "instances": 6,
+          "mean": 0.9444444444444444
+        },
+        "speaker_attribution": {
+          "instances": 8,
+          "mean": 1.0
+        },
+        "superseded_value": {
+          "instances": 11,
+          "mean": 1.0
+        }
+      }
+    },
+    {
+      "batch": 2,
+      "ruleset_version": 3,
+      "active_rule_ids": [
+        2,
+        1
+      ],
+      "examples": 6,
+      "prompt_version": "pv-c9846112",
+      "repeats": 3,
+      "calls": 120,
+      "call_errors": 0,
+      "run_scores": [
+        0.875,
+        0.8833333333333334,
+        0.8777777777777777
+      ],
+      "mean_score": 0.8787037037037037,
+      "per_field_mean": {
+        "budget": 0.8,
+        "decision_timeline": 1.0,
+        "competitors": 1.0,
+        "economic_buyer": 0.85,
+        "champion": 0.9333333333333333,
+        "pain_points": 0.7583333333333333,
+        "use_case": 0.725,
+        "next_step": 0.8916666666666667,
+        "stage_signal": 0.95
+      },
+      "truth_mean_score": 0.8305555555555556,
+      "truth_per_field_mean": {
+        "budget": 0.975,
+        "decision_timeline": 0.65,
+        "competitors": 0.9,
+        "economic_buyer": 0.85,
+        "champion": 0.7666666666666667,
+        "pain_points": 0.7583333333333333,
+        "use_case": 0.6916666666666667,
+        "next_step": 0.9333333333333333,
+        "stage_signal": 0.95
+      },
+      "unsupported": 4,
+      "extracted_fields": 903,
+      "cost_usd": 0.06257569999999998,
+      "by_group": {
+        "house_rule": {
+          "instances": 33,
+          "mean": 0.6363636363636364
+        },
+        "other": {
+          "instances": 287,
+          "mean": 0.8896631823461092
+        },
+        "trap": {
+          "instances": 40,
+          "mean": 1.0
+        }
+      },
+      "by_case": {
+        "ballpark_budget": {
+          "instances": 7,
+          "mean": 0.0
+        },
+        "buried_next_step": {
+          "instances": 6,
+          "mean": 1.0
+        },
+        "committed_champion": {
+          "instances": 7,
+          "mean": 0.8571428571428571
+        },
+        "competitor_threshold": {
+          "instances": 8,
+          "mean": 1.0
+        },
+        "dated_next_step": {
+          "instances": 5,
+          "mean": 0.2
+        },
+        "hedged_timeline": {
+          "instances": 8,
+          "mean": 1.0
+        },
+        "negation": {
+          "instances": 7,
+          "mean": 1.0
+        },
+        "quarter_timeline": {
+          "instances": 6,
+          "mean": 1.0
+        },
+        "speaker_attribution": {
+          "instances": 8,
+          "mean": 1.0
+        },
+        "superseded_value": {
+          "instances": 11,
+          "mean": 1.0
+        }
+      }
+    },
+    {
+      "batch": 3,
+      "ruleset_version": 3,
+      "active_rule_ids": [
+        2,
+        1
+      ],
+      "examples": 8,
+      "prompt_version": "pv-ba5186bc",
+      "repeats": 3,
+      "calls": 120,
+      "call_errors": 0,
+      "run_scores": [
+        0.8694444444444445,
+        0.861111111111111,
+        0.8583333333333334
+      ],
+      "mean_score": 0.862962962962963,
+      "per_field_mean": {
+        "budget": 0.7916666666666666,
+        "decision_timeline": 0.9916666666666667,
+        "competitors": 1.0,
+        "economic_buyer": 0.825,
+        "champion": 0.925,
+        "pain_points": 0.7833333333333333,
+        "use_case": 0.6833333333333333,
+        "next_step": 0.85,
+        "stage_signal": 0.9166666666666666
+      },
+      "truth_mean_score": 0.8219135802469136,
+      "truth_per_field_mean": {
+        "budget": 0.95,
+        "decision_timeline": 0.6583333333333333,
+        "competitors": 0.925,
+        "economic_buyer": 0.825,
+        "champion": 0.7083333333333334,
+        "pain_points": 0.7833333333333333,
+        "use_case": 0.6833333333333333,
+        "next_step": 0.9472222222222223,
+        "stage_signal": 0.9166666666666666
+      },
+      "unsupported": 2,
+      "extracted_fields": 887,
+      "cost_usd": 0.0644577,
+      "by_group": {
+        "house_rule": {
+          "instances": 33,
+          "mean": 0.6464646464646465
+        },
+        "other": {
+          "instances": 287,
+          "mean": 0.8768873403019745
+        },
+        "trap": {
+          "instances": 40,
+          "mean": 0.9416666666666667
+        }
+      },
+      "by_case": {
+        "ballpark_budget": {
+          "instances": 7,
+          "mean": 0.0
+        },
+        "buried_next_step": {
+          "instances": 6,
+          "mean": 0.8888888888888888
+        },
+        "committed_champion": {
+          "instances": 7,
+          "mean": 0.9523809523809523
+        },
+        "competitor_threshold": {
+          "instances": 8,
+          "mean": 1.0
+        },
+        "dated_next_step": {
+          "instances": 5,
+          "mean": 0.2
+        },
+        "hedged_timeline": {
+          "instances": 8,
+          "mean": 1.0
+        },
+        "negation": {
+          "instances": 7,
+          "mean": 1.0
+        },
+        "quarter_timeline": {
+          "instances": 6,
+          "mean": 0.9444444444444444
+        },
+        "speaker_attribution": {
+          "instances": 8,
+          "mean": 0.7916666666666666
+        },
+        "superseded_value": {
+          "instances": 11,
+          "mean": 1.0
+        }
+      }
+    },
+    {
+      "batch": 4,
+      "ruleset_version": 3,
+      "active_rule_ids": [
+        2,
+        1
+      ],
+      "examples": 9,
+      "prompt_version": "pv-e32bb019",
+      "repeats": 3,
+      "calls": 120,
+      "call_errors": 0,
+      "run_scores": [
+        0.888888888888889,
+        0.8777777777777777,
+        0.8805555555555555
+      ],
+      "mean_score": 0.8824074074074074,
+      "per_field_mean": {
+        "budget": 0.8166666666666667,
+        "decision_timeline": 0.9916666666666667,
+        "competitors": 1.0,
+        "economic_buyer": 0.8416666666666667,
+        "champion": 0.9416666666666667,
+        "pain_points": 0.7583333333333333,
+        "use_case": 0.7333333333333333,
+        "next_step": 0.9,
+        "stage_signal": 0.9583333333333334
+      },
+      "truth_mean_score": 0.8410493827160493,
+      "truth_per_field_mean": {
+        "budget": 0.9666666666666667,
+        "decision_timeline": 0.6583333333333333,
+        "competitors": 0.9,
+        "economic_buyer": 0.8416666666666667,
+        "champion": 0.825,
+        "pain_points": 0.7583333333333333,
+        "use_case": 0.7333333333333333,
+        "next_step": 0.9277777777777777,
+        "stage_signal": 0.9583333333333334
+      },
+      "unsupported": 0,
+      "extracted_fields": 895,
+      "cost_usd": 0.06472320000000002,
+      "by_group": {
+        "house_rule": {
+          "instances": 33,
+          "mean": 0.6161616161616161
+        },
+        "other": {
+          "instances": 287,
+          "mean": 0.8977932636469221
+        },
+        "trap": {
+          "instances": 40,
+          "mean": 0.9916666666666667
+        }
+      },
+      "by_case": {
+        "ballpark_budget": {
+          "instances": 7,
+          "mean": 0.0
+        },
+        "buried_next_step": {
+          "instances": 6,
+          "mean": 1.0
+        },
+        "committed_champion": {
+          "instances": 7,
+          "mean": 0.7619047619047619
+        },
+        "competitor_threshold": {
+          "instances": 8,
+          "mean": 1.0
+        },
+        "dated_next_step": {
+          "instances": 5,
+          "mean": 0.26666666666666666
+        },
+        "hedged_timeline": {
+          "instances": 8,
+          "mean": 1.0
+        },
+        "negation": {
+          "instances": 7,
+          "mean": 1.0
+        },
+        "quarter_timeline": {
+          "instances": 6,
+          "mean": 0.9444444444444444
+        },
+        "speaker_attribution": {
+          "instances": 8,
+          "mean": 0.9583333333333334
+        },
+        "superseded_value": {
+          "instances": 11,
+          "mean": 1.0
+        }
+      }
+    },
+    {
+      "batch": 5,
+      "ruleset_version": 4,
+      "active_rule_ids": [
+        2,
+        1,
+        7
+      ],
+      "examples": 9,
+      "prompt_version": "pv-e05e5d68",
+      "repeats": 3,
+      "calls": 120,
+      "call_errors": 0,
+      "run_scores": [
+        0.888888888888889,
+        0.888888888888889,
+        0.888888888888889
+      ],
+      "mean_score": 0.888888888888889,
+      "per_field_mean": {
+        "budget": 0.8,
+        "decision_timeline": 1.0,
+        "competitors": 1.0,
+        "economic_buyer": 0.9333333333333333,
+        "champion": 0.925,
+        "pain_points": 0.7583333333333333,
+        "use_case": 0.725,
+        "next_step": 0.8916666666666667,
+        "stage_signal": 0.9666666666666667
+      },
+      "truth_mean_score": 0.839506172839506,
+      "truth_per_field_mean": {
+        "budget": 0.95,
+        "decision_timeline": 0.65,
+        "competitors": 0.9166666666666666,
+        "economic_buyer": 0.9333333333333333,
+        "champion": 0.7416666666666667,
+        "pain_points": 0.7416666666666667,
+        "use_case": 0.725,
+        "next_step": 0.9305555555555556,
+        "stage_signal": 0.9666666666666667
+      },
+      "unsupported": 2,
+      "extracted_fields": 872,
+      "cost_usd": 0.06480170000000002,
+      "by_group": {
+        "house_rule": {
+          "instances": 33,
+          "mean": 0.6464646464646465
+        },
+        "other": {
+          "instances": 287,
+          "mean": 0.9024390243902439
+        },
+        "trap": {
+          "instances": 40,
+          "mean": 0.9916666666666667
+        }
+      },
+      "by_case": {
+        "ballpark_budget": {
+          "instances": 7,
+          "mean": 0.0
+        },
+        "buried_next_step": {
+          "instances": 6,
+          "mean": 1.0
+        },
+        "committed_champion": {
+          "instances": 7,
+          "mean": 0.8571428571428571
+        },
+        "competitor_threshold": {
+          "instances": 8,
+          "mean": 1.0
+        },
+        "dated_next_step": {
+          "instances": 5,
+          "mean": 0.26666666666666666
+        },
+        "hedged_timeline": {
+          "instances": 8,
+          "mean": 1.0
+        },
+        "negation": {
+          "instances": 7,
+          "mean": 1.0
+        },
+        "quarter_timeline": {
+          "instances": 6,
+          "mean": 1.0
+        },
+        "speaker_attribution": {
+          "instances": 8,
+          "mean": 0.9583333333333334
+        },
+        "superseded_value": {
+          "instances": 11,
+          "mean": 1.0
+        }
+      }
+    },
+    {
+      "batch": 6,
+      "ruleset_version": 4,
+      "active_rule_ids": [
+        2,
+        1,
+        7
+      ],
+      "examples": 9,
+      "prompt_version": "pv-e05e5d68",
+      "repeats": 3,
+      "calls": 120,
+      "call_errors": 0,
+      "run_scores": [
+        0.888888888888889,
+        0.888888888888889,
+        0.888888888888889
+      ],
+      "mean_score": 0.888888888888889,
+      "per_field_mean": {
+        "budget": 0.8,
+        "decision_timeline": 1.0,
+        "competitors": 1.0,
+        "economic_buyer": 0.9333333333333333,
+        "champion": 0.925,
+        "pain_points": 0.7583333333333333,
+        "use_case": 0.725,
+        "next_step": 0.8916666666666667,
+        "stage_signal": 0.9666666666666667
+      },
+      "truth_mean_score": 0.839506172839506,
+      "truth_per_field_mean": {
+        "budget": 0.95,
+        "decision_timeline": 0.65,
+        "competitors": 0.9166666666666666,
+        "economic_buyer": 0.9333333333333333,
+        "champion": 0.7416666666666667,
+        "pain_points": 0.7416666666666667,
+        "use_case": 0.725,
+        "next_step": 0.9305555555555556,
+        "stage_signal": 0.9666666666666667
+      },
+      "unsupported": 2,
+      "extracted_fields": 872,
+      "cost_usd": 0.06480170000000002,
+      "by_group": {
+        "house_rule": {
+          "instances": 33,
+          "mean": 0.6464646464646465
+        },
+        "other": {
+          "instances": 287,
+          "mean": 0.9024390243902439
+        },
+        "trap": {
+          "instances": 40,
+          "mean": 0.9916666666666667
+        }
+      },
+      "by_case": {
+        "ballpark_budget": {
+          "instances": 7,
+          "mean": 0.0
+        },
+        "buried_next_step": {
+          "instances": 6,
+          "mean": 1.0
+        },
+        "committed_champion": {
+          "instances": 7,
+          "mean": 0.8571428571428571
+        },
+        "competitor_threshold": {
+          "instances": 8,
+          "mean": 1.0
+        },
+        "dated_next_step": {
+          "instances": 5,
+          "mean": 0.26666666666666666
+        },
+        "hedged_timeline": {
+          "instances": 8,
+          "mean": 1.0
+        },
+        "negation": {
+          "instances": 7,
+          "mean": 1.0
+        },
+        "quarter_timeline": {
+          "instances": 6,
+          "mean": 1.0
+        },
+        "speaker_attribution": {
+          "instances": 8,
+          "mean": 0.9583333333333334
+        },
+        "superseded_value": {
+          "instances": 11,
+          "mean": 1.0
+        }
+      }
+    },
+    {
+      "batch": 7,
+      "ruleset_version": 4,
+      "active_rule_ids": [
+        2,
+        1,
+        7
+      ],
+      "examples": 9,
+      "prompt_version": "pv-a82b52c9",
+      "repeats": 3,
+      "calls": 120,
+      "call_errors": 0,
+      "run_scores": [
+        0.8916666666666666,
+        0.8777777777777777,
+        0.8861111111111111
+      ],
+      "mean_score": 0.8851851851851852,
+      "per_field_mean": {
+        "budget": 0.8083333333333333,
+        "decision_timeline": 1.0,
+        "competitors": 1.0,
+        "economic_buyer": 0.9333333333333333,
+        "champion": 0.9333333333333333,
+        "pain_points": 0.7583333333333333,
+        "use_case": 0.7166666666666667,
+        "next_step": 0.8583333333333333,
+        "stage_signal": 0.9583333333333334
+      },
+      "truth_mean_score": 0.8466049382716049,
+      "truth_per_field_mean": {
+        "budget": 0.975,
+        "decision_timeline": 0.65,
+        "competitors": 0.9416666666666667,
+        "economic_buyer": 0.9333333333333333,
+        "champion": 0.775,
+        "pain_points": 0.75,
+        "use_case": 0.7083333333333334,
+        "next_step": 0.9277777777777777,
+        "stage_signal": 0.9583333333333334
+      },
+      "unsupported": 2,
+      "extracted_fields": 876,
+      "cost_usd": 0.06473870000000001,
+      "by_group": {
+        "house_rule": {
+          "instances": 33,
+          "mean": 0.6262626262626263
+        },
+        "other": {
+          "instances": 287,
+          "mean": 0.9012775842044135
+        },
+        "trap": {
+          "instances": 40,
+          "mean": 0.9833333333333333
+        }
+      },
+      "by_case": {
+        "ballpark_budget": {
+          "instances": 7,
+          "mean": 0.0
+        },
+        "buried_next_step": {
+          "instances": 6,
+          "mean": 0.8888888888888888
+        },
+        "committed_champion": {
+          "instances": 7,
+          "mean": 0.8095238095238095
+        },
+        "competitor_threshold": {
+          "instances": 8,
+          "mean": 1.0
+        },
+        "dated_next_step": {
+          "instances": 5,
+          "mean": 0.2
+        },
+        "hedged_timeline": {
+          "instances": 8,
+          "mean": 1.0
+        },
+        "negation": {
+          "instances": 7,
+          "mean": 1.0
+        },
+        "quarter_timeline": {
+          "instances": 6,
+          "mean": 1.0
+        },
+        "speaker_attribution": {
+          "instances": 8,
+          "mean": 1.0
+        },
+        "superseded_value": {
+          "instances": 11,
+          "mean": 1.0
+        }
+      }
+    },
+    {
+      "batch": 8,
+      "ruleset_version": 4,
+      "active_rule_ids": [
+        2,
+        1,
+        7
+      ],
+      "examples": 13,
+      "prompt_version": "pv-ccfc7431",
+      "repeats": 3,
+      "calls": 120,
+      "call_errors": 0,
+      "run_scores": [
+        0.8777777777777777,
+        0.9027777777777777,
+        0.888888888888889
+      ],
+      "mean_score": 0.8898148148148147,
+      "per_field_mean": {
+        "budget": 0.8,
+        "decision_timeline": 0.9916666666666667,
+        "competitors": 1.0,
+        "economic_buyer": 0.9583333333333334,
+        "champion": 0.9333333333333333,
+        "pain_points": 0.7916666666666666,
+        "use_case": 0.7,
+        "next_step": 0.875,
+        "stage_signal": 0.9583333333333334
+      },
+      "truth_mean_score": 0.8509259259259259,
+      "truth_per_field_mean": {
+        "budget": 0.975,
+        "decision_timeline": 0.6583333333333333,
+        "competitors": 0.9,
+        "economic_buyer": 0.9583333333333334,
+        "champion": 0.8083333333333333,
+        "pain_points": 0.7833333333333333,
+        "use_case": 0.675,
+        "next_step": 0.9416666666666667,
+        "stage_signal": 0.9583333333333334
+      },
+      "unsupported": 0,
+      "extracted_fields": 879,
+      "cost_usd": 0.06796970000000004,
+      "by_group": {
+        "house_rule": {
+          "instances": 33,
+          "mean": 0.6161616161616161
+        },
+        "other": {
+          "instances": 287,
+          "mean": 0.9059233449477352
+        },
+        "trap": {
+          "instances": 40,
+          "mean": 1.0
+        }
+      },
+      "by_case": {
+        "ballpark_budget": {
+          "instances": 7,
+          "mean": 0.0
+        },
+        "buried_next_step": {
+          "instances": 6,
+          "mean": 1.0
+        },
+        "committed_champion": {
+          "instances": 7,
+          "mean": 0.7619047619047619
+        },
+        "competitor_threshold": {
+          "instances": 8,
+          "mean": 1.0
+        },
+        "dated_next_step": {
+          "instances": 5,
+          "mean": 0.2
+        },
+        "hedged_timeline": {
+          "instances": 8,
+          "mean": 1.0
+        },
+        "negation": {
+          "instances": 7,
+          "mean": 1.0
+        },
+        "quarter_timeline": {
+          "instances": 6,
+          "mean": 1.0
+        },
+        "speaker_attribution": {
+          "instances": 8,
+          "mean": 1.0
+        },
+        "superseded_value": {
+          "instances": 11,
+          "mean": 1.0
+        }
+      }
+    }
+  ],
+  "reviews": [
+    {
+      "batch": 1,
+      "deals": [
+        "d083",
+        "d032",
+        "d080",
+        "d022",
+        "d016"
+      ],
+      "ruleset_version_before": 1,
+      "reviewed": 34,
+      "approved": 23,
+      "edited": 5,
+      "rejected": 6,
+      "by_field": {
+        "budget": {
+          "approve": 2,
+          "reject": 1
+        },
+        "champion": {
+          "reject": 2,
+          "approve": 2
+        },
+        "competitors": {
+          "approve": 2,
+          "reject": 2
+        },
+        "decision_timeline": {
+          "edit": 3,
+          "approve": 1
+        },
+        "economic_buyer": {
+          "reject": 1,
+          "approve": 2
+        },
+        "next_step": {
+          "approve": 2
+        },
+        "pain_points": {
+          "approve": 4
+        },
+        "stage_signal": {
+          "approve": 5
+        },
+        "use_case": {
+          "edit": 2,
+          "approve": 3
+        }
+      },
+      "reject_reasons": {
+        "not_crm_worthy": 4,
+        "evidence_doesnt_support": 2
+      }
+    },
+    {
+      "batch": 2,
+      "deals": [
+        "d037",
+        "d071",
+        "d073",
+        "d069",
+        "d019"
+      ],
+      "ruleset_version_before": 3,
+      "reviewed": 35,
+      "approved": 28,
+      "edited": 3,
+      "rejected": 4,
+      "by_field": {
+        "budget": {
+          "approve": 3,
+          "reject": 1
+        },
+        "champion": {
+          "approve": 1
+        },
+        "competitors": {
+          "approve": 5
+        },
+        "decision_timeline": {
+          "approve": 5
+        },
+        "economic_buyer": {
+          "approve": 3
+        },
+        "next_step": {
+          "reject": 1,
+          "approve": 2
+        },
+        "pain_points": {
+          "approve": 4,
+          "reject": 1
+        },
+        "stage_signal": {
+          "approve": 5
+        },
+        "use_case": {
+          "edit": 3,
+          "reject": 1
+        }
+      },
+      "reject_reasons": {
+        "not_crm_worthy": 2,
+        "evidence_doesnt_support": 2
+      }
+    },
+    {
+      "batch": 3,
+      "deals": [
+        "d006",
+        "d033",
+        "d017",
+        "d001",
+        "d090"
+      ],
+      "ruleset_version_before": 3,
+      "reviewed": 31,
+      "approved": 21,
+      "edited": 5,
+      "rejected": 5,
+      "by_field": {
+        "budget": {
+          "reject": 2,
+          "approve": 2
+        },
+        "champion": {
+          "approve": 2,
+          "reject": 1
+        },
+        "competitors": {
+          "approve": 2
+        },
+        "decision_timeline": {
+          "approve": 3
+        },
+        "economic_buyer": {
+          "reject": 1,
+          "approve": 4
+        },
+        "next_step": {
+          "approve": 1,
+          "edit": 1
+        },
+        "pain_points": {
+          "approve": 2
+        },
+        "stage_signal": {
+          "approve": 4,
+          "edit": 1
+        },
+        "use_case": {
+          "edit": 3,
+          "approve": 1,
+          "reject": 1
+        }
+      },
+      "reject_reasons": {
+        "not_crm_worthy": 3,
+        "evidence_doesnt_support": 2
+      }
+    },
+    {
+      "batch": 4,
+      "deals": [
+        "d024",
+        "d036",
+        "d068",
+        "d064",
+        "d034"
+      ],
+      "ruleset_version_before": 3,
+      "reviewed": 30,
+      "approved": 26,
+      "edited": 2,
+      "rejected": 2,
+      "by_field": {
+        "budget": {
+          "approve": 3
+        },
+        "champion": {
+          "approve": 2
+        },
+        "competitors": {
+          "approve": 3
+        },
+        "decision_timeline": {
+          "approve": 2
+        },
+        "economic_buyer": {
+          "approve": 4
+        },
+        "next_step": {
+          "approve": 4
+        },
+        "pain_points": {
+          "approve": 3
+        },
+        "stage_signal": {
+          "approve": 4,
+          "edit": 1
+        },
+        "use_case": {
+          "reject": 2,
+          "approve": 1,
+          "edit": 1
+        }
+      },
+      "reject_reasons": {
+        "evidence_doesnt_support": 2
+      }
+    },
+    {
+      "batch": 5,
+      "deals": [
+        "d009",
+        "d076",
+        "d042",
+        "d031",
+        "d012"
+      ],
+      "ruleset_version_before": 3,
+      "reviewed": 30,
+      "approved": 26,
+      "edited": 1,
+      "rejected": 3,
+      "by_field": {
+        "budget": {
+          "approve": 1,
+          "reject": 1
+        },
+        "champion": {
+          "approve": 3
+        },
+        "competitors": {
+          "approve": 2
+        },
+        "decision_timeline": {
+          "edit": 1,
+          "approve": 3
+        },
+        "economic_buyer": {
+          "approve": 3,
+          "reject": 1
+        },
+        "next_step": {
+          "approve": 3
+        },
+        "pain_points": {
+          "approve": 4
+        },
+        "stage_signal": {
+          "approve": 5
+        },
+        "use_case": {
+          "reject": 1,
+          "approve": 2
+        }
+      },
+      "reject_reasons": {
+        "evidence_doesnt_support": 2,
+        "not_crm_worthy": 1
+      }
+    },
+    {
+      "batch": 6,
+      "deals": [
+        "d027",
+        "d096",
+        "d084",
+        "d018",
+        "d047"
+      ],
+      "ruleset_version_before": 4,
+      "reviewed": 35,
+      "approved": 29,
+      "edited": 0,
+      "rejected": 6,
+      "by_field": {
+        "budget": {
+          "approve": 2,
+          "reject": 1
+        },
+        "champion": {
+          "approve": 3
+        },
+        "competitors": {
+          "approve": 4
+        },
+        "decision_timeline": {
+          "approve": 5
+        },
+        "economic_buyer": {
+          "approve": 2
+        },
+        "next_step": {
+          "approve": 3,
+          "reject": 1
+        },
+        "pain_points": {
+          "approve": 4
+        },
+        "stage_signal": {
+          "approve": 5
+        },
+        "use_case": {
+          "reject": 4,
+          "approve": 1
+        }
+      },
+      "reject_reasons": {
+        "evidence_doesnt_support": 4,
+        "not_crm_worthy": 2
+      }
+    },
+    {
+      "batch": 7,
+      "deals": [
+        "d030",
+        "d038",
+        "d093",
+        "d063",
+        "d045"
+      ],
+      "ruleset_version_before": 4,
+      "reviewed": 29,
+      "approved": 24,
+      "edited": 1,
+      "rejected": 4,
+      "by_field": {
+        "budget": {
+          "approve": 2,
+          "reject": 2
+        },
+        "champion": {
+          "approve": 3
+        },
+        "competitors": {
+          "approve": 3
+        },
+        "decision_timeline": {
+          "approve": 2
+        },
+        "economic_buyer": {
+          "approve": 1
+        },
+        "next_step": {
+          "approve": 3,
+          "reject": 1
+        },
+        "pain_points": {
+          "approve": 3,
+          "reject": 1
+        },
+        "stage_signal": {
+          "approve": 5
+        },
+        "use_case": {
+          "edit": 1,
+          "approve": 2
+        }
+      },
+      "reject_reasons": {
+        "not_crm_worthy": 3,
+        "evidence_doesnt_support": 1
+      }
+    },
+    {
+      "batch": 8,
+      "deals": [
+        "d026",
+        "d092",
+        "d059",
+        "d085",
+        "d097"
+      ],
+      "ruleset_version_before": 4,
+      "reviewed": 29,
+      "approved": 24,
+      "edited": 4,
+      "rejected": 1,
+      "by_field": {
+        "budget": {
+          "approve": 3
+        },
+        "champion": {
+          "approve": 2
+        },
+        "competitors": {
+          "approve": 4
+        },
+        "decision_timeline": {
+          "approve": 3
+        },
+        "next_step": {
+          "approve": 2,
+          "edit": 2
+        },
+        "pain_points": {
+          "edit": 2,
+          "approve": 1
+        },
+        "stage_signal": {
+          "approve": 5
+        },
+        "use_case": {
+          "approve": 4,
+          "reject": 1
+        }
+      },
+      "reject_reasons": {
+        "wrong_value": 1
+      }
+    }
+  ],
+  "rule_events": [
+    {
+      "batch": 1,
+      "field": "competitors",
+      "source_deal": "d032",
+      "reason": "not_crm_worthy",
+      "status": "created",
+      "skip_reason": "",
+      "rule_id": 1,
+      "rule_text": "Record competitors only when the transcript ties them to the buyer's own evaluation or purchase decision; exclude third-party anecdotes and do not infer a ruled-out stance from a casual mention.",
+      "gate_passed": true,
+      "net_by_field": {
+        "budget": 0,
+        "decision_timeline": 0,
+        "competitors": 4,
+        "economic_buyer": 0,
+        "champion": 1,
+        "pain_points": 0,
+        "use_case": 0,
+        "next_step": -1,
+        "stage_signal": 0
+      },
+      "gate_reasons": [],
+      "summary": "validated: net +4 on competitors",
+      "gate_cost_usd": 0.12396490000000003
+    },
+    {
+      "batch": 1,
+      "field": "champion",
+      "source_deal": "d083",
+      "reason": "not_crm_worthy",
+      "status": "created",
+      "skip_reason": "",
+      "rule_id": 2,
+      "rule_text": "Set champion only when the transcript shows a person actively advocating for the purchase internally or helping advance it; do not infer champion status from pain points, enthusiasm, or product preference alone.",
+      "gate_passed": true,
+      "net_by_field": {
+        "budget": 0,
+        "decision_timeline": 0,
+        "competitors": 0,
+        "economic_buyer": -1,
+        "champion": 5,
+        "pain_points": 0,
+        "use_case": 0,
+        "next_step": 0,
+        "stage_signal": 0
+      },
+      "gate_reasons": [],
+      "summary": "validated: net +5 on champion",
+      "gate_cost_usd": 0.12351720000000001
+    },
+    {
+      "batch": 1,
+      "field": "budget",
+      "source_deal": "d080",
+      "reason": "not_crm_worthy",
+      "status": "skipped",
+      "skip_reason": "Rejecting a hedged budget estimate as not CRM-worthy reflects a company-specific recording preference, not a general extraction mistake."
+    },
+    {
+      "batch": 2,
+      "field": "budget",
+      "source_deal": "d071",
+      "reason": "not_crm_worthy",
+      "status": "skipped",
+      "skip_reason": "The rejection reflects a company-specific choice about recording tentative budgets, not a general extraction mistake, since the estimate was supported and marked as hedged."
+    },
+    {
+      "batch": 2,
+      "field": "pain_points",
+      "source_deal": "d069",
+      "reason": "evidence_doesnt_support",
+      "status": "created",
+      "skip_reason": "",
+      "rule_id": 3,
+      "rule_text": "For pain_points, record data_quality only when the transcript identifies a problem with data accuracy, completeness, or consistency; do not infer it solely from a request for correctly populated fields.",
+      "gate_passed": false,
+      "net_by_field": {
+        "budget": 0,
+        "decision_timeline": -1,
+        "competitors": 0,
+        "economic_buyer": -1,
+        "champion": 0,
+        "pain_points": -1,
+        "use_case": -1,
+        "next_step": 0,
+        "stage_signal": -2
+      },
+      "gate_reasons": [
+        "pain_points net gain -1 is below the minimum 3",
+        "pain_points net gain -1 does not exceed its noise allowance 5.0"
+      ],
+      "summary": "stays a candidate: pain_points net gain -1 is below the minimum 3; pain_points net gain -1 does not exceed its noise allowance 5.0",
+      "gate_cost_usd": 0.12637199999999998
+    },
+    {
+      "batch": 2,
+      "field": "use_case",
+      "source_deal": "d073",
+      "reason": "evidence_doesnt_support",
+      "status": "created",
+      "skip_reason": "",
+      "rule_id": 4,
+      "rule_text": "Set use_case only when the transcript supports the specific activity the buyer wants to perform; do not infer call recording or deal inspection solely from complaints about unexplained outcomes or slipping deals.",
+      "gate_passed": false,
+      "net_by_field": {
+        "budget": 0,
+        "decision_timeline": 0,
+        "competitors": 0,
+        "economic_buyer": -2,
+        "champion": -2,
+        "pain_points": 1,
+        "use_case": -2,
+        "next_step": 1,
+        "stage_signal": -1
+      },
+      "gate_reasons": [
+        "use_case net gain -2 is below the minimum 3",
+        "use_case net gain -2 does not exceed its noise allowance 7.0"
+      ],
+      "summary": "stays a candidate: use_case net gain -2 is below the minimum 3; use_case net gain -2 does not exceed its noise allowance 7.0",
+      "gate_cost_usd": 0.12659749999999997
+    },
+    {
+      "batch": 3,
+      "field": "budget",
+      "source_deal": "d006",
+      "reason": "not_crm_worthy",
+      "status": "skipped",
+      "skip_reason": "The rejection gives no general criterion for excluding tentative budget ranges, which may be CRM-worthy depending on the company's recording practices."
+    },
+    {
+      "batch": 3,
+      "field": "economic_buyer",
+      "source_deal": "d006",
+      "reason": "evidence_doesnt_support",
+      "status": "created",
+      "skip_reason": "",
+      "rule_id": 5,
+      "rule_text": "Set economic_buyer only when the transcript supports that the person has final spending approval authority; do not treat someone providing a budget estimate as the economic buyer.",
+      "gate_passed": false,
+      "net_by_field": {
+        "budget": 2,
+        "decision_timeline": 1,
+        "competitors": 0,
+        "economic_buyer": 3,
+        "champion": -1,
+        "pain_points": -1,
+        "use_case": 1,
+        "next_step": -2,
+        "stage_signal": 1
+      },
+      "gate_reasons": [
+        "economic_buyer net gain 3 does not exceed its noise allowance 3.0"
+      ],
+      "summary": "stays a candidate: economic_buyer net gain 3 does not exceed its noise allowance 3.0",
+      "gate_cost_usd": 0.12850040000000001
+    },
+    {
+      "batch": 3,
+      "field": "champion",
+      "source_deal": "d090",
+      "reason": "not_crm_worthy",
+      "status": "skipped",
+      "skip_reason": "The rejection reinforces the existing rule against inferring champion status from enthusiasm or product preference alone, so no additional rule is needed."
+    },
+    {
+      "batch": 4,
+      "field": "use_case",
+      "source_deal": "d024",
+      "reason": "evidence_doesnt_support",
+      "status": "created",
+      "skip_reason": "",
+      "rule_id": 6,
+      "rule_text": "Set use_case only when the transcript links the proposed solution to that use; do not infer onboarding solely from discussion of new hires, ramp-up challenges, or training needs.",
+      "gate_passed": false,
+      "net_by_field": {
+        "budget": 0,
+        "decision_timeline": 0,
+        "competitors": 0,
+        "economic_buyer": 0,
+        "champion": 2,
+        "pain_points": 1,
+        "use_case": -1,
+        "next_step": 0,
+        "stage_signal": 1
+      },
+      "gate_reasons": [
+        "use_case net gain -1 is below the minimum 3",
+        "use_case net gain -1 does not exceed its noise allowance 7.0"
+      ],
+      "summary": "stays a candidate: use_case net gain -1 is below the minimum 3; use_case net gain -1 does not exceed its noise allowance 7.0",
+      "gate_cost_usd": 0.1300214
+    },
+    {
+      "batch": 5,
+      "field": "budget",
+      "source_deal": "d031",
+      "reason": "not_crm_worthy",
+      "status": "skipped",
+      "skip_reason": "The rejection reflects a company-specific CRM recording preference, not a general reason to exclude explicitly stated tentative budgets."
+    },
+    {
+      "batch": 5,
+      "field": "economic_buyer",
+      "source_deal": "d031",
+      "reason": "evidence_doesnt_support",
+      "status": "created",
+      "skip_reason": "",
+      "rule_id": 7,
+      "rule_text": "Set economic_buyer only when evidence establishes final spending authority; do not infer it from someone quoting a budget or describing approval required from others.",
+      "gate_passed": true,
+      "net_by_field": {
+        "budget": 0,
+        "decision_timeline": -1,
+        "competitors": 0,
+        "economic_buyer": 4,
+        "champion": 0,
+        "pain_points": 0,
+        "use_case": 3,
+        "next_step": -1,
+        "stage_signal": 0
+      },
+      "gate_reasons": [],
+      "summary": "validated: net +4 on economic_buyer",
+      "gate_cost_usd": 0.12988140000000004
+    },
+    {
+      "batch": 5,
+      "field": "use_case",
+      "source_deal": "d009",
+      "reason": "evidence_doesnt_support",
+      "status": "created",
+      "skip_reason": "",
+      "rule_id": 8,
+      "rule_text": "For use_case, distinguish reported pain points from intended uses; assign a value only when the transcript explicitly connects it to a desired application or outcome.",
+      "gate_passed": false,
+      "net_by_field": {
+        "budget": 0,
+        "decision_timeline": 1,
+        "competitors": 0,
+        "economic_buyer": 2,
+        "champion": 2,
+        "pain_points": 0,
+        "use_case": 2,
+        "next_step": 0,
+        "stage_signal": -1
+      },
+      "gate_reasons": [
+        "use_case net gain 2 is below the minimum 3",
+        "use_case net gain 2 does not exceed its noise allowance 7.0"
+      ],
+      "summary": "stays a candidate: use_case net gain 2 is below the minimum 3; use_case net gain 2 does not exceed its noise allowance 7.0",
+      "gate_cost_usd": 0.12936040000000001
+    },
+    {
+      "batch": 6,
+      "field": "use_case",
+      "source_deal": "d027",
+      "reason": "evidence_doesnt_support",
+      "status": "created",
+      "skip_reason": "",
+      "rule_id": 9,
+      "rule_text": "For use_case, assign call_coaching only when the transcript explicitly connects coaching to sales calls; general coaching needs or limited manager availability are not sufficient.",
+      "gate_passed": false,
+      "net_by_field": {
+        "budget": -1,
+        "decision_timeline": 1,
+        "competitors": 0,
+        "economic_buyer": -1,
+        "champion": 1,
+        "pain_points": 0,
+        "use_case": -1,
+        "next_step": 0,
+        "stage_signal": 0
+      },
+      "gate_reasons": [
+        "use_case net gain -1 is below the minimum 3",
+        "use_case net gain -1 does not exceed its noise allowance 7.0"
+      ],
+      "summary": "stays a candidate: use_case net gain -1 is below the minimum 3; use_case net gain -1 does not exceed its noise allowance 7.0",
+      "gate_cost_usd": 0.13023690000000002
+    },
+    {
+      "batch": 6,
+      "field": "budget",
+      "source_deal": "d096",
+      "reason": "not_crm_worthy",
+      "status": "skipped",
+      "skip_reason": "The rejection reflects an unspecified CRM-recording preference, not a general reason to exclude explicitly stated, provisional budget ranges."
+    },
+    {
+      "batch": 6,
+      "field": "next_step",
+      "source_deal": "d047",
+      "reason": "not_crm_worthy",
+      "status": "skipped",
+      "skip_reason": "The rejection reflects a company-specific CRM recording preference, with no basis for a general rule excluding explicitly committed buyer introductions."
+    },
+    {
+      "batch": 7,
+      "field": "budget",
+      "source_deal": "d093",
+      "reason": "not_crm_worthy",
+      "status": "skipped",
+      "skip_reason": "The rejection reflects company-specific CRM relevance and does not establish a general rule against recording explicitly stated, tentative budget ranges."
+    },
+    {
+      "batch": 7,
+      "field": "pain_points",
+      "source_deal": "d063",
+      "reason": "evidence_doesnt_support",
+      "status": "created",
+      "skip_reason": "",
+      "rule_id": 10,
+      "rule_text": "For pain_points, require explicit evidence of a current problem or difficulty; do not treat interest in a feature or a desired capability alone as a stated pain point.",
+      "gate_passed": false,
+      "net_by_field": {
+        "budget": 0,
+        "decision_timeline": 0,
+        "competitors": 0,
+        "economic_buyer": -1,
+        "champion": -1,
+        "pain_points": 0,
+        "use_case": 1,
+        "next_step": 2,
+        "stage_signal": 1
+      },
+      "gate_reasons": [
+        "pain_points net gain 0 is below the minimum 3",
+        "pain_points net gain 0 does not exceed its noise allowance 5.0"
+      ],
+      "summary": "stays a candidate: pain_points net gain 0 is below the minimum 3; pain_points net gain 0 does not exceed its noise allowance 5.0",
+      "gate_cost_usd": 0.12962320000000002
+    },
+    {
+      "batch": 7,
+      "field": "next_step",
+      "source_deal": "d063",
+      "reason": "not_crm_worthy",
+      "status": "skipped",
+      "skip_reason": "The reviewer rejected an explicitly agreed next step without identifying a general CRM inclusion criterion, so the rejection does not support a rule applicable across companies."
+    },
+    {
+      "batch": 8,
+      "field": "use_case",
+      "source_deal": "d092",
+      "reason": "wrong_value",
+      "status": "created",
+      "skip_reason": "",
+      "rule_id": 11,
+      "rule_text": "Populate use_case only with explicitly requested or intended activities; do not add a use case solely because it is mentioned as a business problem or desired outcome.",
+      "gate_passed": false,
+      "net_by_field": {
+        "budget": 0,
+        "decision_timeline": 0,
+        "competitors": 0,
+        "economic_buyer": -1,
+        "champion": -1,
+        "pain_points": 3,
+        "use_case": 2,
+        "next_step": 0,
+        "stage_signal": 0
+      },
+      "gate_reasons": [
+        "use_case net gain 2 is below the minimum 3",
+        "use_case net gain 2 does not exceed its noise allowance 7.0"
+      ],
+      "summary": "stays a candidate: use_case net gain 2 is below the minimum 3; use_case net gain 2 does not exceed its noise allowance 7.0",
+      "gate_cost_usd": 0.13591340000000007
+    }
+  ],
+  "final": {
+    "ruleset_version": 4,
+    "rules": [
+      {
+        "rule_id": 2,
+        "field": "champion",
+        "rule_text": "Set champion only when the transcript shows a person actively advocating for the purchase internally or helping advance it; do not infer champion status from pain points, enthusiasm, or product preference alone.",
+        "validated": 1
+      },
+      {
+        "rule_id": 1,
+        "field": "competitors",
+        "rule_text": "Record competitors only when the transcript ties them to the buyer's own evaluation or purchase decision; exclude third-party anecdotes and do not infer a ruled-out stance from a casual mention.",
+        "validated": 1
+      },
+      {
+        "rule_id": 7,
+        "field": "economic_buyer",
+        "rule_text": "Set economic_buyer only when evidence establishes final spending authority; do not infer it from someone quoting a budget or describing approval required from others.",
+        "validated": 1
+      }
+    ],
+    "example_counts": {
+      "decision_timeline": 3,
+      "pain_points": 2,
+      "use_case": 3,
+      "next_step": 3,
+      "stage_signal": 2
+    },
+    "prompt_version": "pv-ccfc7431"
+  },
+  "spend_usd": {
+    "review": 0.0212,
+    "gates": 1.414,
+    "snapshots": 0.5742,
+    "learner": 0.0302
+  },
+  "spend_total_usd": 2.0397
+}

@@ -1,0 +1,417 @@
+{
+  "metric": "proposal-level (PLAN D1)",
+  "repeats": 5,
+  "arms": {
+    "rules_only": {
+      "prompt_version": "pv-3ca2067f",
+      "repeats": 5,
+      "calls": 200,
+      "call_errors": 0,
+      "run_scores": [
+        0.8416666666666666,
+        0.8583333333333334,
+        0.8388888888888889,
+        0.8527777777777776,
+        0.85
+      ],
+      "mean_score": 0.8483333333333333,
+      "per_field_mean": {
+        "budget": 0.805,
+        "decision_timeline": 0.645,
+        "competitors": 1.0,
+        "economic_buyer": 0.98,
+        "champion": 0.92,
+        "pain_points": 0.79,
+        "use_case": 0.645,
+        "next_step": 0.875,
+        "stage_signal": 0.975
+      },
+      "truth_mean_score": 0.8781481481481481,
+      "truth_per_field_mean": {
+        "budget": 0.96,
+        "decision_timeline": 0.995,
+        "competitors": 0.92,
+        "economic_buyer": 0.98,
+        "champion": 0.775,
+        "pain_points": 0.775,
+        "use_case": 0.615,
+        "next_step": 0.9083333333333333,
+        "stage_signal": 0.975
+      },
+      "unsupported": 0,
+      "extracted_fields": 1464,
+      "cost_usd": 0.09905840000000005,
+      "by_group": {
+        "house_rule": {
+          "instances": 33,
+          "mean": 0.43636363636363634
+        },
+        "other": {
+          "instances": 287,
+          "mean": 0.8745644599303136
+        },
+        "trap": {
+          "instances": 40,
+          "mean": 1.0
+        }
+      },
+      "by_case": {
+        "ballpark_budget": {
+          "instances": 7,
+          "mean": 0.0
+        },
+        "buried_next_step": {
+          "instances": 6,
+          "mean": 1.0
+        },
+        "committed_champion": {
+          "instances": 7,
+          "mean": 0.7714285714285715
+        },
+        "competitor_threshold": {
+          "instances": 8,
+          "mean": 1.0
+        },
+        "dated_next_step": {
+          "instances": 5,
+          "mean": 0.2
+        },
+        "hedged_timeline": {
+          "instances": 8,
+          "mean": 1.0
+        },
+        "negation": {
+          "instances": 7,
+          "mean": 1.0
+        },
+        "quarter_timeline": {
+          "instances": 6,
+          "mean": 0.0
+        },
+        "speaker_attribution": {
+          "instances": 8,
+          "mean": 1.0
+        },
+        "superseded_value": {
+          "instances": 11,
+          "mean": 1.0
+        }
+      },
+      "paired_vs_v0": {
+        "instances": 360,
+        "improved": 19,
+        "worsened": 2,
+        "changed": 21,
+        "mcnemar_p": 0.00022125244140625,
+        "mean_diff": 0.041666666666666664,
+        "diff_ci95": [
+          0.022777777777777782,
+          0.06166666666666666
+        ],
+        "noise_flipped_instances": 25,
+        "clears_noise_floor": false
+      },
+      "rules": [
+        2,
+        1,
+        7
+      ],
+      "examples": 0
+    },
+    "fewshot_only": {
+      "prompt_version": "pv-1ed7f2a0",
+      "repeats": 5,
+      "calls": 200,
+      "call_errors": 0,
+      "run_scores": [
+        0.8555555555555555,
+        0.8388888888888889,
+        0.8388888888888889,
+        0.8388888888888889,
+        0.8416666666666666
+      ],
+      "mean_score": 0.8427777777777777,
+      "per_field_mean": {
+        "budget": 0.8,
+        "decision_timeline": 0.985,
+        "competitors": 0.92,
+        "economic_buyer": 0.81,
+        "champion": 0.825,
+        "pain_points": 0.695,
+        "use_case": 0.72,
+        "next_step": 0.865,
+        "stage_signal": 0.965
+      },
+      "truth_mean_score": 0.8288888888888888,
+      "truth_per_field_mean": {
+        "budget": 0.96,
+        "decision_timeline": 0.665,
+        "competitors": 0.865,
+        "economic_buyer": 0.81,
+        "champion": 0.875,
+        "pain_points": 0.695,
+        "use_case": 0.695,
+        "next_step": 0.93,
+        "stage_signal": 0.965
+      },
+      "unsupported": 3,
+      "extracted_fields": 1544,
+      "cost_usd": 0.1147385,
+      "by_group": {
+        "house_rule": {
+          "instances": 33,
+          "mean": 0.45454545454545453
+        },
+        "other": {
+          "instances": 287,
+          "mean": 0.8655052264808363
+        },
+        "trap": {
+          "instances": 40,
+          "mean": 1.0
+        }
+      },
+      "by_case": {
+        "ballpark_budget": {
+          "instances": 7,
+          "mean": 0.0
+        },
+        "buried_next_step": {
+          "instances": 6,
+          "mean": 1.0
+        },
+        "committed_champion": {
+          "instances": 7,
+          "mean": 0.42857142857142855
+        },
+        "competitor_threshold": {
+          "instances": 8,
+          "mean": 0.625
+        },
+        "dated_next_step": {
+          "instances": 5,
+          "mean": 0.2
+        },
+        "hedged_timeline": {
+          "instances": 8,
+          "mean": 1.0
+        },
+        "negation": {
+          "instances": 7,
+          "mean": 1.0
+        },
+        "quarter_timeline": {
+          "instances": 6,
+          "mean": 1.0
+        },
+        "speaker_attribution": {
+          "instances": 8,
+          "mean": 1.0
+        },
+        "superseded_value": {
+          "instances": 11,
+          "mean": 1.0
+        }
+      },
+      "paired_vs_v0": {
+        "instances": 360,
+        "improved": 22,
+        "worsened": 8,
+        "changed": 30,
+        "mcnemar_p": 0.016124801710247993,
+        "mean_diff": 0.03611111111111111,
+        "diff_ci95": [
+          0.01111111111111112,
+          0.06222222222222221
+        ],
+        "noise_flipped_instances": 25,
+        "clears_noise_floor": true
+      },
+      "rules": [],
+      "examples": 13
+    },
+    "both": {
+      "prompt_version": "pv-ccfc7431",
+      "repeats": 5,
+      "calls": 200,
+      "call_errors": 0,
+      "run_scores": [
+        0.9055555555555556,
+        0.8777777777777777,
+        0.8861111111111111,
+        0.8916666666666666,
+        0.8916666666666666
+      ],
+      "mean_score": 0.8905555555555555,
+      "per_field_mean": {
+        "budget": 0.81,
+        "decision_timeline": 0.965,
+        "competitors": 1.0,
+        "economic_buyer": 0.96,
+        "champion": 0.94,
+        "pain_points": 0.8,
+        "use_case": 0.71,
+        "next_step": 0.87,
+        "stage_signal": 0.96
+      },
+      "truth_mean_score": 0.8511111111111112,
+      "truth_per_field_mean": {
+        "budget": 0.975,
+        "decision_timeline": 0.63,
+        "competitors": 0.91,
+        "economic_buyer": 0.96,
+        "champion": 0.795,
+        "pain_points": 0.8,
+        "use_case": 0.685,
+        "next_step": 0.945,
+        "stage_signal": 0.96
+      },
+      "unsupported": 2,
+      "extracted_fields": 1463,
+      "cost_usd": 0.11407729999999996,
+      "by_group": {
+        "house_rule": {
+          "instances": 33,
+          "mean": 0.6242424242424243
+        },
+        "other": {
+          "instances": 287,
+          "mean": 0.9066202090592335
+        },
+        "trap": {
+          "instances": 40,
+          "mean": 0.995
+        }
+      },
+      "by_case": {
+        "ballpark_budget": {
+          "instances": 7,
+          "mean": 0.0
+        },
+        "buried_next_step": {
+          "instances": 6,
+          "mean": 1.0
+        },
+        "committed_champion": {
+          "instances": 7,
+          "mean": 0.8
+        },
+        "competitor_threshold": {
+          "instances": 8,
+          "mean": 1.0
+        },
+        "dated_next_step": {
+          "instances": 5,
+          "mean": 0.2
+        },
+        "hedged_timeline": {
+          "instances": 8,
+          "mean": 1.0
+        },
+        "negation": {
+          "instances": 7,
+          "mean": 1.0
+        },
+        "quarter_timeline": {
+          "instances": 6,
+          "mean": 1.0
+        },
+        "speaker_attribution": {
+          "instances": 8,
+          "mean": 0.975
+        },
+        "superseded_value": {
+          "instances": 11,
+          "mean": 1.0
+        }
+      },
+      "paired_vs_v0": {
+        "instances": 360,
+        "improved": 37,
+        "worsened": 3,
+        "changed": 40,
+        "mcnemar_p": 1.946500560734421e-08,
+        "mean_diff": 0.08388888888888889,
+        "diff_ci95": [
+          0.05611111111111112,
+          0.11277777777777777
+        ],
+        "noise_flipped_instances": 25,
+        "clears_noise_floor": true
+      },
+      "rules": [
+        2,
+        1,
+        7
+      ],
+      "examples": 13
+    }
+  },
+  "v0": {
+    "run_scores": [
+      0.8111111111111111,
+      0.7944444444444445,
+      0.8194444444444444,
+      0.8027777777777777,
+      0.8055555555555556
+    ],
+    "by_group": {
+      "house_rule": {
+        "instances": 33,
+        "mean": 0.2727272727272727
+      },
+      "other": {
+        "instances": 287,
+        "mean": 0.8411149825783972
+      },
+      "trap": {
+        "instances": 40,
+        "mean": 1.0
+      }
+    },
+    "by_case": {
+      "ballpark_budget": {
+        "instances": 7,
+        "mean": 0.0
+      },
+      "buried_next_step": {
+        "instances": 6,
+        "mean": 1.0
+      },
+      "committed_champion": {
+        "instances": 7,
+        "mean": 0.5428571428571428
+      },
+      "competitor_threshold": {
+        "instances": 8,
+        "mean": 0.525
+      },
+      "dated_next_step": {
+        "instances": 5,
+        "mean": 0.2
+      },
+      "hedged_timeline": {
+        "instances": 8,
+        "mean": 1.0
+      },
+      "negation": {
+        "instances": 7,
+        "mean": 1.0
+      },
+      "quarter_timeline": {
+        "instances": 6,
+        "mean": 0.0
+      },
+      "speaker_attribution": {
+        "instances": 8,
+        "mean": 1.0
+      },
+      "superseded_value": {
+        "instances": 11,
+        "mean": 1.0
+      }
+    },
+    "mean_score": 0.8066666666666666
+  },
+  "spend_usd": 0.3279
+}

@@ -1,0 +1,116 @@
+{
+  "rule_id": 7,
+  "field": "economic_buyer",
+  "rule_text": "Set economic_buyer only when evidence establishes final spending authority; do not infer it from someone quoting a budget or describing approval required from others.",
+  "metric": "pfields",
+  "transcripts": 40,
+  "repeats": 3,
+  "thresholds": {
+    "min_net_gain": 3,
+    "max_other_loss": 2
+  },
+  "allowance": {
+    "budget": 0.0,
+    "decision_timeline": 1.0,
+    "competitors": 3.0,
+    "economic_buyer": 3.0,
+    "champion": 2.0,
+    "pain_points": 5.0,
+    "use_case": 7.0,
+    "next_step": 2.0,
+    "stage_signal": 2.0
+  },
+  "changes": {
+    "budget": {
+      "improved": 0,
+      "worsened": 0
+    },
+    "decision_timeline": {
+      "improved": 0,
+      "worsened": 1
+    },
+    "competitors": {
+      "improved": 0,
+      "worsened": 0
+    },
+    "economic_buyer": {
+      "improved": 5,
+      "worsened": 1
+    },
+    "champion": {
+      "improved": 1,
+      "worsened": 1
+    },
+    "pain_points": {
+      "improved": 1,
+      "worsened": 1
+    },
+    "use_case": {
+      "improved": 3,
+      "worsened": 0
+    },
+    "next_step": {
+      "improved": 0,
+      "worsened": 1
+    },
+    "stage_signal": {
+      "improved": 0,
+      "worsened": 0
+    }
+  },
+  "truth_changes": {
+    "budget": {
+      "improved": 0,
+      "worsened": 1
+    },
+    "decision_timeline": {
+      "improved": 0,
+      "worsened": 1
+    },
+    "competitors": {
+      "improved": 2,
+      "worsened": 0
+    },
+    "economic_buyer": {
+      "improved": 5,
+      "worsened": 1
+    },
+    "champion": {
+      "improved": 1,
+      "worsened": 2
+    },
+    "pain_points": {
+      "improved": 1,
+      "worsened": 1
+    },
+    "use_case": {
+      "improved": 3,
+      "worsened": 0
+    },
+    "next_step": {
+      "improved": 0,
+      "worsened": 2
+    },
+    "stage_signal": {
+      "improved": 0,
+      "worsened": 0
+    }
+  },
+  "validation_score_before": 0.8648148148148147,
+  "validation_score_after": 0.8861111111111111,
+  "cost_usd": 0.12988140000000004,
+  "call_errors": 0,
+  "passed": true,
+  "net_by_field": {
+    "budget": 0,
+    "decision_timeline": -1,
+    "competitors": 0,
+    "economic_buyer": 4,
+    "champion": 0,
+    "pain_points": 0,
+    "use_case": 3,
+    "next_step": -1,
+    "stage_signal": 0
+  },
+  "reasons": []
+}

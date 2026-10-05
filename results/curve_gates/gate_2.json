@@ -1,0 +1,116 @@
+{
+  "rule_id": 2,
+  "field": "champion",
+  "rule_text": "Set champion only when the transcript shows a person actively advocating for the purchase internally or helping advance it; do not infer champion status from pain points, enthusiasm, or product preference alone.",
+  "metric": "pfields",
+  "transcripts": 40,
+  "repeats": 3,
+  "thresholds": {
+    "min_net_gain": 3,
+    "max_other_loss": 2
+  },
+  "allowance": {
+    "budget": 0.0,
+    "decision_timeline": 1.0,
+    "competitors": 3.0,
+    "economic_buyer": 3.0,
+    "champion": 2.0,
+    "pain_points": 5.0,
+    "use_case": 7.0,
+    "next_step": 2.0,
+    "stage_signal": 2.0
+  },
+  "changes": {
+    "budget": {
+      "improved": 0,
+      "worsened": 0
+    },
+    "decision_timeline": {
+      "improved": 0,
+      "worsened": 0
+    },
+    "competitors": {
+      "improved": 0,
+      "worsened": 0
+    },
+    "economic_buyer": {
+      "improved": 0,
+      "worsened": 1
+    },
+    "champion": {
+      "improved": 5,
+      "worsened": 0
+    },
+    "pain_points": {
+      "improved": 1,
+      "worsened": 1
+    },
+    "use_case": {
+      "improved": 3,
+      "worsened": 3
+    },
+    "next_step": {
+      "improved": 0,
+      "worsened": 0
+    },
+    "stage_signal": {
+      "improved": 0,
+      "worsened": 0
+    }
+  },
+  "truth_changes": {
+    "budget": {
+      "improved": 0,
+      "worsened": 0
+    },
+    "decision_timeline": {
+      "improved": 0,
+      "worsened": 0
+    },
+    "competitors": {
+      "improved": 3,
+      "worsened": 1
+    },
+    "economic_buyer": {
+      "improved": 0,
+      "worsened": 1
+    },
+    "champion": {
+      "improved": 2,
+      "worsened": 6
+    },
+    "pain_points": {
+      "improved": 2,
+      "worsened": 1
+    },
+    "use_case": {
+      "improved": 3,
+      "worsened": 4
+    },
+    "next_step": {
+      "improved": 1,
+      "worsened": 0
+    },
+    "stage_signal": {
+      "improved": 0,
+      "worsened": 0
+    }
+  },
+  "validation_score_before": 0.8546296296296295,
+  "validation_score_after": 0.8675925925925926,
+  "cost_usd": 0.12351720000000001,
+  "call_errors": 0,
+  "passed": true,
+  "net_by_field": {
+    "budget": 0,
+    "decision_timeline": 0,
+    "competitors": 0,
+    "economic_buyer": -1,
+    "champion": 5,
+    "pain_points": 0,
+    "use_case": 0,
+    "next_step": 0,
+    "stage_signal": 0
+  },
+  "reasons": []
+}

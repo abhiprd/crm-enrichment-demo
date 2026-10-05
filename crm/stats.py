@@ -42,7 +42,7 @@ def compare(base: dict, cand: dict, noise_flips: int, seed: int = 0) -> dict:
 
     An instance counts as correct when its mean credit over runs is at least 0.5 (majority-correct); it
     changed when that outcome differs. A change clears the noise floor only if the McNemar p-value is
-    below 0.05 AND the changed instances outnumber the instances that flip between V0's own runs.
+    below 0.05 AND the changed instances outnumber the instances that flip between the base arm's own runs (V0's for V0 pairings).
     """
     keys = sorted(set(base) & set(cand))
     mean = lambda xs: sum(xs) / len(xs)  # noqa: E731

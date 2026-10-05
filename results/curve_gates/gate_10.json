@@ -1,0 +1,119 @@
+{
+  "rule_id": 10,
+  "field": "pain_points",
+  "rule_text": "For pain_points, require explicit evidence of a current problem or difficulty; do not treat interest in a feature or a desired capability alone as a stated pain point.",
+  "metric": "pfields",
+  "transcripts": 40,
+  "repeats": 3,
+  "thresholds": {
+    "min_net_gain": 3,
+    "max_other_loss": 2
+  },
+  "allowance": {
+    "budget": 0.0,
+    "decision_timeline": 1.0,
+    "competitors": 3.0,
+    "economic_buyer": 3.0,
+    "champion": 2.0,
+    "pain_points": 5.0,
+    "use_case": 7.0,
+    "next_step": 2.0,
+    "stage_signal": 2.0
+  },
+  "changes": {
+    "budget": {
+      "improved": 0,
+      "worsened": 0
+    },
+    "decision_timeline": {
+      "improved": 0,
+      "worsened": 0
+    },
+    "competitors": {
+      "improved": 0,
+      "worsened": 0
+    },
+    "economic_buyer": {
+      "improved": 0,
+      "worsened": 1
+    },
+    "champion": {
+      "improved": 0,
+      "worsened": 1
+    },
+    "pain_points": {
+      "improved": 0,
+      "worsened": 0
+    },
+    "use_case": {
+      "improved": 1,
+      "worsened": 0
+    },
+    "next_step": {
+      "improved": 2,
+      "worsened": 0
+    },
+    "stage_signal": {
+      "improved": 1,
+      "worsened": 0
+    }
+  },
+  "truth_changes": {
+    "budget": {
+      "improved": 0,
+      "worsened": 0
+    },
+    "decision_timeline": {
+      "improved": 0,
+      "worsened": 0
+    },
+    "competitors": {
+      "improved": 1,
+      "worsened": 2
+    },
+    "economic_buyer": {
+      "improved": 0,
+      "worsened": 1
+    },
+    "champion": {
+      "improved": 2,
+      "worsened": 3
+    },
+    "pain_points": {
+      "improved": 0,
+      "worsened": 1
+    },
+    "use_case": {
+      "improved": 1,
+      "worsened": 0
+    },
+    "next_step": {
+      "improved": 1,
+      "worsened": 4
+    },
+    "stage_signal": {
+      "improved": 1,
+      "worsened": 0
+    }
+  },
+  "validation_score_before": 0.899074074074074,
+  "validation_score_after": 0.9018518518518519,
+  "cost_usd": 0.12962320000000002,
+  "call_errors": 0,
+  "passed": false,
+  "net_by_field": {
+    "budget": 0,
+    "decision_timeline": 0,
+    "competitors": 0,
+    "economic_buyer": -1,
+    "champion": -1,
+    "pain_points": 0,
+    "use_case": 1,
+    "next_step": 2,
+    "stage_signal": 1
+  },
+  "reasons": [
+    "pain_points net gain 0 is below the minimum 3",
+    "pain_points net gain 0 does not exceed its noise allowance 5.0"
+  ]
+}

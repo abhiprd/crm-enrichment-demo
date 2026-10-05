@@ -1,0 +1,119 @@
+{
+  "rule_id": 11,
+  "field": "use_case",
+  "rule_text": "Populate use_case only with explicitly requested or intended activities; do not add a use case solely because it is mentioned as a business problem or desired outcome.",
+  "metric": "pfields",
+  "transcripts": 40,
+  "repeats": 3,
+  "thresholds": {
+    "min_net_gain": 3,
+    "max_other_loss": 2
+  },
+  "allowance": {
+    "budget": 0.0,
+    "decision_timeline": 1.0,
+    "competitors": 3.0,
+    "economic_buyer": 3.0,
+    "champion": 2.0,
+    "pain_points": 5.0,
+    "use_case": 7.0,
+    "next_step": 2.0,
+    "stage_signal": 2.0
+  },
+  "changes": {
+    "budget": {
+      "improved": 0,
+      "worsened": 0
+    },
+    "decision_timeline": {
+      "improved": 0,
+      "worsened": 0
+    },
+    "competitors": {
+      "improved": 0,
+      "worsened": 0
+    },
+    "economic_buyer": {
+      "improved": 0,
+      "worsened": 1
+    },
+    "champion": {
+      "improved": 0,
+      "worsened": 1
+    },
+    "pain_points": {
+      "improved": 3,
+      "worsened": 0
+    },
+    "use_case": {
+      "improved": 3,
+      "worsened": 1
+    },
+    "next_step": {
+      "improved": 0,
+      "worsened": 0
+    },
+    "stage_signal": {
+      "improved": 0,
+      "worsened": 0
+    }
+  },
+  "truth_changes": {
+    "budget": {
+      "improved": 1,
+      "worsened": 0
+    },
+    "decision_timeline": {
+      "improved": 0,
+      "worsened": 0
+    },
+    "competitors": {
+      "improved": 1,
+      "worsened": 2
+    },
+    "economic_buyer": {
+      "improved": 0,
+      "worsened": 1
+    },
+    "champion": {
+      "improved": 1,
+      "worsened": 2
+    },
+    "pain_points": {
+      "improved": 3,
+      "worsened": 0
+    },
+    "use_case": {
+      "improved": 3,
+      "worsened": 1
+    },
+    "next_step": {
+      "improved": 1,
+      "worsened": 0
+    },
+    "stage_signal": {
+      "improved": 0,
+      "worsened": 0
+    }
+  },
+  "validation_score_before": 0.8907407407407407,
+  "validation_score_after": 0.8999999999999999,
+  "cost_usd": 0.13591340000000007,
+  "call_errors": 0,
+  "passed": false,
+  "net_by_field": {
+    "budget": 0,
+    "decision_timeline": 0,
+    "competitors": 0,
+    "economic_buyer": -1,
+    "champion": -1,
+    "pain_points": 3,
+    "use_case": 2,
+    "next_step": 0,
+    "stage_signal": 0
+  },
+  "reasons": [
+    "use_case net gain 2 is below the minimum 3",
+    "use_case net gain 2 does not exceed its noise allowance 7.0"
+  ]
+}

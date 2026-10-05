@@ -1,0 +1,64 @@
+{
+  "calls": 10,
+  "proposals": 58,
+  "reviewed_by_human": 58,
+  "still_pending": 0,
+  "same_decision_kind": 45,
+  "same_decision_and_detail": 43,
+  "confusion": {
+    "human_approve__oracle_approve": 43,
+    "human_approve__oracle_reject": 3,
+    "human_reject__oracle_approve": 1,
+    "human_approve__oracle_edit": 6,
+    "human_edit__oracle_approve": 3,
+    "human_reject__oracle_reject": 2
+  },
+  "human_decisions": {
+    "approve": 52,
+    "reject": 3,
+    "edit": 3
+  },
+  "oracle_decisions_same_proposals": {
+    "approve": 47,
+    "reject": 5,
+    "edit": 6
+  },
+  "human_error_rate_edit_or_reject": 0.10344827586206895,
+  "oracle_error_rate_edit_or_reject": 0.18965517241379315,
+  "by_field": {
+    "budget": {
+      "agree": 6,
+      "differ": 1
+    },
+    "champion": {
+      "differ": 1,
+      "agree": 4
+    },
+    "competitors": {
+      "agree": 8
+    },
+    "decision_timeline": {
+      "agree": 3,
+      "differ": 3
+    },
+    "economic_buyer": {
+      "agree": 5
+    },
+    "next_step": {
+      "differ": 2,
+      "agree": 3
+    },
+    "pain_points": {
+      "agree": 3,
+      "differ": 2
+    },
+    "stage_signal": {
+      "agree": 10
+    },
+    "use_case": {
+      "agree": 3,
+      "differ": 4
+    }
+  },
+  "note": "oracle = idealized reviewer from the answer key; reject reason and edit text compared as well (same_decision_and_detail). Proposals the human left pending are excluded."
+}

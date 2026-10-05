@@ -140,3 +140,29 @@ def baseline(settings: Settings, paths: Paths, run: bool, approved: bool, client
            "note": "Prompt tuned on the learn split only; scored on validation, never used for tuning."}
     _write(paths, "manual_baseline.json", out)
     return out
+
+
+def _cached_runs(paths: Paths, cache_name: str, report: dict, ids: list) -> list:
+    cache = json.loads((paths.root / "results" / cache_name).read_text())
+    return [[evalrun.rescore_proposals(paths, cache[evalrun.cache_key(report["prompt_version"], report["model"],
+                                                                      report["effort"], rep, d)])
+             for d in ids] for rep in range(report["repeats"])]
+
+
+def rescore(paths: Paths) -> dict:
+    """Proposal-level view of the saved V0 noise runs and manual-baseline runs (no API calls) ->
+    results/proposal_scores.json. Includes V0's proposal-level flip rates, which the gate uses as its allowance."""
+    v0 = json.loads((paths.root / "results" / "v0_noise.json").read_text())["report"]
+    bl = json.loads((paths.root / "results" / "manual_baseline.json").read_text())["report"]
+    ids = split_ids(paths, "validation")
+    v0_runs = evalrun.as_metric(_cached_runs(paths, "v0_noise_runs.json", v0, ids), "pfields")
+    bl_runs = evalrun.as_metric(_cached_runs(paths, "manual_baseline_runs.json", bl, ids), "pfields")
+    rep = lambda label, runs, src: evalrun.run_report(label, runs, model=src["model"], effort=src["effort"],  # noqa: E731
+                                                      prompt=src["prompt_version"], split="validation")
+    r0, r1 = rep("v0-proposal", v0_runs, v0), rep("baseline-proposal", bl_runs, bl)
+    cmp = stats.compare(evalrun.instance_credits(v0_runs), evalrun.instance_credits(bl_runs), r0["flipped_instances"])
+    out = {"metric": "proposal-level: extraction -> proposal vs expected_proposal (PLAN D1)",
+           "v0": r0, "manual_baseline": r1, "paired_baseline_vs_v0": cmp,
+           "note": "Re-scored from saved raw extractions; no API calls. next_step proposes the first listed step only."}
+    _write(paths, "proposal_scores.json", out)
+    return out

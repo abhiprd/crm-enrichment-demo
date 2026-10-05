@@ -140,6 +140,7 @@ def repo(tmp_path):
     ingest_inbox(p, settle_seconds=0)
     (tmp_path / "results").mkdir(exist_ok=True)
     (tmp_path / "results" / "v0_noise.json").write_text(json.dumps({"report": {"flip_rate_by_field": {}}}))
+    (tmp_path / "results" / "proposal_scores.json").write_text(json.dumps({"v0": {"flip_rate_by_field": {}}}))
     return p
 
 

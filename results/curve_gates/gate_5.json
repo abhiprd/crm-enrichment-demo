@@ -1,0 +1,118 @@
+{
+  "rule_id": 5,
+  "field": "economic_buyer",
+  "rule_text": "Set economic_buyer only when the transcript supports that the person has final spending approval authority; do not treat someone providing a budget estimate as the economic buyer.",
+  "metric": "pfields",
+  "transcripts": 40,
+  "repeats": 3,
+  "thresholds": {
+    "min_net_gain": 3,
+    "max_other_loss": 2
+  },
+  "allowance": {
+    "budget": 0.0,
+    "decision_timeline": 1.0,
+    "competitors": 3.0,
+    "economic_buyer": 3.0,
+    "champion": 2.0,
+    "pain_points": 5.0,
+    "use_case": 7.0,
+    "next_step": 2.0,
+    "stage_signal": 2.0
+  },
+  "changes": {
+    "budget": {
+      "improved": 2,
+      "worsened": 0
+    },
+    "decision_timeline": {
+      "improved": 1,
+      "worsened": 0
+    },
+    "competitors": {
+      "improved": 0,
+      "worsened": 0
+    },
+    "economic_buyer": {
+      "improved": 3,
+      "worsened": 0
+    },
+    "champion": {
+      "improved": 0,
+      "worsened": 1
+    },
+    "pain_points": {
+      "improved": 0,
+      "worsened": 1
+    },
+    "use_case": {
+      "improved": 3,
+      "worsened": 2
+    },
+    "next_step": {
+      "improved": 0,
+      "worsened": 2
+    },
+    "stage_signal": {
+      "improved": 1,
+      "worsened": 0
+    }
+  },
+  "truth_changes": {
+    "budget": {
+      "improved": 2,
+      "worsened": 1
+    },
+    "decision_timeline": {
+      "improved": 1,
+      "worsened": 1
+    },
+    "competitors": {
+      "improved": 0,
+      "worsened": 1
+    },
+    "economic_buyer": {
+      "improved": 3,
+      "worsened": 0
+    },
+    "champion": {
+      "improved": 1,
+      "worsened": 0
+    },
+    "pain_points": {
+      "improved": 0,
+      "worsened": 1
+    },
+    "use_case": {
+      "improved": 3,
+      "worsened": 2
+    },
+    "next_step": {
+      "improved": 1,
+      "worsened": 2
+    },
+    "stage_signal": {
+      "improved": 1,
+      "worsened": 0
+    }
+  },
+  "validation_score_before": 0.8703703703703703,
+  "validation_score_after": 0.875,
+  "cost_usd": 0.12850040000000001,
+  "call_errors": 0,
+  "passed": false,
+  "net_by_field": {
+    "budget": 2,
+    "decision_timeline": 1,
+    "competitors": 0,
+    "economic_buyer": 3,
+    "champion": -1,
+    "pain_points": -1,
+    "use_case": 1,
+    "next_step": -2,
+    "stage_signal": 1
+  },
+  "reasons": [
+    "economic_buyer net gain 3 does not exceed its noise allowance 3.0"
+  ]
+}

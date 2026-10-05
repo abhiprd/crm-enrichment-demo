@@ -111,9 +111,21 @@ def cmd_eval(args, paths: Paths) -> int:
         ids = bakeoff.select_deals(dealset)
         deal_path.parent.mkdir(exist_ok=True)
         deal_path.write_text(json.dumps({"seed": bakeoff.SEED, "split": "validation", "deals": ids}, indent=2))
-    if args.what in ("noise", "learn", "learn-errors", "baseline"):
+    if args.what in ("curve", "ablate", "test"):
+        from . import curve
+        if args.what == "curve":
+            out = curve.run_curve(settings, paths) if args.run else {"dry_run": True, **curve.plan_curve(settings, paths)}
+        elif args.what == "ablate":
+            out = curve.run_ablation(settings, paths) if args.run else {"dry_run": True, "arms": 3, "repeats": 5}
+        else:
+            out = curve.run_test(settings, paths, args.confirm_frozen) if args.run else {"dry_run": True, **curve.test_plan(settings, paths)}
+        print(json.dumps(out, indent=2))
+        return 0
+    if args.what in ("noise", "learn", "learn-errors", "baseline", "rescore"):
         from . import evalcmds
-        if args.what == "noise":
+        if args.what == "rescore":
+            out = evalcmds.rescore(paths)
+        elif args.what == "noise":
             out = evalcmds.noise(settings, paths, args.run)
         elif args.what == "learn":
             out = evalcmds.learn_round(settings, paths, Path(args.prompt), args.round, args.run)
@@ -147,6 +159,29 @@ def cmd_eval(args, paths: Paths) -> int:
     result = bakeoff.run_bakeoff(settings, paths, ids, args.repeats)
     print(json.dumps(result["selection"], indent=2))
     print("wrote results/bakeoff.json")
+    return 0
+
+
+def cmd_handreview(args, paths: Paths) -> int:
+    from . import handreview
+    from .config import Settings
+    settings = Settings.load()
+    if args.action == "report":
+        print(json.dumps(handreview.report(paths), indent=2))
+        return 0
+    if args.action == "build":
+        if not args.run:
+            print(json.dumps({"dry_run": True, "calls": handreview.choose_calls(paths), "extractor_calls": len(handreview.choose_calls(paths))}))
+            return 0
+        print(json.dumps(handreview.build(settings, paths), indent=2))
+        return 0
+    if not args.live:
+        print("post and serve talk to Slack: pass --live")
+        return 1
+    if args.action == "post":
+        print(json.dumps({"posted": handreview.post(settings, paths)}, indent=2))
+        return 0
+    handreview.serve(settings, paths)
     return 0
 
 
@@ -219,14 +254,20 @@ def main(argv: list[str] | None = None) -> int:
     sub.add_parser("status", help="dataset progress by split")
 
     pe = sub.add_parser("eval", help="eval experiments (dry-run plan by default)")
-    pe.add_argument("what", choices=["bakeoff", "bakeoff-deals", "noise", "learn", "learn-errors", "baseline"])
+    pe.add_argument("what", choices=["bakeoff", "bakeoff-deals", "noise", "learn", "learn-errors", "baseline", "rescore", "curve", "ablate", "test"])
     pe.add_argument("--prompt", default="prompts/extractor_v0.md", help="prompt for learn / learn-errors")
     pe.add_argument("--round", type=int, default=0, help="iteration number for `learn`")
     pe.add_argument("--limit", type=int, default=40, help="max rows for learn-errors")
     pe.add_argument("--approved", action="store_true", help="baseline prompt approved by the project owner")
+    pe.add_argument("--confirm-frozen", action="store_true", help="test: the project owner confirmed the final version is frozen")
     pe.add_argument("--run", action="store_true", help="call OpenAI for real (default prints the plan and estimate)")
     pe.add_argument("--smoke", action="store_true", help="one call per setting on a fixture transcript")
     pe.add_argument("--repeats", type=int, default=3)
+
+    ph = sub.add_parser("handreview", help="hand-review cards for ~10 validation calls (no HubSpot writes)")
+    ph.add_argument("action", choices=["build", "post", "serve", "report"])
+    ph.add_argument("--run", action="store_true", help="build: call OpenAI (default prints the plan)")
+    ph.add_argument("--live", action="store_true", help="post/serve: use Slack")
 
     pp = sub.add_parser("preflight", help="verify keys, scopes, models and channels before any live step")
     pp.add_argument("--only", action="append", choices=["hubspot", "slack", "openai"])
@@ -243,7 +284,7 @@ def main(argv: list[str] | None = None) -> int:
     args = p.parse_args(argv)
     paths = Paths.from_env(args.root)
     load_env(paths.root)
-    handlers = {"ingest": cmd_ingest, "request": cmd_request, "status": cmd_status, "slice": cmd_slice, "eval": cmd_eval, "preflight": cmd_preflight, "rules": cmd_rules}
+    handlers = {"ingest": cmd_ingest, "request": cmd_request, "status": cmd_status, "slice": cmd_slice, "eval": cmd_eval, "preflight": cmd_preflight, "handreview": cmd_handreview, "rules": cmd_rules}
     return handlers[args.cmd](args, paths)
 
 

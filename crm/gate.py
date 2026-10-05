@@ -6,7 +6,10 @@ compares per-instance majority outcomes. Thresholds are fixed here, before any r
   target field:  improved - worsened >= MIN_NET_GAIN  AND  > that field's flip allowance
   other fields:  no field may lose more than MAX_OTHER_LOSS net instances
 
-A field's flip allowance is its V0 run-to-run flip rate (results/v0_noise.json) x the number of transcripts.
+A field's flip allowance is its V0 run-to-run flip rate x the number of transcripts. Outcomes are proposal-level
+(did the extraction lead to the expected proposal, PLAN D1), so the allowance is V0's proposal-level flip rate
+(results/proposal_scores.json, from `crm eval rescore`); the truth-level rate in results/v0_noise.json applies
+only to metric "fields". The thresholds below did not change; only the outcome they are applied to did.
 Keys are read in code only; this module writes aggregate counts, never truth."""
 
 from __future__ import annotations
@@ -28,12 +31,15 @@ MIN_NET_GAIN = 3
 MAX_OTHER_LOSS = 2
 
 
-def field_allowance(paths: Paths, n_transcripts: int) -> dict:
+def field_allowance(paths: Paths, n_transcripts: int, metric: str = "fields") -> dict:
     """Expected flipped instances per field: V0 flip rate x transcripts. Missing noise file means no allowance data."""
-    f = paths.root / "results" / "v0_noise.json"
+    name = "v0_noise.json" if metric == "fields" else "proposal_scores.json"
+    f = paths.root / "results" / name
     if not f.exists():
-        raise SystemExit("results/v0_noise.json is missing: the gate needs the measured noise floor")
-    rates = json.loads(f.read_text())["report"]["flip_rate_by_field"]
+        raise SystemExit(f"results/{name} is missing: the gate needs the measured noise floor"
+                         + (" (run `crm eval rescore`)" if metric != "fields" else ""))
+    data = json.loads(f.read_text())
+    rates = data["report"]["flip_rate_by_field"] if metric == "fields" else data["v0"]["flip_rate_by_field"]
     return {fld: (rates.get(fld) or 0.0) * n_transcripts for fld in FIELDS}
 
 
@@ -84,8 +90,10 @@ def plan(settings: Settings, conn, paths: Paths, rule_id: int) -> dict:
             "calls_if_nothing_cached": 2 * REPEATS * len(ids)}
 
 
-def validate_rule(settings: Settings, conn, paths: Paths, rule_id: int, client=None) -> dict:
-    """Replay validation with and without the rule; write results/gate_<rule_id>.json; return the result."""
+def validate_rule(settings: Settings, conn, paths: Paths, rule_id: int, client=None, metric: str = "pfields",
+                  out_name: Optional[str] = None) -> dict:
+    """Replay validation with and without the rule; write results/<out_name or gate_<rule_id>.json>; return the
+    result. `metric` is "pfields" (proposal-level, the default since M5) or "fields" (truth-level, M4)."""
     rule = rules.get_rule(conn, rule_id)
     ids = split_ids(paths, "validation")
     base_t, cand_t = _templates(conn, rule)
@@ -94,20 +102,24 @@ def validate_rule(settings: Settings, conn, paths: Paths, rule_id: int, client=N
                   cache_path=cache, client=client)
     base_runs = evalrun.run_spec(settings, paths, ids, template=base_t, tag=f"gate-base-{rule_id}", **common)
     cand_runs = evalrun.run_spec(settings, paths, ids, template=cand_t, tag=f"gate-rule-{rule_id}", **common)
-    changes = net_changes(base_runs, cand_runs)
-    verdict = decide(changes, rule["field"], field_allowance(paths, len(ids)))
-    before = evalrun.aggregate("base", base_runs)["mean_score"]
-    after = evalrun.aggregate("candidate", cand_runs)["mean_score"]
-    result = {"rule_id": rule_id, "field": rule["field"], "rule_text": rule["rule_text"],
+    base_p, cand_p = evalrun.as_metric(base_runs, metric), evalrun.as_metric(cand_runs, metric)
+    changes = net_changes(base_p, cand_p)
+    allowance = field_allowance(paths, len(ids), metric)
+    verdict = decide(changes, rule["field"], allowance)
+    before = evalrun.aggregate("base", base_p)["mean_score"]
+    after = evalrun.aggregate("candidate", cand_p)["mean_score"]
+    result = {"rule_id": rule_id, "field": rule["field"], "rule_text": rule["rule_text"], "metric": metric,
               "transcripts": len(ids), "repeats": REPEATS,
               "thresholds": {"min_net_gain": MIN_NET_GAIN, "max_other_loss": MAX_OTHER_LOSS},
-              "allowance": {f: round(v, 2) for f, v in field_allowance(paths, len(ids)).items()},
-              "changes": changes, "validation_score_before": before, "validation_score_after": after,
+              "allowance": {f: round(v, 2) for f, v in allowance.items()},
+              "changes": changes, "truth_changes": net_changes(base_runs, cand_runs),
+              "validation_score_before": before, "validation_score_after": after,
               "cost_usd": evalrun.aggregate("b", base_runs)["total_cost"] + evalrun.aggregate("c", cand_runs)["total_cost"],
               "call_errors": evalrun.aggregate("b", base_runs)["call_errors"] + evalrun.aggregate("c", cand_runs)["call_errors"],
               **verdict}
-    (paths.root / "results").mkdir(exist_ok=True)
-    (paths.root / "results" / f"gate_{rule_id}.json").write_text(json.dumps(result, indent=2), encoding="utf-8")
+    out_path = paths.root / "results" / (out_name or f"gate_{rule_id}.json")
+    out_path.parent.mkdir(parents=True, exist_ok=True)
+    out_path.write_text(json.dumps(result, indent=2), encoding="utf-8")
     return result
 
 
