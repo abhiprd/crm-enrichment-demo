@@ -1,0 +1,31 @@
+{
+  "source": "local spend logs (results/crm.sqlite, results/curve.sqlite, results/handreview.sqlite; git-ignored, so this file regenerates only locally). Extractor stats: requests with purpose extract at the selected model and effort, pooled across every run at that setting (validation, test, noise floor, baseline, gates, ablation, demo; includes archived first-pass runs); excludes extract-retry, debug and the effort-low and effort-medium bake-off calls. Learner stats: purpose rule-learner at effort low, both logs.",
+  "extractor": {
+    "model": "gpt-6-luna",
+    "effort": "none",
+    "calls": 5691,
+    "mean_cost_usd": 0.000524977965208222,
+    "mean_latency_ms": 4832.733965911088,
+    "p50_latency_ms": 4284,
+    "p95_latency_ms": 7964,
+    "mean_input_tokens": 2484.356000702864,
+    "mean_output_tokens": 553.2321208926375,
+    "total_cost_usd": 2.9876495999999912
+  },
+  "rule_learner": {
+    "model": "gpt-6.1-sol",
+    "calls": 22,
+    "mean_cost_usd": 0.0015026363636363638,
+    "mean_latency_ms": 3290.9545454545455
+  },
+  "crm_fill_rate": {
+    "calls": 10,
+    "fields_per_call": 8,
+    "cells": 80,
+    "filled_before": 36,
+    "filled_after": 62,
+    "fill_rate_before": 0.45,
+    "fill_rate_after": 0.775,
+    "note": "after = filled before, or an approved/edited proposal on that field, from the hand-reviewed decisions (one reviewer)"
+  }
+}

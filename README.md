@@ -55,6 +55,52 @@ python3 -m crm eval noise [--run]       # V0 noise floor on the validation split
 python3 -m crm eval baseline [--run --approved]
 ```
 
+## Results
+
+Scores come in two kinds. **Truth level** asks whether the extraction matches what was said on the call. **Proposal level** asks whether it leads to the proposal that should land in the CRM after company house rules (for example, timelines are recorded as quarters). House rules are never shown to the extractor; the loop has to learn them from reviewer feedback. All numbers below come from files in `results/` and are generated into the charts by `python3 -m crm charts`. The detail, denominators, and caveats are in [STATUS.md](STATUS.md).
+
+![Validation score by learning batch](docs/charts/curve.svg)
+
+An oracle reviewer (a script that plays the reviewer from the answer key) went through the 40 learn transcripts in 8 batches; after each batch the extractor was scored on the 40 validation transcripts. At proposal level (3 runs per point), the 33 house-rule instances per run rose from 0.313 to 0.616 and the all-field score from 0.815 to 0.890 (`results/curve.json`). At truth level the same runs went from 0.865 to 0.851. Validation was also used to gate rules, so this line is tuned-on, not held out.
+
+![Ablation](docs/charts/ablation.svg)
+
+On validation (5 runs per arm, 360 instances), V0 scored 0.807, rules only 0.848, examples only 0.843 and both 0.891 (`results/ablation.json`). Against V0's 25 flipped instances, examples only changed 30 (22 improved, 8 worsened) and both changed 40 (37 improved, 3 worsened), so both clear the pre-set noise rule. Rules only changed 21 (19 improved, 2 worsened), which is within noise. The ablation tests the final state, not individual rules, and these are tuned-on validation numbers.
+
+![Test split](docs/charts/test.svg)
+
+On the single test run (20 transcripts x 9 fields = 180 instances, 5 runs per arm, `results/test_run.json`), proposal-level scores were V0 0.818, manual baseline 0.852 and final 0.912. Final vs baseline changed 18 of 180 instances (14 improved, 4 worsened; p = 0.031 against a bar of 8 flips), which clears the pre-set rule. **At truth level the order reverses**: V0 0.879, baseline 0.926, final 0.850 (no paired test stored, so "lower", not "significantly lower"). The final version was tuned toward the proposal metric, so its gain is not better extraction against the labels. The test split has been used once and must not be run again.
+
+The oracle's edit-or-reject share by batch (with Wilson intervals) and its reject reasons are below. The bands overlap, and the extractor changed between batches, so no trend is tested.
+
+![Error rate](docs/charts/review_error.svg)
+
+![Reject reasons](docs/charts/reject_reasons.svg)
+
+![Rule inventory](docs/charts/rules.svg)
+
+Of 11 candidate rules drafted from rejects, 3 passed the validation gate. The learner declined to write a rule for 9 rejects, including every budget and next-step reject it examined, so the ballpark-budget house rule stayed at 0 of 7 instances at every point (`results/curve.json`). The oracle gave only a reason code, no note; whether the cause is that, the learner, or an unlearnable rule was not isolated.
+
+A single reviewer (the project owner) also reviewed 58 proposals on 10 validation calls. Their decision kind matched the oracle's on 45 of 58 (`results/handreview.json`); these are validation calls (not held out) and the reviewer knew the learn-split work, so it is a small, single-reviewer sample and the oracle is not a proven stand-in for a human.
+
+### Unit economics
+
+From `results/unit_economics.json`, built from local spend logs (git-ignored, so it regenerates only locally). These are per model request, not per transcript or deal.
+
+| Item | Value |
+| --- | --- |
+| Extractor requests at the selected setting (`gpt-6-luna`, effort `none`) | 5,691 logged, pooled across every validation, test, noise-floor, baseline, gate, ablation and demo run at that setting; excludes retries and the effort-low and effort-medium bake-off calls |
+| Mean cost per extractor request | $0.000525 |
+| Latency per extractor request | 4.8 s mean, 4.3 s median, 8.0 s at the 95th percentile |
+| Tokens per extractor request (means; prompts vary by run) | about 2,484 in, 553 out |
+| Rule learner (`gpt-6.1-sol`, effort low) | 22 requests, $0.0015 each, 3.3 s mean |
+| Learning-curve run | $2.04 (`results/curve.json`) |
+| Ablation | $0.33 (`results/ablation.json`) |
+| Test run | $0.16 (`results/test_run.json`) |
+| CRM field slots held a value, hand-reviewed calls | 36 of 80 before the call; 62 of 80 after the reviewer's approved or edited proposals |
+
+The curve, ablation and test costs are subsets of the logged requests, not additions to them, and none of this is the project's total spend. The fill-rate row counts filled slots (10 validation calls x 8 fields), not correct values; it comes from one reviewer's decisions, whose clicks went to a stub and wrote nothing to HubSpot, so it is a demonstration, not a rate to expect elsewhere.
+
 ## Repository layout
 
 | Path | Contents |
@@ -63,7 +109,8 @@ python3 -m crm eval baseline [--run --approved]
 | `data/` | Deals and answer keys, taxonomy and label definitions, transcripts, audit verdicts |
 | `prompts/` | Extractor prompts, transcript generator prompt, the demo transcript |
 | `scripts/` | Deal generator, HubSpot seeding, hand-check worksheets |
-| `results/` | Eval outputs (noise floor, baseline, bake-off) |
+| `results/` | Eval outputs (noise floor, baseline, bake-off, curve, ablation, test run, hand review, unit economics) |
+| `docs/charts/` | The static SVG charts used above, regenerated by `python3 -m crm charts` |
 | `tests/` | Unit and end-to-end dry-run tests |
 | `docs/SPEC.md`, `PLAN.md`, `STATUS.md` | Specification, build plan, and current progress with measured results |
 
@@ -81,10 +128,11 @@ Python, SQLite, Slack Bolt (Socket Mode), the HubSpot REST API (service key), an
 - **M3, Slack review loop and writeback**: batched review cards with edit and reject modals, authorization, stale-value handling, deal notes, folder watcher, live demo.
 - **M4, Learning loop**: a reject becomes a plain-English rule written by a second model, put in force immediately (demo mode) or after validation, replayed on the validation split by a gate, stored in append-only versions that can be reverted. Demonstrated live on a paired call.
 
+- **M5, Experiments**: oracle reviewer, learning curve, ablation, the single test-set run, and a human-versus-oracle reviewer comparison.
+- **M6, Charts and unit economics**: static charts (below) and a cost and latency table, generated from `results/` by `python3 -m crm charts`.
+
 **To do**
 
-- **M5, Experiments**: oracle reviewer, learning curve, ablations, the single test-set run, and a human-versus-oracle reviewer comparison.
-- **M6, Charts and unit economics**: static charts and a cost and latency table.
 - **M7, Write-up and demo**: final write-up, a short demo recording, and a limitations section.
 
 Measured results and per-milestone evidence are tracked in [STATUS.md](STATUS.md).

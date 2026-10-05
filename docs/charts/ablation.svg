@@ -1,0 +1,55 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 330" width="720" height="330" role="img" aria-label="Ablation on validation: final state with and without each ingredient. 5 runs per arm, 40 validation transcripts; dot = one run, tick = mean">
+<style>
+:root{--bg:#fcfcfb;--ink:#0b0b0b;--ink2:#52514e;--grid:#e3e2de;--s1:#2a78d6;--s2:#eb6834;--s3:#1baf7a;--s4:#8a8984}
+@media (prefers-color-scheme: dark){:root{--bg:#1a1a19;--ink:#fff;--ink2:#c3c2b7;--grid:#34332f;--s1:#3987e5;--s2:#d95926;--s3:#199e70;--s4:#8a8984}}
+text{font-family:system-ui,-apple-system,Segoe UI,Helvetica,Arial,sans-serif;fill:var(--ink)}
+.t{font-size:16px;font-weight:600}.sub{font-size:12px;fill:var(--ink2)}.ax{font-size:11px;fill:var(--ink2)}
+.lab{font-size:12px}.grid{stroke:var(--grid);stroke-width:1}.axis{stroke:var(--ink2);stroke-width:1}
+</style>
+<rect width="720" height="330" fill="var(--bg)"/>
+<text class="t" x="24" y="28">Ablation on validation: final state with and without each ingredient</text>
+<text class="sub" x="24" y="46">5 runs per arm, 40 validation transcripts; dot = one run, tick = mean</text>
+<line class="grid" x1="278.9" x2="278.9" y1="84" y2="266"/>
+<line class="grid" x1="415.0" x2="415.0" y1="84" y2="266"/>
+<line class="grid" x1="551.1" x2="551.1" y1="84" y2="266"/>
+<text class="ax" x="278.9" y="282" text-anchor="middle">0.80</text>
+<text class="ax" x="415.0" y="282" text-anchor="middle">0.85</text>
+<text class="ax" x="551.1" y="282" text-anchor="middle">0.90</text>
+<text class="ax" x="415" y="300" text-anchor="middle">Mean proposal-level score per run (axis starts at 0.76)</text>
+<text class="lab" x="160" y="110.8" text-anchor="end">V0 (empty ruleset)</text>
+<line x1="263.8" x2="331.8" y1="106.8" y2="106.8" stroke="var(--s4)" stroke-width="2" opacity="0.5"/>
+<circle cx="309.1" cy="106.8" r="4" fill="var(--s4)" stroke="var(--bg)" stroke-width="2"/>
+<circle cx="263.8" cy="106.8" r="4" fill="var(--s4)" stroke="var(--bg)" stroke-width="2"/>
+<circle cx="331.8" cy="106.8" r="4" fill="var(--s4)" stroke="var(--bg)" stroke-width="2"/>
+<circle cx="286.5" cy="106.8" r="4" fill="var(--s4)" stroke="var(--bg)" stroke-width="2"/>
+<circle cx="294.0" cy="106.8" r="4" fill="var(--s4)" stroke="var(--bg)" stroke-width="2"/>
+<line x1="297.0" x2="297.0" y1="94.8" y2="118.8" stroke="var(--ink)" stroke-width="2"/>
+<text class="lab" x="668" y="110.8">0.807</text>
+<text class="lab" x="160" y="156.2" text-anchor="end">rules only</text>
+<line x1="384.8" x2="437.7" y1="152.2" y2="152.2" stroke="var(--s1)" stroke-width="2" opacity="0.5"/>
+<circle cx="392.3" cy="152.2" r="4" fill="var(--s1)" stroke="var(--bg)" stroke-width="2"/>
+<circle cx="437.7" cy="152.2" r="4" fill="var(--s1)" stroke="var(--bg)" stroke-width="2"/>
+<circle cx="384.8" cy="152.2" r="4" fill="var(--s1)" stroke="var(--bg)" stroke-width="2"/>
+<circle cx="422.6" cy="152.2" r="4" fill="var(--s1)" stroke="var(--bg)" stroke-width="2"/>
+<circle cx="415.0" cy="152.2" r="4" fill="var(--s1)" stroke="var(--bg)" stroke-width="2"/>
+<line x1="410.5" x2="410.5" y1="140.2" y2="164.2" stroke="var(--ink)" stroke-width="2"/>
+<text class="lab" x="668" y="156.2">0.848</text>
+<text class="lab" x="160" y="201.8" text-anchor="end">few-shot only</text>
+<line x1="384.8" x2="430.1" y1="197.8" y2="197.8" stroke="var(--s1)" stroke-width="2" opacity="0.5"/>
+<circle cx="430.1" cy="197.8" r="4" fill="var(--s1)" stroke="var(--bg)" stroke-width="2"/>
+<circle cx="384.8" cy="197.8" r="4" fill="var(--s1)" stroke="var(--bg)" stroke-width="2"/>
+<circle cx="384.8" cy="197.8" r="4" fill="var(--s1)" stroke="var(--bg)" stroke-width="2"/>
+<circle cx="384.8" cy="197.8" r="4" fill="var(--s1)" stroke="var(--bg)" stroke-width="2"/>
+<circle cx="392.3" cy="197.8" r="4" fill="var(--s1)" stroke="var(--bg)" stroke-width="2"/>
+<line x1="395.3" x2="395.3" y1="185.8" y2="209.8" stroke="var(--ink)" stroke-width="2"/>
+<text class="lab" x="668" y="201.8">0.843</text>
+<text class="lab" x="160" y="247.2" text-anchor="end">both</text>
+<line x1="490.6" x2="566.2" y1="243.2" y2="243.2" stroke="var(--s1)" stroke-width="2" opacity="0.5"/>
+<circle cx="566.2" cy="243.2" r="4" fill="var(--s1)" stroke="var(--bg)" stroke-width="2"/>
+<circle cx="490.6" cy="243.2" r="4" fill="var(--s1)" stroke="var(--bg)" stroke-width="2"/>
+<circle cx="513.3" cy="243.2" r="4" fill="var(--s1)" stroke="var(--bg)" stroke-width="2"/>
+<circle cx="528.4" cy="243.2" r="4" fill="var(--s1)" stroke="var(--bg)" stroke-width="2"/>
+<circle cx="528.4" cy="243.2" r="4" fill="var(--s1)" stroke="var(--bg)" stroke-width="2"/>
+<line x1="525.4" x2="525.4" y1="231.2" y2="255.2" stroke="var(--ink)" stroke-width="2"/>
+<text class="lab" x="668" y="247.2">0.891</text>
+</svg>

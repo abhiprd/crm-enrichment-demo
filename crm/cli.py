@@ -185,6 +185,15 @@ def cmd_handreview(args, paths: Paths) -> int:
     return 0
 
 
+def cmd_charts(args, paths: Paths) -> int:
+    from . import charts
+    from .config import Settings
+    s = Settings.load()
+    for f in charts.build_all(paths, s.extractor_model, s.learner_model, s.extractor_effort or None):
+        print("wrote", f)
+    return 0
+
+
 def cmd_preflight(args, paths: Paths) -> int:
     from . import preflight
     from .config import Settings
@@ -269,6 +278,8 @@ def main(argv: list[str] | None = None) -> int:
     ph.add_argument("--run", action="store_true", help="build: call OpenAI (default prints the plan)")
     ph.add_argument("--live", action="store_true", help="post/serve: use Slack")
 
+    sub.add_parser("charts", help="write docs/charts/*.svg and results/unit_economics.json from results/")
+
     pp = sub.add_parser("preflight", help="verify keys, scopes, models and channels before any live step")
     pp.add_argument("--only", action="append", choices=["hubspot", "slack", "openai"])
 
@@ -284,7 +295,7 @@ def main(argv: list[str] | None = None) -> int:
     args = p.parse_args(argv)
     paths = Paths.from_env(args.root)
     load_env(paths.root)
-    handlers = {"ingest": cmd_ingest, "request": cmd_request, "status": cmd_status, "slice": cmd_slice, "eval": cmd_eval, "preflight": cmd_preflight, "handreview": cmd_handreview, "rules": cmd_rules}
+    handlers = {"ingest": cmd_ingest, "request": cmd_request, "status": cmd_status, "slice": cmd_slice, "eval": cmd_eval, "preflight": cmd_preflight, "handreview": cmd_handreview, "charts": cmd_charts, "rules": cmd_rules}
     return handlers[args.cmd](args, paths)
 
 

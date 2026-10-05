@@ -55,3 +55,14 @@ def compare(base: dict, cand: dict, noise_flips: int, seed: int = 0) -> dict:
     return {"instances": len(keys), "improved": improved, "worsened": worsened, "changed": changed,
             "mcnemar_p": p, "mean_diff": d, "diff_ci95": [lo, hi], "noise_flipped_instances": noise_flips,
             "clears_noise_floor": bool(p < 0.05 and changed > noise_flips)}
+
+
+def wilson(successes: int, n: int, z: float = 1.96) -> tuple:
+    """(rate, lo, hi): Wilson score interval for a proportion. n == 0 gives (0, 0, 1): no information."""
+    if n == 0:
+        return 0.0, 0.0, 1.0
+    p = successes / n
+    denom = 1 + z * z / n
+    centre = (p + z * z / (2 * n)) / denom
+    half = z * math.sqrt(p * (1 - p) / n + z * z / (4 * n * n)) / denom
+    return p, max(0.0, centre - half), min(1.0, centre + half)

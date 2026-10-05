@@ -1,0 +1,99 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 400" width="720" height="400" role="img" aria-label="Validation score by learning batch (proposal level). 3 runs per point, 40 validation transcripts; oracle reviewer, rules gated">
+<style>
+:root{--bg:#fcfcfb;--ink:#0b0b0b;--ink2:#52514e;--grid:#e3e2de;--s1:#2a78d6;--s2:#eb6834;--s3:#1baf7a;--s4:#8a8984}
+@media (prefers-color-scheme: dark){:root{--bg:#1a1a19;--ink:#fff;--ink2:#c3c2b7;--grid:#34332f;--s1:#3987e5;--s2:#d95926;--s3:#199e70;--s4:#8a8984}}
+text{font-family:system-ui,-apple-system,Segoe UI,Helvetica,Arial,sans-serif;fill:var(--ink)}
+.t{font-size:16px;font-weight:600}.sub{font-size:12px;fill:var(--ink2)}.ax{font-size:11px;fill:var(--ink2)}
+.lab{font-size:12px}.grid{stroke:var(--grid);stroke-width:1}.axis{stroke:var(--ink2);stroke-width:1}
+</style>
+<rect width="720" height="400" fill="var(--bg)"/>
+<text class="t" x="24" y="28">Validation score by learning batch (proposal level)</text>
+<text class="sub" x="24" y="46">3 runs per point, 40 validation transcripts; oracle reviewer, rules gated</text>
+<line x1="24" x2="46" y1="68" y2="68" stroke="var(--s1)" stroke-width="2.5"/>
+<text class="lab" x="52" y="72">All fields</text>
+<line x1="144" x2="166" y1="68" y2="68" stroke="var(--s2)" stroke-width="2.5"/>
+<text class="lab" x="172" y="72">House-rule instances</text>
+<line x1="334" x2="356" y1="68" y2="68" stroke="var(--s3)" stroke-width="2.5"/>
+<text class="lab" x="362" y="72">Trap instances</text>
+<line x1="482" x2="504" y1="68" y2="68" stroke="var(--s1)" stroke-width="2.5" stroke-dasharray="4 3"/>
+<text class="lab" x="510" y="72">V0, 5-run mean (0.807)</text>
+<line x1="24" x2="46" y1="84" y2="84" stroke="var(--s4)" stroke-width="2.5" stroke-dasharray="4 3"/>
+<text class="lab" x="52" y="88">Manual baseline, 5-run mean (0.860)</text>
+<line class="grid" x1="60" x2="590" y1="330.0" y2="330.0"/>
+<text class="ax" x="52" y="334.0" text-anchor="end">0.00</text>
+<line class="grid" x1="60" x2="590" y1="274.5" y2="274.5"/>
+<text class="ax" x="52" y="278.5" text-anchor="end">0.25</text>
+<line class="grid" x1="60" x2="590" y1="219.0" y2="219.0"/>
+<text class="ax" x="52" y="223.0" text-anchor="end">0.50</text>
+<line class="grid" x1="60" x2="590" y1="163.5" y2="163.5"/>
+<text class="ax" x="52" y="167.5" text-anchor="end">0.75</text>
+<line class="grid" x1="60" x2="590" y1="108.0" y2="108.0"/>
+<text class="ax" x="52" y="112.0" text-anchor="end">1.00</text>
+<line class="axis" x1="60" x2="590" y1="330" y2="330"/>
+<text class="ax" x="60.0" y="346" text-anchor="middle">0</text>
+<text class="ax" x="126.2" y="346" text-anchor="middle">1</text>
+<text class="ax" x="192.5" y="346" text-anchor="middle">2</text>
+<text class="ax" x="258.8" y="346" text-anchor="middle">3</text>
+<text class="ax" x="325.0" y="346" text-anchor="middle">4</text>
+<text class="ax" x="391.2" y="346" text-anchor="middle">5</text>
+<text class="ax" x="457.5" y="346" text-anchor="middle">6</text>
+<text class="ax" x="523.8" y="346" text-anchor="middle">7</text>
+<text class="ax" x="590.0" y="346" text-anchor="middle">8</text>
+<text class="ax" x="325" y="364" text-anchor="middle">Learning batch (5 learn transcripts each; 0 = empty ruleset)</text>
+<text class="ax" transform="translate(16 219) rotate(-90)" text-anchor="middle">Mean proposal-level score</text>
+<line x1="60" x2="590" y1="150.9" y2="150.9" stroke="var(--s1)" stroke-width="1.5" stroke-dasharray="5 4" opacity="0.8"/>
+<line x1="60" x2="590" y1="139.1" y2="139.1" stroke="var(--s4)" stroke-width="1.5" stroke-dasharray="5 4" opacity="0.8"/>
+<polyline points="60.0,149.1 126.2,138.2 192.5,134.9 258.8,138.4 325.0,134.1 391.2,132.7 457.5,132.7 523.8,133.5 590.0,132.5" fill="none" stroke="var(--s1)" stroke-width="2"/>
+<circle cx="60.0" cy="149.1" r="3.5" fill="var(--s1)" stroke="var(--bg)" stroke-width="2"/>
+<circle cx="126.2" cy="138.2" r="3.5" fill="var(--s1)" stroke="var(--bg)" stroke-width="2"/>
+<circle cx="192.5" cy="134.9" r="3.5" fill="var(--s1)" stroke="var(--bg)" stroke-width="2"/>
+<circle cx="258.8" cy="138.4" r="3.5" fill="var(--s1)" stroke="var(--bg)" stroke-width="2"/>
+<circle cx="325.0" cy="134.1" r="3.5" fill="var(--s1)" stroke="var(--bg)" stroke-width="2"/>
+<circle cx="391.2" cy="132.7" r="3.5" fill="var(--s1)" stroke="var(--bg)" stroke-width="2"/>
+<circle cx="457.5" cy="132.7" r="3.5" fill="var(--s1)" stroke="var(--bg)" stroke-width="2"/>
+<circle cx="523.8" cy="133.5" r="3.5" fill="var(--s1)" stroke="var(--bg)" stroke-width="2"/>
+<circle cx="590.0" cy="132.5" r="3.5" fill="var(--s1)" stroke="var(--bg)" stroke-width="2"/>
+<text class="lab" x="600" y="136.5">0.890</text>
+<polyline points="60.0,260.5 126.2,191.0 192.5,188.7 258.8,186.5 325.0,193.2 391.2,186.5 457.5,186.5 523.8,191.0 590.0,193.2" fill="none" stroke="var(--s2)" stroke-width="2"/>
+<circle cx="60.0" cy="260.5" r="3.5" fill="var(--s2)" stroke="var(--bg)" stroke-width="2"/>
+<circle cx="126.2" cy="191.0" r="3.5" fill="var(--s2)" stroke="var(--bg)" stroke-width="2"/>
+<circle cx="192.5" cy="188.7" r="3.5" fill="var(--s2)" stroke="var(--bg)" stroke-width="2"/>
+<circle cx="258.8" cy="186.5" r="3.5" fill="var(--s2)" stroke="var(--bg)" stroke-width="2"/>
+<circle cx="325.0" cy="193.2" r="3.5" fill="var(--s2)" stroke="var(--bg)" stroke-width="2"/>
+<circle cx="391.2" cy="186.5" r="3.5" fill="var(--s2)" stroke="var(--bg)" stroke-width="2"/>
+<circle cx="457.5" cy="186.5" r="3.5" fill="var(--s2)" stroke="var(--bg)" stroke-width="2"/>
+<circle cx="523.8" cy="191.0" r="3.5" fill="var(--s2)" stroke="var(--bg)" stroke-width="2"/>
+<circle cx="590.0" cy="193.2" r="3.5" fill="var(--s2)" stroke="var(--bg)" stroke-width="2"/>
+<text class="lab" x="600" y="197.2">0.616</text>
+<polyline points="60.0,111.7 126.2,108.0 192.5,108.0 258.8,121.0 325.0,109.8 391.2,109.8 457.5,109.8 523.8,111.7 590.0,108.0" fill="none" stroke="var(--s3)" stroke-width="2"/>
+<circle cx="60.0" cy="111.7" r="3.5" fill="var(--s3)" stroke="var(--bg)" stroke-width="2"/>
+<circle cx="126.2" cy="108.0" r="3.5" fill="var(--s3)" stroke="var(--bg)" stroke-width="2"/>
+<circle cx="192.5" cy="108.0" r="3.5" fill="var(--s3)" stroke="var(--bg)" stroke-width="2"/>
+<circle cx="258.8" cy="121.0" r="3.5" fill="var(--s3)" stroke="var(--bg)" stroke-width="2"/>
+<circle cx="325.0" cy="109.8" r="3.5" fill="var(--s3)" stroke="var(--bg)" stroke-width="2"/>
+<circle cx="391.2" cy="109.8" r="3.5" fill="var(--s3)" stroke="var(--bg)" stroke-width="2"/>
+<circle cx="457.5" cy="109.8" r="3.5" fill="var(--s3)" stroke="var(--bg)" stroke-width="2"/>
+<circle cx="523.8" cy="111.7" r="3.5" fill="var(--s3)" stroke="var(--bg)" stroke-width="2"/>
+<circle cx="590.0" cy="108.0" r="3.5" fill="var(--s3)" stroke="var(--bg)" stroke-width="2"/>
+<text class="lab" x="600" y="112.0">1.000</text>
+<text class="ax" x="52" y="382" text-anchor="end">rules</text>
+<text class="ax" x="52" y="394" text-anchor="end">examples</text>
+<text class="ax" x="60.0" y="382" text-anchor="middle">0</text>
+<text class="ax" x="60.0" y="394" text-anchor="middle">0</text>
+<text class="ax" x="126.2" y="382" text-anchor="middle">2</text>
+<text class="ax" x="126.2" y="394" text-anchor="middle">5</text>
+<text class="ax" x="192.5" y="382" text-anchor="middle">2</text>
+<text class="ax" x="192.5" y="394" text-anchor="middle">6</text>
+<text class="ax" x="258.8" y="382" text-anchor="middle">2</text>
+<text class="ax" x="258.8" y="394" text-anchor="middle">8</text>
+<text class="ax" x="325.0" y="382" text-anchor="middle">2</text>
+<text class="ax" x="325.0" y="394" text-anchor="middle">9</text>
+<text class="ax" x="391.2" y="382" text-anchor="middle">3</text>
+<text class="ax" x="391.2" y="394" text-anchor="middle">9</text>
+<text class="ax" x="457.5" y="382" text-anchor="middle">3</text>
+<text class="ax" x="457.5" y="394" text-anchor="middle">9</text>
+<text class="ax" x="523.8" y="382" text-anchor="middle">3</text>
+<text class="ax" x="523.8" y="394" text-anchor="middle">9</text>
+<text class="ax" x="590.0" y="382" text-anchor="middle">3</text>
+<text class="ax" x="590.0" y="394" text-anchor="middle">13</text>
+</svg>

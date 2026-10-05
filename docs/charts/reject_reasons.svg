@@ -1,0 +1,53 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 380" width="720" height="380" role="img" aria-label="Reject reasons by batch (oracle reviewer). Counts of rejected proposals; reasons come from the reviewer&#x27;s reason code">
+<style>
+:root{--bg:#fcfcfb;--ink:#0b0b0b;--ink2:#52514e;--grid:#e3e2de;--s1:#2a78d6;--s2:#eb6834;--s3:#1baf7a;--s4:#8a8984}
+@media (prefers-color-scheme: dark){:root{--bg:#1a1a19;--ink:#fff;--ink2:#c3c2b7;--grid:#34332f;--s1:#3987e5;--s2:#d95926;--s3:#199e70;--s4:#8a8984}}
+text{font-family:system-ui,-apple-system,Segoe UI,Helvetica,Arial,sans-serif;fill:var(--ink)}
+.t{font-size:16px;font-weight:600}.sub{font-size:12px;fill:var(--ink2)}.ax{font-size:11px;fill:var(--ink2)}
+.lab{font-size:12px}.grid{stroke:var(--grid);stroke-width:1}.axis{stroke:var(--ink2);stroke-width:1}
+</style>
+<rect width="720" height="380" fill="var(--bg)"/>
+<text class="t" x="24" y="28">Reject reasons by batch (oracle reviewer)</text>
+<text class="sub" x="24" y="46">Counts of rejected proposals; reasons come from the reviewer&#x27;s reason code</text>
+<line x1="24" x2="46" y1="68" y2="68" stroke="var(--s1)" stroke-width="2.5"/>
+<text class="lab" x="52" y="72">not crm worthy</text>
+<line x1="172" x2="194" y1="68" y2="68" stroke="var(--s2)" stroke-width="2.5"/>
+<text class="lab" x="200" y="72">evidence doesnt support</text>
+<line x1="383" x2="405" y1="68" y2="68" stroke="var(--s3)" stroke-width="2.5"/>
+<text class="lab" x="411" y="72">wrong value</text>
+<line x1="510" x2="532" y1="68" y2="68" stroke="var(--s4)" stroke-width="2.5"/>
+<text class="lab" x="538" y="72">other</text>
+<line class="grid" x1="60" x2="680" y1="310.0" y2="310.0"/>
+<text class="ax" x="52" y="314.0" text-anchor="end">0</text>
+<line class="grid" x1="60" x2="680" y1="252.3" y2="252.3"/>
+<text class="ax" x="52" y="256.3" text-anchor="end">2</text>
+<line class="grid" x1="60" x2="680" y1="194.6" y2="194.6"/>
+<text class="ax" x="52" y="198.6" text-anchor="end">4</text>
+<line class="grid" x1="60" x2="680" y1="136.9" y2="136.9"/>
+<text class="ax" x="52" y="140.9" text-anchor="end">6</text>
+<line class="axis" x1="60" x2="680" y1="310" y2="310"/>
+<text class="ax" x="98.8" y="326" text-anchor="middle">1</text>
+<text class="ax" x="176.2" y="326" text-anchor="middle">2</text>
+<text class="ax" x="253.8" y="326" text-anchor="middle">3</text>
+<text class="ax" x="331.2" y="326" text-anchor="middle">4</text>
+<text class="ax" x="408.8" y="326" text-anchor="middle">5</text>
+<text class="ax" x="486.2" y="326" text-anchor="middle">6</text>
+<text class="ax" x="563.8" y="326" text-anchor="middle">7</text>
+<text class="ax" x="641.2" y="326" text-anchor="middle">8</text>
+<text class="ax" x="370" y="344" text-anchor="middle">Learning batch</text>
+<text class="ax" transform="translate(16 209) rotate(-90)" text-anchor="middle">Rejected proposals</text>
+<rect x="81.8" y="195.6" width="34" height="113.4" fill="var(--s1)"/>
+<rect x="81.8" y="137.9" width="34" height="55.7" fill="var(--s2)"/>
+<rect x="159.2" y="253.3" width="34" height="55.7" fill="var(--s1)"/>
+<rect x="159.2" y="195.6" width="34" height="55.7" fill="var(--s2)"/>
+<rect x="236.8" y="224.4" width="34" height="84.6" fill="var(--s1)"/>
+<rect x="236.8" y="166.7" width="34" height="55.7" fill="var(--s2)"/>
+<rect x="314.2" y="253.3" width="34" height="55.7" fill="var(--s2)"/>
+<rect x="391.8" y="282.1" width="34" height="26.9" fill="var(--s1)"/>
+<rect x="391.8" y="224.4" width="34" height="55.7" fill="var(--s2)"/>
+<rect x="469.2" y="253.3" width="34" height="55.7" fill="var(--s1)"/>
+<rect x="469.2" y="137.9" width="34" height="113.4" fill="var(--s2)"/>
+<rect x="546.8" y="224.4" width="34" height="84.6" fill="var(--s1)"/>
+<rect x="546.8" y="195.6" width="34" height="26.9" fill="var(--s2)"/>
+<rect x="624.2" y="282.1" width="34" height="26.9" fill="var(--s3)"/>
+</svg>

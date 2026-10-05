@@ -1,0 +1,24 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 720 250" width="720" height="250" role="img" aria-label="Rule inventory after the learning curve. Rejects the oracle made, at most 3 candidates per batch; each candidate is gated on validation">
+<style>
+:root{--bg:#fcfcfb;--ink:#0b0b0b;--ink2:#52514e;--grid:#e3e2de;--s1:#2a78d6;--s2:#eb6834;--s3:#1baf7a;--s4:#8a8984}
+@media (prefers-color-scheme: dark){:root{--bg:#1a1a19;--ink:#fff;--ink2:#c3c2b7;--grid:#34332f;--s1:#3987e5;--s2:#d95926;--s3:#199e70;--s4:#8a8984}}
+text{font-family:system-ui,-apple-system,Segoe UI,Helvetica,Arial,sans-serif;fill:var(--ink)}
+.t{font-size:16px;font-weight:600}.sub{font-size:12px;fill:var(--ink2)}.ax{font-size:11px;fill:var(--ink2)}
+.lab{font-size:12px}.grid{stroke:var(--grid);stroke-width:1}.axis{stroke:var(--ink2);stroke-width:1}
+</style>
+<rect width="720" height="250" fill="var(--bg)"/>
+<text class="t" x="24" y="28">Rule inventory after the learning curve</text>
+<text class="sub" x="24" y="46">Rejects the oracle made, at most 3 candidates per batch; each candidate is gated on validation</text>
+<text class="lab" x="220" y="91.5" text-anchor="end">Candidate rules drafted</text>
+<rect x="230" y="76.0" width="394.2" height="23.0" rx="3" fill="var(--s1)"/>
+<text class="lab" x="632.2" y="91.5">11</text>
+<text class="lab" x="220" y="126.5" text-anchor="end">Passed the gate, now active</text>
+<rect x="230" y="111.0" width="107.5" height="23.0" rx="3" fill="var(--s1)"/>
+<text class="lab" x="345.5" y="126.5">3</text>
+<text class="lab" x="220" y="161.5" text-anchor="end">Failed the gate, not activated</text>
+<rect x="230" y="146.0" width="286.7" height="23.0" rx="3" fill="var(--s1)"/>
+<text class="lab" x="524.7" y="161.5">8</text>
+<text class="lab" x="220" y="196.5" text-anchor="end">Learner declined to write a rule</text>
+<rect x="230" y="181.0" width="322.5" height="23.0" rx="3" fill="var(--s1)"/>
+<text class="lab" x="560.5" y="196.5">9</text>
+</svg>
