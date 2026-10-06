@@ -11,7 +11,7 @@ Update at the end of every session: what changed, what's next, and any number wi
 | M4 | Learning loop | done (mechanism; no validated gain) | Live reject -> rule -> gate -> versions -> revert, and a paired replay: `results/m4_demo.json`, `results/gate_1.json`, `results/gate_2.json`. The learned rules did not clear the validation gate |
 | M5 | Batch experiment and test run | done (measured; gain is at proposal level only, see caveats) | `results/curve.json`, `results/ablation.json`, `results/proposal_scores.json`, `results/curve_gates/`, `results/test_run.json`, `results/handreview.json` |
 | M6 | Charts and unit economics | done | `docs/charts/*.svg` (from `results/curve.json`, `ablation.json`, `test_run.json`, `proposal_scores.json`), `results/unit_economics.json`; README Results section; auditor-checked wording below |
-| M7 | Write-up and demo | in progress: README write-up, limitations and demo runbook (`docs/DEMO.md`) done and auditor-checked; the demo recording is not made | README.md, docs/DEMO.md |
+| M7 | Write-up and demo | done, with a scope change: README write-up, limitations and demo runbook (`docs/DEMO.md`) are done and auditor-checked. The 2-minute recording was never made; the project owner removed it from M7 on 2026-10-06, so the original exit criterion (including a recording) was not met | README.md, docs/DEMO.md, PLAN.md |
 
 ## Decisions pending
 
@@ -120,3 +120,4 @@ Other: the pipeline lets a junk stance value through (for example "not_applicabl
 - 2026-10-05 (M6): added `crm/charts.py` and `crm charts`, `stats.wilson`, six SVG charts, `results/unit_economics.json`, and the README Results section. 133 tests pass.
 - 2026-10-05 (M7): README findings summary, limitations and demo section; `docs/DEMO.md` runbook; auditor-checked wording. Open: the 2-minute recording (project owner).
 - 2026-10-06 (demo rehearsal): a live reject on the paired demo produced rule 3 (competitors); its gate, at proposal level on the 40 validation transcripts x 3 repeats, passed with net +4 on competitors (4 improved, 0 worsened) and no other field losing more than 1: `results/gate_3.json`. One rule on one run; no claim beyond that.
+- 2026-10-06 (M7 closed): the project owner dropped the demo recording from M7's scope and closed the project. The recording was not made; docs/DEMO.md remains as a runbook. All milestones M0 to M7 are closed. Test split used once; do not run it again.

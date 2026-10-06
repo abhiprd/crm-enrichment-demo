@@ -131,7 +131,7 @@ The curve, ablation and test costs are subsets of the logged requests, not addit
 
 ## Demo
 
-A step-by-step 2-minute runbook is in [docs/DEMO.md](docs/DEMO.md).
+A step-by-step runbook for a roughly 2-minute live demo is in [docs/DEMO.md](docs/DEMO.md). No recording is published.
 
 ## Repository layout
 
@@ -159,12 +159,8 @@ Python, SQLite, Slack Bolt (Socket Mode), the HubSpot REST API (service key), an
 - **M2, Extraction and measurement**: extractor, quote validator, scorer, noise floor, manual baseline, paired statistics, model and effort bake-off.
 - **M3, Slack review loop and writeback**: batched review cards with edit and reject modals, authorization, stale-value handling, deal notes, folder watcher, live demo.
 - **M4, Learning loop**: a reject becomes a plain-English rule written by a second model, put in force immediately (demo mode) or after validation, replayed on the validation split by a gate, stored in append-only versions that can be reverted. Demonstrated live on a paired call (no validated gain).
-
 - **M5, Experiments**: oracle reviewer, learning curve, ablation, the single test-set run, and a human-versus-oracle reviewer comparison.
 - **M6, Charts and unit economics**: static charts (below) and a cost and latency table, generated from `results/` by `python3 -m crm charts`.
-
-**To do**
-
-- **M7, Write-up and demo**: the write-up and limitations are above; the recording is still to be made from the runbook.
+- **M7, Write-up and demo**: the write-up and limitations are above, and `docs/DEMO.md` is a runbook for a live demo. No recording was made; the project owner dropped it from scope.
 
 Measured results and per-milestone evidence are tracked in [STATUS.md](STATUS.md).

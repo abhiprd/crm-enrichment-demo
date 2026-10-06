@@ -62,7 +62,7 @@ Live demo: a chat transcript with a `demo-` id (for example `demo-northwind`) ne
 | M4 | Rule learner, versions, validation gate, few-shot, revert | `/milestone M4` (plan first) | Reject, then rule, then changed output on a paired transcript |
 | M5 | Learning curve, ablation, the single test run, about 10 hand-reviewed calls | `/eval-run curve`, `/eval-run ablate`, `/eval-run test`, `eval-auditor` | `results/` holds the curve, ablation, test run, and human-vs-oracle gap |
 | M6 | Static charts and the unit-economics table | `/milestone M6` | Charts render in the README |
-| M7 | README, 2-minute demo recording, limitations | `/milestone M7`, `eval-auditor` on every claim | Publishable |
+| M7 | README, demo runbook, limitations (the 2-minute recording was dropped from scope by the project owner on 2026-10-06) | `/milestone M7`, `eval-auditor` on every claim | Publishable |
 
 ## Working agreement
 
