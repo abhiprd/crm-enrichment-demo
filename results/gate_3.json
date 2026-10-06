@@ -1,0 +1,116 @@
+{
+  "rule_id": 3,
+  "field": "competitors",
+  "rule_text": "Add a competitor only when the transcript ties it to the prospect's own use, evaluation, or competitive consideration; do not treat a third party's use or endorsement as evidence of the prospect's stance.",
+  "metric": "pfields",
+  "transcripts": 40,
+  "repeats": 3,
+  "thresholds": {
+    "min_net_gain": 3,
+    "max_other_loss": 2
+  },
+  "allowance": {
+    "budget": 0.0,
+    "decision_timeline": 1.0,
+    "competitors": 3.0,
+    "economic_buyer": 3.0,
+    "champion": 2.0,
+    "pain_points": 5.0,
+    "use_case": 7.0,
+    "next_step": 2.0,
+    "stage_signal": 2.0
+  },
+  "changes": {
+    "budget": {
+      "improved": 0,
+      "worsened": 0
+    },
+    "decision_timeline": {
+      "improved": 0,
+      "worsened": 0
+    },
+    "competitors": {
+      "improved": 4,
+      "worsened": 0
+    },
+    "economic_buyer": {
+      "improved": 0,
+      "worsened": 1
+    },
+    "champion": {
+      "improved": 0,
+      "worsened": 0
+    },
+    "pain_points": {
+      "improved": 1,
+      "worsened": 1
+    },
+    "use_case": {
+      "improved": 0,
+      "worsened": 1
+    },
+    "next_step": {
+      "improved": 0,
+      "worsened": 0
+    },
+    "stage_signal": {
+      "improved": 0,
+      "worsened": 0
+    }
+  },
+  "truth_changes": {
+    "budget": {
+      "improved": 0,
+      "worsened": 0
+    },
+    "decision_timeline": {
+      "improved": 0,
+      "worsened": 0
+    },
+    "competitors": {
+      "improved": 6,
+      "worsened": 1
+    },
+    "economic_buyer": {
+      "improved": 0,
+      "worsened": 1
+    },
+    "champion": {
+      "improved": 0,
+      "worsened": 1
+    },
+    "pain_points": {
+      "improved": 1,
+      "worsened": 1
+    },
+    "use_case": {
+      "improved": 0,
+      "worsened": 1
+    },
+    "next_step": {
+      "improved": 3,
+      "worsened": 0
+    },
+    "stage_signal": {
+      "improved": 0,
+      "worsened": 0
+    }
+  },
+  "validation_score_before": 0.8222222222222223,
+  "validation_score_after": 0.8305555555555554,
+  "cost_usd": 0.1211212,
+  "call_errors": 0,
+  "passed": true,
+  "net_by_field": {
+    "budget": 0,
+    "decision_timeline": 0,
+    "competitors": 4,
+    "economic_buyer": -1,
+    "champion": 0,
+    "pain_points": 0,
+    "use_case": -1,
+    "next_step": 0,
+    "stage_signal": 0
+  },
+  "reasons": []
+}
