@@ -49,14 +49,17 @@ python3 -m crm status       # dataset progress by split
 python3 -m crm preflight    # verify keys, scopes, and models before live steps
 ```
 
-Live demo (needs HubSpot, Slack, and OpenAI keys in `.env`):
+Live demo (needs HubSpot, Slack, and OpenAI keys in `.env`; run it with the virtual environment active). Comments are kept out of the commands so they paste into zsh. The full on-camera script is in [docs/DEMO.md](docs/DEMO.md).
 
 ```bash
-python3 scripts/seed_hubspot.py --demo --live          # create the demo deal
-python3 -m crm ingest --watch --run --live --force     # watch inbox/, post cards to Slack
-cp prompts/demo/northwind.md inbox/demo-northwind.md   # drop a call; a card appears in Slack
-python3 scripts/seed_hubspot.py --demo --live --reset  # restore the demo deal afterwards
+source .venv/bin/activate
+python3 scripts/seed_hubspot.py --demo --live
+python3 -m crm ingest --watch --run --live --force
+cp prompts/demo/northwind.md inbox/demo-northwind.md
+python3 scripts/seed_hubspot.py --demo --live --reset
 ```
+
+In order: create the demo deal; watch `inbox/` and post cards to Slack (leave this running in its own terminal tab); drop a call so a card appears; restore the demo deal afterwards.
 
 Evaluation (dry-run plan first; add `--run` to call the model):
 

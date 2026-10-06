@@ -1,15 +1,27 @@
 # Demo runbook (about 2 minutes)
 
-Shows one loop live: a call produces a Slack card, a reviewer rejects a proposal, a rule is learned, and the next call changes. All companies and people are fictional. Needs `.env` with HubSpot, Slack and OpenAI keys, and the laptop running (Socket Mode). Use `.venv/bin/python` if the system Python lacks the dependencies.
+Shows one loop live: a call produces a Slack card, a reviewer rejects a proposal, a rule is learned, and the next call changes. All companies and people are fictional. Needs `.env` with HubSpot, Slack and OpenAI keys, and the laptop running (Socket Mode). Activate `.venv` first (see below); the system Python lacks the Slack packages.
 
 ## Before recording (not on camera)
 
+Run everything from the repo root with the project's virtual environment, which has the Slack packages the system Python lacks:
+
 ```bash
-python3 -m crm preflight                                # keys, scopes, models
-python3 -m crm rules list                               # find the version whose active rules are empty (v5 at the time of writing)
-python3 -m crm rules revert 5                           # back to that empty ruleset (a new version; nothing is rewritten)
-python3 scripts/seed_hubspot.py --demo --live --reset   # demo deal back to its starting values
+source .venv/bin/activate
 ```
+
+Then, one command at a time (the comments are below the block, not inside it, so it pastes into zsh):
+
+```bash
+python3 -m crm preflight
+python3 -m crm rules list
+python3 -m crm rules revert 5
+python3 scripts/seed_hubspot.py --demo --live --reset
+```
+
+- `preflight` checks keys, scopes and models.
+- `rules list` shows the versions; confirm the one whose active rules are empty (v5 when this was written) before reverting. `rules revert 5` makes a new version with that empty ruleset; nothing is rewritten.
+- The seed command puts the demo deal back to its starting values.
 
 Rehearse once end to end. The paired calls are engineered with the same trap (a vendor mentioned only as another company's tool), but a live model may not fail on cue: keep a recorded take as the fallback.
 
