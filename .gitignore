@@ -28,3 +28,8 @@ results/archive/**/*_runs.json
 
 # local Claude Code settings
 .claude/settings.local.json
+
+# test-audit artefacts
+mutants/
+.coverage
+htmlcov/

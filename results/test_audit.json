@@ -1,0 +1,446 @@
+{
+  "tool": "mutmut 3.8.0 on Python 3.12.12 (a throwaway venv outside the repo); coverage 7.10.7 / pytest-cov on Python 3.9.6",
+  "note": "detected = killed or aborted the test process; 4 aborts are in extractor. Equivalent mutants are not removed from the denominator, so the kill rate is a floor.",
+  "tests": {
+    "before": 133,
+    "after": 288,
+    "added": 155
+  },
+  "mutation_by_module": {
+    "scoring": {
+      "mutants": 351,
+      "before": {
+        "detected": 239,
+        "survived": 112
+      },
+      "after_first_tests": {
+        "detected": 338,
+        "survived": 13
+      },
+      "after_all_tests": {
+        "detected": 338,
+        "survived": 13
+      }
+    },
+    "propscore": {
+      "mutants": 180,
+      "before": {
+        "detected": 155,
+        "survived": 25
+      },
+      "after_first_tests": {
+        "detected": 167,
+        "survived": 13
+      },
+      "after_all_tests": {
+        "detected": 167,
+        "survived": 13
+      }
+    },
+    "proposals": {
+      "mutants": 317,
+      "before": {
+        "detected": 265,
+        "survived": 52
+      },
+      "after_first_tests": {
+        "detected": 308,
+        "survived": 9
+      },
+      "after_all_tests": {
+        "detected": 308,
+        "survived": 9
+      }
+    },
+    "validator": {
+      "mutants": 74,
+      "before": {
+        "detected": 61,
+        "survived": 13
+      },
+      "after_first_tests": {
+        "detected": 70,
+        "survived": 4
+      },
+      "after_all_tests": {
+        "detected": 70,
+        "survived": 4
+      }
+    },
+    "stats": {
+      "mutants": 177,
+      "before": {
+        "detected": 140,
+        "survived": 37
+      },
+      "after_first_tests": {
+        "detected": 163,
+        "survived": 14
+      },
+      "after_all_tests": {
+        "detected": 163,
+        "survived": 14
+      }
+    },
+    "review": {
+      "mutants": 1019,
+      "before": {
+        "detected": 509,
+        "survived": 510
+      },
+      "after_first_tests": {
+        "detected": 518,
+        "survived": 501
+      },
+      "after_all_tests": {
+        "detected": 747,
+        "survived": 272
+      }
+    },
+    "rules": {
+      "mutants": 325,
+      "before": {
+        "detected": 242,
+        "survived": 83
+      },
+      "after_first_tests": {
+        "detected": 275,
+        "survived": 50
+      },
+      "after_all_tests": {
+        "detected": 275,
+        "survived": 50
+      }
+    },
+    "gate": {
+      "mutants": 488,
+      "before": {
+        "detected": 316,
+        "survived": 145
+      },
+      "after_first_tests": {
+        "detected": 321,
+        "survived": 140
+      },
+      "after_all_tests": {
+        "detected": 399,
+        "survived": 62
+      }
+    },
+    "extractor": {
+      "mutants": 290,
+      "before": {
+        "detected": 216,
+        "survived": 74
+      },
+      "after_first_tests": {
+        "detected": 259,
+        "survived": 31
+      },
+      "after_all_tests": {
+        "detected": 260,
+        "survived": 30
+      }
+    },
+    "learner": {
+      "mutants": 381,
+      "before": {
+        "detected": 234,
+        "survived": 147
+      },
+      "after_first_tests": {
+        "detected": 234,
+        "survived": 147
+      },
+      "after_all_tests": {
+        "detected": 324,
+        "survived": 57
+      }
+    },
+    "oracle": {
+      "mutants": 274,
+      "before": {
+        "detected": 190,
+        "survived": 75
+      },
+      "after_first_tests": {
+        "detected": 190,
+        "survived": 75
+      },
+      "after_all_tests": {
+        "detected": 244,
+        "survived": 30
+      }
+    }
+  },
+  "mutation_total": {
+    "mutants": 3876,
+    "before_detected": 2567,
+    "after_detected": 3295,
+    "before_survived": 1273,
+    "after_survived": 554,
+    "no_test_mutants_before": 36,
+    "no_test_mutants_after": 27
+  },
+  "survivors_after_all_tests_by_kind": {
+    "message/label text": 157,
+    "logic": 106,
+    "string casing": 205,
+    "SQL keyword or string casing (equivalent)": 80,
+    "file encoding argument (equivalent)": 6
+  },
+  "branch_coverage_before": {
+    "statements": 3077,
+    "missed": 849,
+    "branches": 928,
+    "partial": 115,
+    "cover": "71%"
+  },
+  "branch_coverage_after": {
+    "crm/__init__.py": {
+      "statements": 0,
+      "missed": 0,
+      "branches": 0,
+      "partial": 0,
+      "cover": "100%"
+    },
+    "crm/__main__.py": {
+      "statements": 3,
+      "missed": 3,
+      "branches": 0,
+      "partial": 0,
+      "cover": "0%"
+    },
+    "crm/bakeoff.py": {
+      "statements": 112,
+      "missed": 52,
+      "branches": 34,
+      "partial": 4,
+      "cover": "52%"
+    },
+    "crm/briefs.py": {
+      "statements": 34,
+      "missed": 5,
+      "branches": 12,
+      "partial": 2,
+      "cover": "80%"
+    },
+    "crm/charts.py": {
+      "statements": 224,
+      "missed": 12,
+      "branches": 48,
+      "partial": 1,
+      "cover": "94%"
+    },
+    "crm/cli.py": {
+      "statements": 262,
+      "missed": 143,
+      "branches": 90,
+      "partial": 6,
+      "cover": "41%"
+    },
+    "crm/config.py": {
+      "statements": 43,
+      "missed": 10,
+      "branches": 6,
+      "partial": 1,
+      "cover": "78%"
+    },
+    "crm/curve.py": {
+      "statements": 197,
+      "missed": 128,
+      "branches": 46,
+      "partial": 3,
+      "cover": "35%"
+    },
+    "crm/db.py": {
+      "statements": 23,
+      "missed": 3,
+      "branches": 12,
+      "partial": 3,
+      "cover": "83%"
+    },
+    "crm/deals.py": {
+      "statements": 55,
+      "missed": 16,
+      "branches": 34,
+      "partial": 15,
+      "cover": "65%"
+    },
+    "crm/evalcmds.py": {
+      "statements": 105,
+      "missed": 17,
+      "branches": 22,
+      "partial": 4,
+      "cover": "83%"
+    },
+    "crm/evalrun.py": {
+      "statements": 98,
+      "missed": 7,
+      "branches": 22,
+      "partial": 2,
+      "cover": "92%"
+    },
+    "crm/extractor.py": {
+      "statements": 102,
+      "missed": 0,
+      "branches": 24,
+      "partial": 0,
+      "cover": "100%"
+    },
+    "crm/gate.py": {
+      "statements": 88,
+      "missed": 3,
+      "branches": 18,
+      "partial": 0,
+      "cover": "97%"
+    },
+    "crm/handreview.py": {
+      "statements": 108,
+      "missed": 37,
+      "branches": 16,
+      "partial": 0,
+      "cover": "60%"
+    },
+    "crm/hubspot.py": {
+      "statements": 90,
+      "missed": 1,
+      "branches": 30,
+      "partial": 4,
+      "cover": "96%"
+    },
+    "crm/ingest.py": {
+      "statements": 317,
+      "missed": 41,
+      "branches": 150,
+      "partial": 24,
+      "cover": "84%"
+    },
+    "crm/learner.py": {
+      "statements": 86,
+      "missed": 0,
+      "branches": 30,
+      "partial": 0,
+      "cover": "100%"
+    },
+    "crm/learning.py": {
+      "statements": 32,
+      "missed": 3,
+      "branches": 8,
+      "partial": 2,
+      "cover": "88%"
+    },
+    "crm/llm.py": {
+      "statements": 59,
+      "missed": 4,
+      "branches": 12,
+      "partial": 3,
+      "cover": "90%"
+    },
+    "crm/oracle.py": {
+      "statements": 75,
+      "missed": 0,
+      "branches": 18,
+      "partial": 0,
+      "cover": "100%"
+    },
+    "crm/paths.py": {
+      "statements": 44,
+      "missed": 0,
+      "branches": 2,
+      "partial": 0,
+      "cover": "100%"
+    },
+    "crm/pipeline.py": {
+      "statements": 107,
+      "missed": 19,
+      "branches": 40,
+      "partial": 9,
+      "cover": "78%"
+    },
+    "crm/preflight.py": {
+      "statements": 109,
+      "missed": 58,
+      "branches": 30,
+      "partial": 3,
+      "cover": "42%"
+    },
+    "crm/proposals.py": {
+      "statements": 87,
+      "missed": 0,
+      "branches": 36,
+      "partial": 1,
+      "cover": "99%"
+    },
+    "crm/propscore.py": {
+      "statements": 51,
+      "missed": 0,
+      "branches": 24,
+      "partial": 0,
+      "cover": "100%"
+    },
+    "crm/review.py": {
+      "statements": 150,
+      "missed": 0,
+      "branches": 44,
+      "partial": 1,
+      "cover": "99%"
+    },
+    "crm/rules.py": {
+      "statements": 77,
+      "missed": 0,
+      "branches": 22,
+      "partial": 1,
+      "cover": "99%"
+    },
+    "crm/schema.py": {
+      "statements": 11,
+      "missed": 0,
+      "branches": 0,
+      "partial": 0,
+      "cover": "100%"
+    },
+    "crm/scoring.py": {
+      "statements": 89,
+      "missed": 0,
+      "branches": 42,
+      "partial": 0,
+      "cover": "100%"
+    },
+    "crm/slack_app.py": {
+      "statements": 89,
+      "missed": 89,
+      "branches": 16,
+      "partial": 0,
+      "cover": "0%"
+    },
+    "crm/slice.py": {
+      "statements": 78,
+      "missed": 49,
+      "branches": 18,
+      "partial": 1,
+      "cover": "33%"
+    },
+    "crm/stats.py": {
+      "statements": 42,
+      "missed": 0,
+      "branches": 8,
+      "partial": 0,
+      "cover": "100%"
+    },
+    "crm/validator.py": {
+      "statements": 30,
+      "missed": 0,
+      "branches": 14,
+      "partial": 0,
+      "cover": "100%"
+    },
+    "TOTAL": {
+      "statements": 3077,
+      "missed": 700,
+      "branches": 928,
+      "partial": 90,
+      "cover": "76%"
+    }
+  }
+}
