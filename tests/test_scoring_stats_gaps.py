@@ -104,11 +104,21 @@ def test_score_field_next_step_is_the_mean_of_action_owner_date():
     assert one["score"] == pytest.approx(1 / 3)
     full = scoring.score_field("next_step", t, truth("stated", {"action": "SEND_PROPOSAL", "owner": "dev", "date": "2026-11-02"}))
     assert full["score"] == 1.0 and full["correct"] is True
-    # Audit finding, pinned as current behaviour: a junk (non-dict) prediction still earns the date part when the
-    # key's date is null, because None == None. An empty list of steps scores nothing.
-    assert scoring.next_step_parts({"action": "a", "owner": "o", "date": None}, "junk") == {"action": False, "owner": False, "date": True}
-    assert scoring.next_step_parts({"action": "a", "owner": "o", "date": "2026-11-02"}, "junk")["date"] is False
-    assert scoring.next_step_parts({"action": "a", "owner": "o", "date": None}, []) == {"action": False, "owner": False, "date": False}
+    # A prediction with no usable step earns nothing, even when the key's date is null (None == None used to credit it).
+    none = {"action": False, "owner": False, "date": False}
+    nodate = {"action": "a", "owner": "o", "date": None}
+    for junk in ("junk", None, 5, {}, [], [None, "x", {}]):
+        assert scoring.next_step_parts(nodate, junk) == none
+    assert scoring.next_step_parts({"action": "a", "owner": "o", "date": "2026-11-02"}, "junk") == none
+    # A real step with a null date still matches a null-date key on that part.
+    assert scoring.next_step_parts(nodate, {"action": "a", "owner": "x", "date": None}) == {"action": True, "owner": False, "date": True}
+
+
+def test_a_stated_but_unusable_next_step_scores_zero_not_a_third():
+    t = truth("stated", {"action": "send_proposal", "owner": "Dev", "date": None})
+    for junk in ("n/a", None, {}, []):
+        r = scoring.score_field("next_step", t, truth("stated", junk))
+        assert r["score"] == 0.0 and r["correct"] is False and r["parts"] == {"action": False, "owner": False, "date": False}
 
 
 def test_score_field_rejects_an_unknown_field_by_name():

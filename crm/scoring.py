@@ -96,7 +96,8 @@ def next_step_parts(truth: Any, pred: Any) -> dict:
         if not steps:
             return {"action": False, "owner": False, "date": False}
         return max((next_step_parts(truth, p) for p in steps), key=lambda parts: sum(parts.values()))
-    pred = pred if isinstance(pred, dict) else {}
+    if not isinstance(pred, dict) or not pred:  # no usable step: nothing to credit, not even a matching empty date
+        return {"action": False, "owner": False, "date": False}
     return {"action": str(pred.get("action", "")).lower() == str(truth["action"]).lower(),
             "owner": norm_name(pred.get("owner")) == norm_name(truth["owner"]),
             "date": (pred.get("date") or None) == (truth.get("date") or None)}

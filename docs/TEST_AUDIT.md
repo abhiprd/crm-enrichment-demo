@@ -54,7 +54,7 @@ Before the new tests, the weakest spots were in code that produces the project's
 - `Proposal` fields (`field`, `prop`, `current`, `status`) were never asserted, only the proposed text.
 - The ruleset version metadata (parent, reason, author) and the validation scores on version rows were never asserted.
 
-None of this changes a past result, because the code was not modified. It means a regression in those functions would have gone unnoticed. The new tests assert each of these.
+None of this changes a past result, because the code was not modified at the time. It means a regression in those functions would have gone unnoticed. The new tests assert each of these.
 
 ### What still survives (554 mutants)
 
@@ -104,9 +104,9 @@ No test mocks a function and then asserts only on the mock's return value. The s
 - `tests/test_evalcmds.py:115` asserted `learn_errors(...) == []`, which would pass if the function always returned an empty list. A new test adds a learn-split deal and asserts the entries.
 - `tests/test_extractor_scoring.py:25` asserted `prompt_version() == prompt_version()`, which asserts nothing. A new test pins the format and that the hash follows the text.
 
-## Findings in the code (not fixed: no source file was changed)
+## Findings in the code (finding 1 fixed after the audit; the rest reported, not fixed)
 
-1. **Next-step scoring gives date credit to an empty prediction.** When the prediction is junk or missing and the key's date is null, `None == None` earns the date part, so an empty prediction scores 1/3 on `next_step`. This sits in the scorer behind the reported results; changing it would change past numbers, so it needs a decision. `tests/test_scoring_stats_gaps.py` pins the current behaviour.
+1. **Next-step scoring gave date credit to an empty prediction. Fixed after the audit.** When the prediction was junk or missing and the key's date was null, `None == None` earned the date part, so an empty prediction scored 1/3 on `next_step`. `scoring.next_step_parts` now returns no credit when there is no usable step. Checked against the saved raw extractions in the validation, learn and bake-off caches, for every next-step instance whose status matched the key: none changed, so no existing result moves. That check was a one-off script and its counts were not saved to a results file. The test split was not rescored or re-run. Tests: `tests/test_scoring_stats_gaps.py`.
 2. **A stray comma in few-shot examples with no quote.** `compose_template` renders `- budget,: a reviewer changed...`. Cosmetic, but it is in the prompt the extractor sees.
 3. **No deduplication when a call is processed twice.** Each run makes a new interaction and a new set of pending proposals. Two runs within the same second collide on the interaction id (a timestamp to the second) and the second run fails with a database integrity error.
 4. **Validation scores are not stored on the version row when a candidate rule passes the gate.** `apply_verdict` records the scores before it activates the candidate, so the version created by the activation has none. They land only for rules that were already active (demo mode).
@@ -130,7 +130,7 @@ Run one module at a time and read `mutants/crm/<module>.py.meta` for the per-mut
 
 ## Recommended next steps
 
-- Decide whether to fix findings 1 and 3, which affect results or crash a re-run.
+- Decide whether to fix finding 3, which crashes a re-run.
 - Mutation-test the modules not reached here, starting with `pipeline`, `ingest`, `hubspot`, `llm` and `evalrun`.
 - Cover the `curve` and `cli` entry points with fake-client tests; they are the largest untested code that runs the experiments.
 - Review the 106 remaining logic survivors, beginning with `gate.validate_rule` argument pass-through.
