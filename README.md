@@ -10,15 +10,13 @@ call transcript  ->  extractor (LLM)  ->  quote check  ->  proposals  ->  Slack 
 
 Everything runs in dry-run by default. Posting to Slack or writing to HubSpot needs an explicit `--live` flag.
 
-## Findings in brief
+## What it does and how it scored
 
-- **The mechanism works end to end.** Calls become Slack cards, reviewer decisions are logged, and a reject can become a versioned, gated, revertible rule that changes the next extraction (live demo and paired replay on two fictional calls, no statistics, `results/m4_demo.json`). The rules from that demo did not clear the validation gate.
-- **Run-to-run noise is large enough to matter.** Identical V0 runs flip 37 of 360 (transcript, field) outcomes at truth level (`results/v0_noise.json`) and 25 of 360 at proposal level (`results/ablation.json`, `noise_flipped_instances`). A change counts only if it also changes more instances than that and passes the paired test.
-- **A scored gain exists only on one metric.** With an oracle reviewer, the proposal-level score rises on validation (tuned-on) and on the single test run, but the truth-level score on the test run is lower than the hand-tuned baseline (0.850 vs 0.926, `results/test_run.json`). The largest single contribution is reviewer-edit examples fixing the decision-timeline quarter format (about 13 of the roughly 27 net instance gain in the final state; `results/ablation.json`, `results/proposal_scores.json`); the rest is spread over economic buyer, champion and competitors, where the three gated rules act. That is a per-field decomposition on tuned-on validation, not an isolated ablation. Rules alone changed 21 of 360 instances (19 improved, 2 worsened) against a bar of 25: within noise.
-- **Some conventions were not learned.** The learner declined to write a rule for all 6 budget and 2 next-step rejects it examined (all reason `not_crm_worthy`), so the ballpark-budget convention was never picked up (0 of 7 instances at every point, `results/curve.json`).
-- **The oracle is not a human.** One reviewer matched the oracle's decision kind on 45 of 58 proposals on 10 validation calls (not held out; `results/handreview.json`).
+A call transcript goes in. One Slack review card comes out, with a proposed update for each CRM field, the quote behind it, and Approve / Edit / Reject buttons. An approved or edited value is written to HubSpot only if the CRM value has not changed since the proposal. Rejects become versioned, gated, revertible rules, and edits become worked examples, so later extractions change.
 
-The details, denominators and caveats are under Results and in [STATUS.md](STATUS.md).
+**Held-out result.** With a scripted oracle reviewer standing in for a human (it plays the review from the answer key), the final version scored 0.912 at proposal level on the single test run (20 transcripts x 9 fields = 180 instances, 5 runs per arm; `results/test_run.json`). Proposal level means the extraction leads to the CRM update a company's conventions call for. The starting prompt scored 0.818 and a hand-tuned baseline 0.852. Against the starting prompt the final version changed 21 of 180 instances (19 improved, 2 worsened) with a noise bar of 15; against the baseline it changed 18 (14 improved, 4 worsened) with a bar of 8. Both clear the noise bar, a rule fixed before the run, though the proposal-level metric itself was chosen after earlier results (see Limitations). The calls are fictional and the test split was run once.
+
+At truth level (matching what was said on the call) the final version scored 0.850 on the same run, below the hand-tuned baseline (0.926) and the starting prompt (0.879), so the gain reflects learned house-rule conventions, not more accurate reading of the calls. The oracle also makes these scores an upper bound on what real reviewer feedback would give. See Results, "Reading these numbers" and Limitations for the rest.
 
 ## What it can do
 
@@ -95,6 +93,16 @@ The oracle's edit-or-reject share by batch (with Wilson intervals) and its rejec
 Of 11 candidate rules drafted from rejects, 3 passed the validation gate. The learner declined to write a rule for 9 rejects, including every budget and next-step reject it examined, so the ballpark-budget house rule stayed at 0 of 7 instances at every point (`results/curve.json`). The oracle gave only a reason code, no note; whether the cause is that, the learner, or an unlearnable rule was not isolated.
 
 A single reviewer (the project owner) also reviewed 58 proposals on 10 validation calls. Their decision kind matched the oracle's on 45 of 58 (`results/handreview.json`); these are validation calls (not held out) and the reviewer knew the learn-split work, so it is a small, single-reviewer sample and the oracle is not a proven stand-in for a human.
+
+### Reading these numbers
+
+- **The mechanism works end to end.** Calls become Slack cards, reviewer decisions are logged, and a reject can become a versioned, gated, revertible rule that changes the next extraction (live demo and paired replay on two fictional calls, no statistics, `results/m4_demo.json`). The rules from that demo did not clear the validation gate.
+- **Run-to-run noise is large enough to matter.** Identical V0 runs flip 37 of 360 (transcript, field) outcomes at truth level (`results/v0_noise.json`) and 25 of 360 at proposal level (`results/ablation.json`, `noise_flipped_instances`). A change counts only if it also changes more instances than that and passes the paired test.
+- **A scored gain exists only on one metric.** With an oracle reviewer, the proposal-level score rises on validation (tuned-on) and on the single test run, but the truth-level score on the test run is lower than the hand-tuned baseline (0.850 vs 0.926, `results/test_run.json`). The largest single contribution is reviewer-edit examples fixing the decision-timeline quarter format (about 13 of the roughly 27 net instance gain in the final state; `results/ablation.json`, `results/proposal_scores.json`); the rest is spread over economic buyer, champion and competitors, where the three gated rules act. That is a per-field decomposition on tuned-on validation, not an isolated ablation. Rules alone changed 21 of 360 instances (19 improved, 2 worsened) against a bar of 25: within noise.
+- **Some conventions were not learned.** The learner declined to write a rule for all 6 budget and 2 next-step rejects it examined (all reason `not_crm_worthy`), so the ballpark-budget convention was never picked up (0 of 7 instances at every point, `results/curve.json`).
+- **The oracle is not a human.** One reviewer matched the oracle's decision kind on 45 of 58 proposals on 10 validation calls (not held out; `results/handreview.json`).
+
+The details, denominators and caveats are above and in [STATUS.md](STATUS.md).
 
 ### Unit economics
 
